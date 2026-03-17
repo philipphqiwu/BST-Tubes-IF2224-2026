@@ -8,6 +8,4 @@ times
 rdiv
 period
 lbrack
-rbrack
-rparent
-Error at line 13 at character '$'
+Error at line 9 at character '$'

@@ -3,18 +3,20 @@
 void lexer(std::ifstream& input, std::ofstream& output){
     int state = Start;
     char c;
+    bool shouldExit = false;
 
     std::string str = "";
     int lineCnt = 1;
 
     while(input.get(c)){
+        if(shouldExit) return;
         if(c == '\n'){
             lineCnt++;
         }
         switch(state){
             // Start/empty
             case Start:
-                startBehavior(output, lineCnt, c, state, str);
+                startBehavior(output, lineCnt, c, state, str, shouldExit);
                 break;
 
             // Komen
@@ -46,10 +48,19 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     output << "intcon (" << str << ")\n";
                     str = "";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else if(isNumber(c)){
                     str += c;
                 } else if(c == '.'){
+                    str += c;
+                    state = RealBegin;
+                }
+                break;
+
+            case RealBegin:
+                if(!isNumber(c)){
+                    errorMsg(output, lineCnt, c, shouldExit);
+                } else if(isNumber(c)){
                     str += c;
                     state = Real;
                 }
@@ -59,7 +70,8 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 if(!isNumber(c)){
                     output << "realcon (" << str << ")\n";
                     str = "";
-                    startBehavior(output, lineCnt, c, state, str);
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else if(isNumber(c)){
                     str += c;
                 }
@@ -71,7 +83,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str += c;
                     state = Char;
                 } else{
-                    errorMsg(output, lineCnt, c);
+                    errorMsg(output, lineCnt, c, shouldExit);
                     return;
                 }
                 break;
@@ -97,7 +109,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             // Keyword / ident
             case ident:
-                identBehavior(output, lineCnt, c, state, str);
+                identBehavior(output, lineCnt, c, state, str, shouldExit);
                 break;
 
             case kw_a:
@@ -106,7 +118,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_ar;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_ar:
@@ -115,16 +127,16 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_arr;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_arr:
                 if(c == 'a'){
                     str += c;
-                    state = kw_arr;
+                    state = kw_arra;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_arra:
@@ -133,7 +145,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_array;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_array:
@@ -141,10 +153,10 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "arraysy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
@@ -154,7 +166,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_be;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_be:
@@ -163,7 +175,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_beg;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_beg:
@@ -172,7 +184,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_begi;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_begi:
@@ -181,7 +193,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_begin;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_begin:
@@ -189,22 +201,187 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "beginsy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_c:
+                if(c == 'a'){
+                    str += c;
+                    state = kw_ca;
+                } else if(c == 'o'){
+                    str += c;
+                    state = kw_co;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_ca:
+                if(c == 's'){
+                    str += c;
+                    state = kw_cas;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_cas:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_case;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_case:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "casesy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_co:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_con;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_con:
+                if(c == 's'){
+                    str += c;
+                    state = kw_cons;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_cons:
+                if(c == 't'){
+                    str += c;
+                    state = kw_const;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_const:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "constsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
-
+            case kw_d:
+                if(c == 'i'){
+                    str += c;
+                    state = kw_di;
+                } else if(c == 'o'){
+                    str += c;
+                    state = kw_do;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_di:
+                if(c == 'v'){
+                    str += c;
+                    state = kw_div;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_do:
+                if(c == 'w'){
+                    str += c;
+                    state = kw_dow;
+                } else if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "dosy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                }else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_dow:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_down;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_down:
+                if(c == 't'){
+                    str += c;
+                    state = kw_downt;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_downt:
+                if(c == 'o'){
+                    str += c;
+                    state = kw_downto;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_downto:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "downtosy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_div:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "idiv\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
 
             case kw_e:
-                if(c == 'n'){
+                if(c == 'l'){
+                    str += c;
+                    state = kw_el;
+                } else if(c == 'n'){
                     str += c;
                     state = kw_en;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_en:
@@ -213,7 +390,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_end;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_end:
@@ -221,13 +398,139 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "endsy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_el:
+                if(c == 's'){
+                    str += c;
+                    state = kw_els;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_els:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_else;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_else:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "elsesy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
+            case kw_f:
+                if(c == 'o'){
+                    str += c;
+                    state = kw_fo;
+                } else if(c == 'u'){
+                    str += c;
+                    state = kw_fu;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_fo:
+                if(c == 'r'){
+                    str += c;
+                    state = kw_for;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_for:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "forsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_fu:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_fun;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_fun:
+                if(c == 'c'){
+                    str += c;
+                    state = kw_func;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_func:
+                if(c == 't'){
+                    str += c;
+                    state = kw_funct;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_funct:
+                if(c == 'i'){
+                    str += c;
+                    state = kw_functi;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_functi:
+                if(c == 'o'){
+                    str += c;
+                    state = kw_functio;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_functio:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_function;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_function:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "functionsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
 
             case kw_i:
                 if(c == 'f'){
@@ -235,7 +538,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_if;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_if:
@@ -243,13 +546,33 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "ifsy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
+            case kw_o:
+                if(c == 'f'){
+                    str += c;
+                    state = kw_of;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_of:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "ofsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
 
             case kw_p:
                 if(c == 'r'){
@@ -257,7 +580,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_pr;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_pr:
@@ -266,16 +589,19 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_pro;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_pro:
-                if(c == 'g'){
+                if(c == 'c'){
+                    str += c;
+                    state = kw_proc;
+                } else if(c == 'g'){
                     str += c;
                     state = kw_prog;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_prog:
@@ -284,7 +610,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_progr;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_progr:
@@ -293,7 +619,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_progra;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_progra:
@@ -302,7 +628,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_program;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_program:
@@ -310,13 +636,303 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "programsy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_proc:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_proce;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_proce:
+                if(c == 'd'){
+                    str += c;
+                    state = kw_proced;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_proced:
+                if(c == 'u'){
+                    str += c;
+                    state = kw_procedu;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_procedu:
+                if(c == 'r'){
+                    str += c;
+                    state = kw_procedur;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_procedur:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_procedure;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_procedure:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "proceduresy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
+            case kw_r:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_re;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_re:
+                if(c == 'c'){
+                    str += c;
+                    state = kw_rec;
+                } else if(c == 'p'){
+                    str += c;
+                    state = kw_rep;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_rec:
+                if(c == 'o'){
+                    str += c;
+                    state = kw_reco;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_reco:
+                if(c == 'r'){
+                    str += c;
+                    state = kw_recor;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_recor:
+                if(c == 'd'){
+                    str += c;
+                    state = kw_record;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_record:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "recordsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_rep:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_repe;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_repe:
+                if(c == 'a'){
+                    str += c;
+                    state = kw_repea;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_repea:
+                if(c == 't'){
+                    str += c;
+                    state = kw_repeat;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_repeat:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "repeatsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+
+            case kw_t:
+                if(c == 'h'){
+                    str += c;
+                    state = kw_th;
+                } else if(c == 'o'){
+                    str += c;
+                    state = kw_to;
+                } else if(c == 'y'){
+                    str += c;
+                    state = kw_ty;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_th:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_the;
+                } else if(c == 'p'){
+                    str += c;
+                    state = kw_rep;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_the:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_then;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_then:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "thensy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_to:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "tosy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_ty:
+                if(c == 'p'){
+                    str += c;
+                    state = kw_typ;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_typ:
+                if(c == 'e'){
+                    str += c;
+                    state = kw_type;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_type:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "typesy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+
+
+            case kw_u:
+                if(c == 'n'){
+                    str += c;
+                    state = kw_un;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_un:
+                if(c == 't'){
+                    str += c;
+                    state = kw_unt;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_unt:
+                if(c == 'i'){
+                    str += c;
+                    state = kw_unti;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_unti:
+                if(c == 'l'){
+                    str += c;
+                    state = kw_until;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_until:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "untilsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
 
             case kw_v:
                 if(c == 'a'){
@@ -324,7 +940,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_va;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_va:
@@ -333,7 +949,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_var;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_var:
@@ -341,10 +957,10 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "varsy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
@@ -354,7 +970,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_wh;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_wh:
@@ -363,7 +979,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_whi;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_whi:
@@ -372,16 +988,16 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     state = kw_whil;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_whil:
-                if(c == 'h'){
+                if(c == 'e'){
                     str += c;
                     state = kw_while;
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case kw_while:
@@ -389,10 +1005,121 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str = "";
                     output << "whilesy\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 } else{
                     state = ident;
-                    identBehavior(output, lineCnt, c, state, str);
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+
+            case kw_A:
+                if(c == 'N'){
+                    str += c;
+                    state = kw_AN;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_AN:
+                if(c == 'D'){
+                    str += c;
+                    state = kw_AND;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_AND:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "andsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            
+            case kw_M:
+                if(c == 'O'){
+                    str += c;
+                    state = kw_MO;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_MO:
+                if(c == 'D'){
+                    str += c;
+                    state = kw_MOD;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_MOD:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "imod\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+
+             case kw_N:
+                if(c == 'O'){
+                    str += c;
+                    state = kw_NO;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_NO:
+                if(c == 'T'){
+                    str += c;
+                    state = kw_NOT;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_NOT:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "notsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+
+             case kw_O:
+                if(c == 'R'){
+                    str += c;
+                    state = kw_OR;
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
+                }
+                break;
+            case kw_OR:
+                if(!isAlphabet(c) && !isNumber(c)){
+                    str = "";
+                    output << "orsy\n";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else{
+                    state = ident;
+                    identBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
 
@@ -403,7 +1130,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "plus\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case sy_minus:
@@ -413,7 +1140,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "minus\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case sy_eql:
@@ -421,7 +1148,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     output << "eql\n";
                     state = Start;
                 } else{
-                    errorMsg(output, lineCnt, c);
+                    errorMsg(output, lineCnt, c, shouldExit);
                     return;
                 }
                 break;
@@ -438,7 +1165,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "lss\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case sy_gt:
@@ -451,7 +1178,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "gtr\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case sy_lpar:
@@ -460,7 +1187,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "lparent\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
             case sy_colon:
@@ -470,11 +1197,95 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 } else{
                     output << "colon\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
         }
     }
+
+    // Process at EOF
+    if(input.eof() && state != Start){
+        if(state == CommentCurly || state == CommentStar || state == CommentStarClose || state == RealBegin || state == CharBegin || state == sy_eql){
+            errorMsg(output, lineCnt, c, shouldExit);
+        } else if(state == Number){
+            output << "intcon (" << str << ")\n";
+        } else if(state == Real){
+            output << "realcon (" << str << ")\n";
+        } else if(state == Char){
+            output << "charcon (" << str << ")\n";
+        } else if(state == String){
+            output << "string ('" << str << "')\n";
+        } else if(state == sy_plus){
+            output << "plus\n";
+        } else if(state == sy_minus){
+             output << "minus\n";
+        } else if(state == sy_lss){
+            output << "lss\n";
+        } else if(state == sy_gt){
+            output << "gtr\n";
+        } else if(state == sy_colon){
+            output << "colon\n";
+        } else if(state == sy_lpar){
+            output << "lparent\n";
+        } else if(state == kw_array){
+            output << "arraysy\n";
+        } else if(state == kw_begin){
+            output << "beginsy\n";
+        } else if(state == kw_case){
+            output << "casesy\n";
+        } else if(state == kw_const){
+            output << "constsy\n";
+        }else if(state == kw_div){
+            output << "divsy\n";
+        } else if(state == kw_do){
+            output << "dosy\n";
+        } else if(state == kw_downto){
+            output << "downtosy\n";
+        } else if(state == kw_else){
+            output << "elsesy\n";
+        } else if(state == kw_end){
+            output << "endsy\n";
+        } else if(state == kw_for){
+            output << "forsy\n";
+        } else if(state == kw_function){
+            output << "functionsy\n";
+        } else if(state == kw_if){
+            output << "ifsy\n";
+        } else if(state == kw_of){
+            output << "ofsy\n";
+        } else if(state == kw_procedure){
+            output << "proceduresy\n";
+        } else if(state == kw_program){
+            output << "programsy\n";
+        } else if(state == kw_record){
+            output << "recordsy\n";
+        } else if(state == kw_repeat){
+            output << "repeatsy\n";
+        } else if(state == kw_then){
+            output << "thensy\n";
+        } else if(state == kw_to){
+            output << "tosy\n";
+        } else if(state == kw_type){
+            output << "typesy\n";
+        } else if(state == kw_until){
+            output << "untilsy\n";
+        } else if(state == kw_var){
+            output << "varsy\n";
+        } else if(state == kw_while){
+            output << "whilesy\n";
+        } else if(state == kw_AND){
+            output << "andsy\n";
+        } else if(state == kw_MOD){
+            output << "imod\n";
+        } else if(state == kw_NOT){
+            output << "notsy\n";
+        } else if(state == kw_OR){
+            output << "orsy\n";
+        } else {
+            output << "ident (" << str << ")\n";
+        }
+    }
+
     return;
 }
 
@@ -493,10 +1304,11 @@ bool isJunk(char c){
 bool isWhitespace(char c){
     return (c == '\n' || c == '\r' || c == ' ');
 }
-void errorMsg(std::ofstream& output, int lineCnt, char c){
+void errorMsg(std::ofstream& output, int lineCnt, char c, bool& shouldExit){
     output << "Error at line " << lineCnt << " at character '" << c << "'\n";
+    shouldExit = true;
 }
-void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str){
+void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
     switch(c){
         case '{':
             state = CommentCurly;
@@ -627,19 +1439,19 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             str += c;
             state = ident;
         } else if(!isWhitespace(c) && !isSymbol(c)){
-            errorMsg(output, lineCnt, c);
+            errorMsg(output, lineCnt, c, shouldExit);
             return;
         } 
     }
 }
 
-void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str){
+void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
     if(isAlphabet(c) || isNumber(c)){
         str += c;
     } else{
         output << "ident (" << str << ")\n";
         str = "";
         state = Start;
-        startBehavior(output, lineCnt, c, state, str);
+        startBehavior(output, lineCnt, c, state, str, shouldExit);
     } 
 }
