@@ -1,0 +1,13 @@
+period
+semicolon
+
+comma
+plus
+minus
+times
+rdiv
+period
+lbrack
+rbrack
+rparent
+Error at line 13 at character '$'
