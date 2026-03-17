@@ -3,8 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
-void tes();
+enum State {
+    state1,
+    state2,
+};
 
+void lexer(std::ifstream& file);
 
 #endif

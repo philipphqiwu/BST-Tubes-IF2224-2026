@@ -1,5 +1,9 @@
 #include "lexer.hpp"
 
-void tes(){
-    std::cout << "tes\n";
+void lexer(std::ifstream& file){
+    char c;
+
+    while(file.get(c)){
+        std::cout << c;
+    }
 }
