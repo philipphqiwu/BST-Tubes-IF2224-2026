@@ -1,0 +1,11 @@
+period
+semicolon
+
+comma
+plus
+minus
+times
+rdiv
+period
+lbrack
+Error at line 9 at character '$'

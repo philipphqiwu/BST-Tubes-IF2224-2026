@@ -1,0 +1,59 @@
+1, 3, 48
+3.14, 26.7
+'j', 'k', 'h'
+'IRK', 'TBFO', 'jkh'
+NOT
++
+-
+*
+div
+/
+MOD
+AND
+OR
+==
+<>
+>
+>=
+<
+<=
+(
+)
+[
+]
+,
+;
+.
+:
+:=
+const
+type 
+var
+function
+procedure
+array
+record
+program
+x, PI, MyInt, 
+Integer, Real, Char, String
+h4g,
+identIniSangatPanjang24tetapiTetapValid
+begin
+if
+case
+repeat
+while
+for
+end
+else
+until
+of
+do
+to
+downto
+then
+{ Ini komentar }, (* In komentar *)
+vara
+asdasdasf
+-67
+50
