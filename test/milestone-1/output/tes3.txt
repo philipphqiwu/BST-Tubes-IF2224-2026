@@ -1,4 +1,19 @@
 intcon (1)
+minus
+intcon (2)
+intcon (1)
+intcon (-2)
+intcon (1)
+minus
+intcon (2)
+intcon (1)
+intcon (-2)
+intcon (1)
+intcon (2)
+intcon (1)
+plus
+intcon (2)
+intcon (1)
 plus
 intcon (-2)
 intcon (1)
@@ -17,7 +32,4 @@ plus
 intcon (2)
 intcon (1)
 minus
-intcon (2)
-intcon (-2)
-intcon (1)
 intcon (2)
