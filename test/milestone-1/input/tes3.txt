@@ -1,1 +1,9 @@
-idk isiin tes case ini something lah nanti haha
+1 +-2
+1+- 2
+1+-2
+1-+2
+1-+ 2
+1 -+2
+-2
+1
++2
