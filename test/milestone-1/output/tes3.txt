@@ -1,9 +1,35 @@
-ident (idk)
-ident (isiin)
-ident (tes)
-casesy
-ident (ini)
-ident (something)
-ident (lah)
-ident (nanti)
-ident (haha)
+intcon (1)
+minus
+intcon (2)
+intcon (1)
+intcon (-2)
+intcon (1)
+minus
+intcon (2)
+intcon (1)
+intcon (-2)
+intcon (1)
+intcon (2)
+intcon (1)
+plus
+intcon (2)
+intcon (1)
+plus
+intcon (-2)
+intcon (1)
+plus
+minus
+intcon (2)
+intcon (1)
+plus
+intcon (-2)
+intcon (1)
+minus
+intcon (2)
+intcon (1)
+minus
+plus
+intcon (2)
+intcon (1)
+minus
+intcon (2)

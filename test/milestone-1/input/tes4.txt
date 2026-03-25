@@ -1,0 +1,11 @@
+{ Menguji operator perbandingan dan logika }
+program UjiLogika;
+var
+  x, y: integer;
+  isValid: boolean;
+begin
+  if (x <> y) AND (x <= 100) OR NOT (y > 50.5) then
+    x := x MOD 2;
+  else
+    y := x div 3;
+end.

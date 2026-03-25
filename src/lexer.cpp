@@ -4,6 +4,8 @@ void lexer(std::ifstream& input, std::ofstream& output){
     int state = Start;
     char c;
     bool shouldExit = false;
+    bool stringHadEscape = false;
+    (void)stringHadEscape;
 
     std::string str = "";
     int lineCnt = 1;
@@ -79,12 +81,21 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             // Char / string
             case CharBegin:
-                if(c != '\''){
+                if (c == '\'') {
+                    if (input.peek() == '\''){
+                        input.get(c);
+                        str += '\'';
+                        stringHadEscape = true;
+                        state = String;
+                    } else {
+                        output << "string ('" << str << "')\n";
+                        str = "";
+                        stringHadEscape = false;
+                        state = Start;
+                    }
+                } else {
                     str += c;
                     state = Char;
-                } else{
-                    errorMsg(output, lineCnt, c, shouldExit);
-                    return;
                 }
                 break;
             case Char:
@@ -98,10 +109,17 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 }
                 break;
             case String:
-                if(c == '\''){
-                    output << "string ('" << str << "')\n";
-                    str = "";
-                    state = Start;
+                if (c == '\'') {
+                    if (input.peek() == '\''){
+                        input.get(c);
+                        str += '\'';
+                        stringHadEscape = true;
+                    } else{
+                        output << "string ('" << str << "')\n";
+                        str = "";
+                        stringHadEscape = false;
+                        state = Start;
+                    }
                 } else {
                     str += c;
                 }
@@ -1126,6 +1144,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
             // Simbol / operator
             case sy_plus:
                 if(isNumber(c)){
+                    str = c;
                     state = Number;
                 } else{
                     output << "plus\n";
@@ -1135,6 +1154,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
             case sy_minus:
                 if(isNumber(c)){
+                    str = "-";
                     str += c;
                     state = Number;
                 } else{
@@ -1388,7 +1408,6 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             state = sy_plus;
             break;
         case '-':
-            str += c;
             state = sy_minus;
             break;
         case '*':
