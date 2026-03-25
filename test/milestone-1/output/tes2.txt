@@ -69,7 +69,7 @@ beginsy
 ifsy
 casesy
 repeatsy
-ident (while)
+whilesy
 forsy
 endsy
 elsesy

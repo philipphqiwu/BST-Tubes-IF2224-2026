@@ -1,9 +1,13 @@
 #ifndef LEXER_HPP
 #define LEXER_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include <fstream>
+#include <cctype>
+#include <algorithm>
 
 enum State {
     Start,
@@ -17,107 +21,6 @@ enum State {
     Char,
     String,
     ident,
-    kw_a,
-    kw_ar,
-    kw_arr,
-    kw_arra,
-    kw_array,
-    kw_b,
-    kw_be,
-    kw_beg,
-    kw_begi,
-    kw_begin,
-    kw_c,
-    kw_ca,
-    kw_cas,
-    kw_case,
-    kw_co,
-    kw_con,
-    kw_cons,
-    kw_const,
-    kw_d,
-    kw_di,
-    kw_div,
-    kw_do,
-    kw_dow,
-    kw_down,
-    kw_downt,
-    kw_downto,
-    kw_e,
-    kw_el,
-    kw_els,
-    kw_else,
-    kw_en,
-    kw_end,
-    kw_f,
-    kw_fo,
-    kw_for,
-    kw_fu,
-    kw_fun,
-    kw_func,
-    kw_funct,
-    kw_functi,
-    kw_functio,
-    kw_function,
-    kw_i,
-    kw_if,
-    kw_o,
-    kw_of,
-    kw_p,
-    kw_pr,
-    kw_pro,
-    kw_proc,
-    kw_proce,
-    kw_proced,
-    kw_procedu,
-    kw_procedur,
-    kw_procedure,
-    kw_prog,
-    kw_progr,
-    kw_progra,
-    kw_program,
-    kw_r,
-    kw_re,
-    kw_rec,
-    kw_reco,
-    kw_recor,
-    kw_record,
-    kw_rep,
-    kw_repe,
-    kw_repea,
-    kw_repeat,
-    kw_t,
-    kw_th,
-    kw_the,
-    kw_then,
-    kw_to,
-    kw_ty,
-    kw_typ,
-    kw_type,
-    kw_u,
-    kw_un,
-    kw_unt,
-    kw_unti,
-    kw_until,
-    kw_v,
-    kw_va,
-    kw_var,
-    kw_w,
-    kw_wh,
-    kw_whi,
-    kw_whil,
-    kw_while,
-    kw_A,
-    kw_AN,
-    kw_AND,
-    kw_M,
-    kw_MO,
-    kw_MOD,
-    kw_N,
-    kw_NO,
-    kw_NOT,
-    kw_O,
-    kw_OR,
     sy_plus,
     sy_minus,
     sy_eql,
@@ -126,6 +29,8 @@ enum State {
     sy_lpar,
     sy_colon,
 };
+
+extern std::unordered_map<std::string, std::string> keywordLookupTable;
 
 void lexer(std::ifstream& input, std::ofstream& output);
 bool isNumber(char c);
@@ -136,5 +41,6 @@ bool isJunk(char c);
 void errorMsg(std::ofstream& output, int lineCnt, char c, bool& shouldExit);
 void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
 void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
+std::string keywordLookup(std::string str);
 
 #endif
