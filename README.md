@@ -23,7 +23,9 @@ make run
 
 
 ## Team Members
-- Kevin Wirya Valerian - 13524019<br/>
-- Ray Owen Martin - 13524033<br/>
-- Emilio Justin - 13524043<br/>
-- Philipp Hamara - 13524101<br/>
+| NIM | Nama | Pembagian Tugas |
+| :---: | :--- | :--- |
+| **13524019** | Kevin Wirya Valerian | Laporan & Perancangan DFA |
+| **13524033** | Ray Owen Martin | Perancangan & Pembuatan Diagram DFA |
+| **13524043** | Emilio Justin | Laporan & Perancangan DFA |
+| **13524101** | Philipp Hamara | Implementasi kode program |
