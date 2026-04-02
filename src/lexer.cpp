@@ -135,11 +135,6 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
 
             // Simbol / operator
-            case sy_plus:
-                output << "plus\n";
-                state = Start;
-                startBehavior(output, lineCnt, c, state, str, shouldExit);
-                break;
             case sy_minus:
                 if(isNumber(c)){
                     str = "-";
@@ -223,8 +218,6 @@ void lexer(std::ifstream& input, std::ofstream& output){
             output << "charcon (" << str << ")\n";
         } else if(state == String){
             output << "string ('" << str << "')\n";
-        } else if(state == sy_plus){
-            output << "plus\n";
         } else if(state == sy_minus){
              output << "minus\n";
         } else if(state == sy_lss){
@@ -280,7 +273,7 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             state = CharBegin;
             break;
         case '+':
-            state = sy_plus;
+            output << "plus\n";
             break;
         case '-':
             state = sy_minus;

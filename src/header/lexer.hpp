@@ -21,7 +21,6 @@ enum State {
     Char,
     String,
     ident,
-    sy_plus,
     sy_minus,
     sy_eql,
     sy_lss,
