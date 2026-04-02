@@ -1,0 +1,57 @@
+program Stringgggg;
+
+var
+  s1, s2, s3, s4, s5, s6, s7: string;
+  c1, c2, c3, c4, c5: char;
+  identTest: integer;
+
+begin
+  s1 := 'Arion Compiler Milestone 1';
+  s2 := '';
+  s3 := 'It''s a great day for coding in ''C++''';
+  s4 := 'Dia berkata, ''''Halo!''''';
+  s5 := 'String dengan simbol: !@#$%^&*()_+';
+  s6 := '   String dengan banyak spasi di dalam   ';
+  s7 := 'String yang berisi kurawal { ini bukan komentar }';
+  
+  c1 := 'A';
+  c2 := '7';
+  c3 := '+';
+  c4 := '''';
+  c5 := ' ';
+
+  s1 := 'Cek petik di ujung''';
+  s2 := '''' + 'Tengah' + '''';
+  s3 := 'Double single quote di awal: ''''Hello';
+  s4 := 'Double single quote di tengah: Hel''''lo';
+  s5 := 'Double single quote di akhir: Hello''''';
+
+  c1 := 'B';
+  if (c1 == 'B') then
+  begin
+    s1 := 'Kombinasi ''string'' dan ''char''';
+  end;
+
+  s6 := 'Line 1' + 'Line 2';
+  s7 := 'Tab	Test';
+
+  identTest := 100;
+  
+  s1 := 'Tes ident di dalam string: var ident begin end';
+  s2 := '(* Ini bukan komentar karena di dalam string *)';
+  s3 := '{ Ini juga bukan komentar }';
+  
+  c2 := 'z';
+  c3 := '0';
+  
+  s4 := 'Punctuation test: .,;:()[]';
+  s5 := 'Sangat '''' Panjang '''' Sekali '''' String '''' Ini';
+  
+  writeln(s1);
+  writeln(s2);
+  writeln(s3);
+  writeln(c1);
+  writeln(c4);
+
+  s6 := 'Done';
+end.

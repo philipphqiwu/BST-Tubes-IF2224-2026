@@ -1,0 +1,7 @@
+ident (tes)
+realcon (0.51)
+ident (arrayzz)
+intcon (2)
+intcon (2)
+intcon (67)
+Error at line 6 at newline character '\n' 

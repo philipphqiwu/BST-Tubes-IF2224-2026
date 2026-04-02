@@ -1,0 +1,56 @@
+comment
+programsy
+ident (UjiLogika)
+semicolon
+
+varsy
+ident (x)
+comma
+ident (y)
+colon
+ident (integer)
+semicolon
+
+ident (isValid)
+colon
+ident (boolean)
+semicolon
+
+beginsy
+ifsy
+lparent
+ident (x)
+neq
+ident (y)
+rparent
+andsy
+lparent
+ident (x)
+leq
+intcon (100)
+rparent
+orsy
+notsy
+lparent
+ident (y)
+gtr
+realcon (50.5)
+rparent
+thensy
+ident (x)
+becomes
+ident (x)
+imod
+intcon (2)
+semicolon
+
+elsesy
+ident (y)
+becomes
+ident (x)
+idiv
+intcon (3)
+semicolon
+
+endsy
+period

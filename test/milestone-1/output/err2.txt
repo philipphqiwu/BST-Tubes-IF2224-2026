@@ -1,0 +1,13 @@
+programsy
+ident (Hello)
+semicolon
+
+varsy
+ident (a)
+comma
+ident (b)
+colon
+ident (integer)
+semicolon
+
+Error at line 5 at character '!'

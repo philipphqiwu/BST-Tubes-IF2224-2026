@@ -1,0 +1,240 @@
+programsy
+ident (Stringgggg)
+semicolon
+
+varsy
+ident (s1)
+comma
+ident (s2)
+comma
+ident (s3)
+comma
+ident (s4)
+comma
+ident (s5)
+comma
+ident (s6)
+comma
+ident (s7)
+colon
+ident (string)
+semicolon
+
+ident (c1)
+comma
+ident (c2)
+comma
+ident (c3)
+comma
+ident (c4)
+comma
+ident (c5)
+colon
+ident (char)
+semicolon
+
+ident (identTest)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (s1)
+becomes
+string ('Arion Compiler Milestone 1')
+semicolon
+
+ident (s2)
+becomes
+string ('')
+semicolon
+
+ident (s3)
+becomes
+string ('It's a great day for coding in 'C++'')
+semicolon
+
+ident (s4)
+becomes
+string ('Dia berkata, ''Halo!''')
+semicolon
+
+ident (s5)
+becomes
+string ('String dengan simbol: !@#$%^&*()_+')
+semicolon
+
+ident (s6)
+becomes
+string ('   String dengan banyak spasi di dalam   ')
+semicolon
+
+ident (s7)
+becomes
+string ('String yang berisi kurawal { ini bukan komentar }')
+semicolon
+
+ident (c1)
+becomes
+charcon (A)
+semicolon
+
+ident (c2)
+becomes
+charcon (7)
+semicolon
+
+ident (c3)
+becomes
+charcon (+)
+semicolon
+
+ident (c4)
+becomes
+string (''')
+semicolon
+
+ident (c5)
+becomes
+charcon ( )
+semicolon
+
+ident (s1)
+becomes
+string ('Cek petik di ujung'')
+semicolon
+
+ident (s2)
+becomes
+string (''')
+plus
+string ('Tengah')
+plus
+string (''')
+semicolon
+
+ident (s3)
+becomes
+string ('Double single quote di awal: ''Hello')
+semicolon
+
+ident (s4)
+becomes
+string ('Double single quote di tengah: Hel''lo')
+semicolon
+
+ident (s5)
+becomes
+string ('Double single quote di akhir: Hello''')
+semicolon
+
+ident (c1)
+becomes
+charcon (B)
+semicolon
+
+ifsy
+lparent
+ident (c1)
+eql
+charcon (B)
+rparent
+thensy
+beginsy
+ident (s1)
+becomes
+string ('Kombinasi 'string' dan 'char'')
+semicolon
+
+endsy
+semicolon
+
+ident (s6)
+becomes
+string ('Line 1')
+plus
+string ('Line 2')
+semicolon
+
+ident (s7)
+becomes
+string ('Tab	Test')
+semicolon
+
+ident (identTest)
+becomes
+intcon (100)
+semicolon
+
+ident (s1)
+becomes
+string ('Tes ident di dalam string: var ident begin end')
+semicolon
+
+ident (s2)
+becomes
+string ('(* Ini bukan komentar karena di dalam string *)')
+semicolon
+
+ident (s3)
+becomes
+string ('{ Ini juga bukan komentar }')
+semicolon
+
+ident (c2)
+becomes
+charcon (z)
+semicolon
+
+ident (c3)
+becomes
+charcon (0)
+semicolon
+
+ident (s4)
+becomes
+string ('Punctuation test: .,;:()[]')
+semicolon
+
+ident (s5)
+becomes
+string ('Sangat '' Panjang '' Sekali '' String '' Ini')
+semicolon
+
+ident (writeln)
+lparent
+ident (s1)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (s2)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (s3)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (c1)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (c4)
+rparent
+semicolon
+
+ident (s6)
+becomes
+string ('Done')
+semicolon
+
+endsy
+period

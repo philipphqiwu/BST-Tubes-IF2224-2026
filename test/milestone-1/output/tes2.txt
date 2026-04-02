@@ -1,0 +1,88 @@
+intcon (1)
+comma
+intcon (3)
+comma
+intcon (48)
+realcon (3.14)
+comma
+realcon (26.7)
+charcon (j)
+comma
+charcon (k)
+comma
+charcon (h)
+string ('IRK')
+comma
+string ('TBFO')
+comma
+string ('jkh')
+notsy
+plus
+minus
+times
+idiv
+rdiv
+imod
+andsy
+orsy
+eql
+neq
+gtr
+geq
+lss
+leq
+lparent
+rparent
+lbrack
+rbrack
+comma
+semicolon
+
+period
+colon
+becomes
+constsy
+typesy
+varsy
+functionsy
+proceduresy
+arraysy
+recordsy
+programsy
+ident (x)
+comma
+ident (PI)
+comma
+ident (MyInt)
+comma
+ident (Integer)
+comma
+ident (Real)
+comma
+ident (Char)
+comma
+ident (String)
+ident (h4g)
+comma
+ident (identIniSangatPanjang24tetapiTetapValid)
+beginsy
+ifsy
+casesy
+repeatsy
+whilesy
+forsy
+endsy
+elsesy
+untilsy
+ofsy
+dosy
+tosy
+downtosy
+thensy
+comment
+comma
+comment
+ident (vara)
+ident (asdasdasf)
+intcon (-67)
+intcon (50)
