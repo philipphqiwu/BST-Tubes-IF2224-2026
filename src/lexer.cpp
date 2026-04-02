@@ -109,6 +109,10 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 }
                 break;
             case String:
+                if (c == '\n'){
+                    errorMsg(output, lineCnt, c, shouldExit);
+                    // return;
+                }
                 if (c == '\'') {
                     if (input.peek() == '\''){
                         input.get(c);
@@ -132,14 +136,14 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             // Simbol / operator
             case sy_plus:
-                if(isNumber(c)){
-                    str = c;
-                    state = Number;
-                } else{
+                // if(isNumber(c)){
+                //     str = c;
+                //     state = Number;
+                // } else{
                     output << "plus\n";
                     state = Start;
                     startBehavior(output, lineCnt, c, state, str, shouldExit);
-                }
+                // }
                 break;
             case sy_minus:
                 if(isNumber(c)){
@@ -214,7 +218,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
     // Process at EOF
     if(input.eof() && state != Start){
-        if(state == CommentCurly || state == CommentStar || state == CommentStarClose || state == RealBegin || state == CharBegin || state == sy_eql){
+        if(state == CommentCurly || state == CommentStar || state == CommentStarClose || state == RealBegin || state == CharBegin || state == Char || state == String || state == sy_eql){
             errorMsg(output, lineCnt, c, shouldExit);
         } else if(state == Number){
             output << "intcon (" << str << ")\n";
@@ -265,7 +269,11 @@ bool isWhitespace(char c){
     return (c == '\n' || c == '\r' || c == ' ');
 }
 void errorMsg(std::ofstream& output, int lineCnt, char c, bool& shouldExit){
-    output << "Error at line " << lineCnt << " at character '" << c << "'\n";
+    if (c == '\n'){
+        output << "Error at line " << lineCnt-1 << " at newline character \'\\n\' \n";
+    } else{
+        output << "Error at line " << lineCnt << " at character '" << c << "'\n";
+    }
     shouldExit = true;
 }
 void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
