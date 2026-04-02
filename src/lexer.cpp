@@ -136,14 +136,9 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             // Simbol / operator
             case sy_plus:
-                // if(isNumber(c)){
-                //     str = c;
-                //     state = Number;
-                // } else{
-                    output << "plus\n";
-                    state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
-                // }
+                output << "plus\n";
+                state = Start;
+                startBehavior(output, lineCnt, c, state, str, shouldExit);
                 break;
             case sy_minus:
                 if(isNumber(c)){
