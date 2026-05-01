@@ -1,9 +1,9 @@
-program SyntaxError1;
+program SyntaxError2;
 
 var
   x: integer;
 
 begin
-  x := 5
+  x := ;
   writeln(x);
 end.

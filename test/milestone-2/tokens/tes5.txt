@@ -1,0 +1,89 @@
+programsy
+ident (TypeDemo)
+semicolon
+
+typesy
+ident (Range)
+eql
+unknown (==)
+intcon (1)
+period
+period
+intcon (10)
+semicolon
+
+ident (Month)
+eql
+unknown (==)
+lparent
+ident (Jan)
+comma
+ident (Feb)
+comma
+ident (Mar)
+comma
+ident (Apr)
+comma
+ident (May)
+comma
+ident (Jun)
+comma
+ident (Jul)
+comma
+ident (Aug)
+comma
+ident (Sep)
+comma
+ident (Oct)
+comma
+ident (Nov)
+comma
+ident (Dec)
+rparent
+semicolon
+
+varsy
+ident (arr)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (10)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (i)
+colon
+ident (integer)
+semicolon
+
+beginsy
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (10)
+dosy
+ident (arr)
+lbrack
+ident (i)
+rbrack
+becomes
+ident (i)
+times
+intcon (2)
+semicolon
+
+ident (writeln)
+lparent
+string ('Array filled')
+rparent
+semicolon
+
+endsy
+period

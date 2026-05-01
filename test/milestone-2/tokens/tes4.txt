@@ -1,0 +1,100 @@
+programsy
+ident (SubprogramDemo)
+semicolon
+
+varsy
+ident (n)
+comma
+ident (result)
+colon
+ident (integer)
+semicolon
+
+functionsy
+ident (factorial)
+lparent
+ident (n)
+colon
+ident (integer)
+rparent
+colon
+ident (integer)
+semicolon
+
+varsy
+ident (i)
+comma
+ident (f)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (f)
+becomes
+intcon (1)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+ident (n)
+dosy
+ident (f)
+becomes
+ident (f)
+times
+ident (i)
+semicolon
+
+ident (result)
+becomes
+ident (f)
+semicolon
+
+endsy
+semicolon
+
+proceduresy
+ident (printResult)
+lparent
+ident (val)
+colon
+ident (integer)
+rparent
+semicolon
+
+beginsy
+ident (writeln)
+lparent
+string ('Result = ')
+comma
+ident (val)
+rparent
+semicolon
+
+endsy
+semicolon
+
+beginsy
+ident (n)
+becomes
+intcon (5)
+semicolon
+
+ident (factorial)
+lparent
+ident (n)
+rparent
+semicolon
+
+ident (printResult)
+lparent
+ident (result)
+rparent
+semicolon
+
+endsy
+period

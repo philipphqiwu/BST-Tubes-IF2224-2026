@@ -1,5 +1,4 @@
-programsy
-ident (SyntaxError1)
+ident (Hello)
 semicolon
 
 varsy
@@ -12,10 +11,6 @@ beginsy
 ident (x)
 becomes
 intcon (5)
-ident (writeln)
-lparent
-ident (x)
-rparent
 semicolon
 
 endsy

@@ -1,0 +1,15 @@
+program TypeDemo;
+
+type
+  Range == 1..10;
+  Month == (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec);
+
+var
+  arr: array[1..10] of integer;
+  i: integer;
+
+begin
+  for i := 1 to 10 do
+    arr[i] := i * 2;
+  writeln('Array filled');
+end.

@@ -1,7 +1,9 @@
 #include "header/lexer.hpp"
+#include <vector>
 
-void lexer(std::ifstream& input, std::ofstream& output){
+std::vector<Token> lexer(std::ifstream& input, std::ofstream& output){
     int state = Start;
+    std::vector<Token> tokens;
     char c;
     bool shouldExit = false;
     bool stringHadEscape = false;
@@ -11,19 +13,20 @@ void lexer(std::ifstream& input, std::ofstream& output){
     int lineCnt = 1;
 
     while(input.get(c)){
-        if(shouldExit) return;
+        if(shouldExit) return tokens;
         if(c == '\n'){
             lineCnt++;
         }
         switch(state){
             // Start/empty
             case Start:
-                startBehavior(output, lineCnt, c, state, str, shouldExit);
+                startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 break;
 
             // Komen
             case CommentCurly:
                 if(c == '}'){
+                    tokens.emplace_back("comment", "", lineCnt);
                     output << "comment\n";
                     state = Start;
                 } 
@@ -37,6 +40,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             case CommentStarClose:
                 if(c == ')'){
+                    tokens.emplace_back("comment", "", lineCnt);
                     output << "comment\n";
                     state = Start;
                 } else if(c != '*'){
@@ -47,15 +51,31 @@ void lexer(std::ifstream& input, std::ofstream& output){
             // Number
             case Number:
                 if(!isNumber(c) && c != '.'){
+                    tokens.emplace_back("intcon", str, lineCnt);
                     output << "intcon (" << str << ")\n";
                     str = "";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 } else if(isNumber(c)){
                     str += c;
                 } else if(c == '.'){
-                    str += c;
-                    state = RealBegin;
+                    if (input.peek() == '.') {
+                        tokens.emplace_back("intcon", str, lineCnt);
+                        output << "intcon (" << str << ")\n";
+                        
+                        tokens.emplace_back("period", "", lineCnt);
+                        output << "period\n";
+                        
+                        input.get(c); 
+                        tokens.emplace_back("period", "", lineCnt);
+                        output << "period\n";
+                        
+                        str = "";
+                        state = Start;
+                    } else {
+                        str += c;
+                        state = RealBegin;
+                    }
                 }
                 break;
 
@@ -71,10 +91,11 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             case Real:
                 if(!isNumber(c)){
+                    tokens.emplace_back("realcon", str, lineCnt);
                     output << "realcon (" << str << ")\n";
                     str = "";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 } else if(isNumber(c)){
                     str += c;
                 }
@@ -89,6 +110,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                         stringHadEscape = true;
                         state = String;
                     } else {
+                        tokens.emplace_back("string", "'" + str + "'", lineCnt);
                         output << "string ('" << str << "')\n";
                         str = "";
                         stringHadEscape = false;
@@ -101,6 +123,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
             case Char:
                 if(c == '\''){
+                    tokens.emplace_back("charcon", str, lineCnt);
                     output << "charcon (" << str << ")\n";
                     str = "";
                     state = Start;
@@ -111,6 +134,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
             case String:
                 if (c == '\n'){
+                    tokens.emplace_back("unknown", str, lineCnt);
                     output << "unknown (" << str << ")\n";
                     str = "";
                     state = Start;
@@ -121,6 +145,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                         str += '\'';
                         stringHadEscape = true;
                     } else{
+                        tokens.emplace_back("string", "'" + str + "'", lineCnt);
                         output << "string ('" << str << "')\n";
                         str = "";
                         stringHadEscape = false;
@@ -133,7 +158,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             // Keyword / ident
             case ident:
-                identBehavior(output, lineCnt, c, state, str, shouldExit);
+                identBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 break;
 
             // Simbol / operator
@@ -143,13 +168,15 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     str += c;
                     state = Number;
                 } else{
+                    tokens.emplace_back("minus", "", lineCnt);
                     output << "minus\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 }
                 break;
             case sy_eql:
                 if(c == '='){
+                    tokens.emplace_back("eql", "", lineCnt);
                     output << "eql\n";
                     state = Start;
                 } else{
@@ -158,6 +185,7 @@ void lexer(std::ifstream& input, std::ofstream& output){
                         str += c;
                         state = Unknown;
                     } else {
+                        tokens.emplace_back("unknown", "=", lineCnt);
                         output << "unknown (=)\n";
                         state = Start;
                     }
@@ -165,58 +193,81 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
             case sy_lss:
                 if(c == '>'){
+                    tokens.emplace_back("neq", "", lineCnt);
                     output << "neq\n";
                     state = Start;
                 } else if(c == '='){
+                    tokens.emplace_back("leq", "", lineCnt);
                     output << "leq\n";
                     state = Start;
                 } else if(isWhitespace(c)){
+                    tokens.emplace_back("lss", "", lineCnt);
                     output << "lss\n";
                     state = Start;
                 } else{
+                    tokens.emplace_back("lss", "", lineCnt);
                     output << "lss\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 }
                 break;
             case sy_gt:
                 if(c == '='){
+                    tokens.emplace_back("geq", "", lineCnt);
                     output << "geq\n";
                     state = Start;
                 } else if(isWhitespace(c)){
+                    tokens.emplace_back("gtr", "", lineCnt);
                     output << "gtr\n";
                     state = Start;
                 } else{
+                    tokens.emplace_back("gtr", "", lineCnt);
                     output << "gtr\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 }
                 break;
             case sy_lpar:
                 if(c == '*'){
                     state = CommentStar;
                 } else{
+                    tokens.emplace_back("lparent", "", lineCnt);
                     output << "lparent\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 }
                 break;
             case sy_colon:
                 if(c == '='){
+                    tokens.emplace_back("becomes", "", lineCnt);
                     output << "becomes\n";
                     state = Start;
                 } else{
+                    tokens.emplace_back("colon", "", lineCnt);
                     output << "colon\n";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
+                }
+                break;
+            case sy_period: 
+                if (isWhitespace(c) || isAlphabet(c) || c == ';' || c == ',' || c == '(' || c == ')' || c == '[' || c == ']' || c == '.') {
+                    tokens.emplace_back("period", "", lineCnt);
+                    output << "period\n";
+                    str = "";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
+                } else {
+                    state = Unknown;
+                    str += c;
                 }
                 break;
             case Unknown:
                 if (isWhitespace(c) || c == ';' || c == ',' || c == '(' || c == ')' || c == '[' || c == ']') {
+                    tokens.emplace_back("unknown", str, lineCnt);
                     output << "unknown (" << str << ")\n";
                     str = "";
                     state = Start;
-                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                    startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
                 } else {
                     str += c;
                 }
@@ -227,36 +278,51 @@ void lexer(std::ifstream& input, std::ofstream& output){
     // Process at EOF
     if(input.eof() && state != Start){
         if(state == CommentCurly || state == CommentStar || state == CommentStarClose){
+            tokens.emplace_back("unknown", "unclosed_comment", lineCnt);
             output << "unknown (unclosed_comment)\n";
         } else if(state == RealBegin || state == CharBegin || state == Char || state == String || state == Unknown){
+            tokens.emplace_back("unknown", str, lineCnt);
             output << "unknown (" << str << ")\n";
         } else if(state == sy_eql){
+            tokens.emplace_back("unknown", "=", lineCnt);
             output << "unknown (=)\n";
         } else if(state == Number){
+            tokens.emplace_back("intcon", str, lineCnt);
             output << "intcon (" << str << ")\n";
         } else if(state == Real){
+            tokens.emplace_back("realcon", str, lineCnt);
             output << "realcon (" << str << ")\n";
         } else if(state == sy_minus){
-             output << "minus\n";
+            tokens.emplace_back("minus", "", lineCnt);
+            output << "minus\n";
         } else if(state == sy_lss){
+            tokens.emplace_back("lss", "", lineCnt);
             output << "lss\n";
         } else if(state == sy_gt){
+            tokens.emplace_back("gtr", "", lineCnt);
             output << "gtr\n";
         } else if(state == sy_colon){
+            tokens.emplace_back("colon", "", lineCnt);
             output << "colon\n";
         } else if(state == sy_lpar){
+            tokens.emplace_back("lparent", "", lineCnt);
             output << "lparent\n";
+        } else if(state == sy_period){ // TAMBAHAN UNTUK TITIK DI AKHIR FILE
+            tokens.emplace_back("period", "", lineCnt);
+            output << "period\n";
         } else {
             std::string identOrKw = keywordLookup(str);
             if(identOrKw == "ident"){
+                tokens.emplace_back("ident", str, lineCnt);
                 output << "ident (" << str << ")\n";
             } else{
+                tokens.emplace_back(identOrKw, "", lineCnt);
                 output << identOrKw << "\n";
             }
         }
     }
 
-    return;
+    return tokens;
 }
 
 bool isNumber(char c){
@@ -274,7 +340,7 @@ bool isJunk(char c){
 bool isWhitespace(char c){
     return (c == '\n' || c == '\r' || c == ' ');
 }
-void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
+void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit, std::vector<Token>& tokens){
     switch(c){
         case '{':
             state = CommentCurly;
@@ -283,19 +349,23 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             state = CharBegin;
             break;
         case '+':
+            tokens.emplace_back("plus", "", lineCnt);
             output << "plus\n";
             break;
         case '-':
             state = sy_minus;
             break;
         case '*':
+            tokens.emplace_back("times", "", lineCnt);
             output << "times\n";
             break;
         case '/':
+            tokens.emplace_back("rdiv", "", lineCnt);
             output << "rdiv\n";
             break;
         case '=':
-            state = sy_eql;
+            tokens.emplace_back("eql", "", lineCnt);
+            output << "eql\n";
             break;
         case '<':
             state = sy_lss;
@@ -307,22 +377,28 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             state = sy_lpar;
             break;
         case ')':
+            tokens.emplace_back("rparent", "", lineCnt);
             output << "rparent\n";
             break;
         case '[':
+            tokens.emplace_back("lbrack", "", lineCnt);
             output << "lbrack\n";
             break;
         case ']':
+            tokens.emplace_back("rbrack", "", lineCnt);
             output << "rbrack\n";
             break;
         case ',':
+            tokens.emplace_back("comma", "", lineCnt);
             output << "comma\n";
             break;
         case ';':
+            tokens.emplace_back("semicolon", "", lineCnt);
             output << "semicolon\n\n";
             break;
         case '.':
-            output << "period\n";
+            state = sy_period; 
+            str += c;
             break;
         case ':':
             state = sy_colon;
@@ -342,19 +418,21 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
     }
 }
 
-void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
+void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit, std::vector<Token>& tokens){
     if(isAlphabet(c) || isNumber(c)){
         str += c;
     } else{
         std::string identOrKw = keywordLookup(str);
         if(identOrKw == "ident"){
+            tokens.emplace_back("ident", str, lineCnt);
             output << "ident (" << str << ")\n";
         } else{
+            tokens.emplace_back(identOrKw, "", lineCnt);
             output << identOrKw << "\n";
         }
         str = "";
         state = Start;
-        startBehavior(output, lineCnt, c, state, str, shouldExit);
+        startBehavior(output, lineCnt, c, state, str, shouldExit, tokens);
     } 
 }
 

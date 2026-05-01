@@ -24,6 +24,14 @@ static int runMilestone1(const std::string& filename) {
     lexer(input, output);
     input.close();
     output.close();
+
+    input.open(out_path);
+    if(input.is_open()){
+        std::cout << "=== Hasil Lexer ===\n";
+        std::cout << input.rdbuf();
+        input.close();
+    }
+
     return 0;
 }
 
@@ -46,14 +54,19 @@ static int runMilestone2(const std::string& filename) {
         return 1;
     }
 
-    std::cout << "=== Lexer output ===\n";
-    lexer(srcFile, tokenFile);
+    std::vector<Token> tokens = lexer(srcFile, tokenFile);
     srcFile.close();
     tokenFile.close();
 
+    std::ifstream readToken(token_path);
+    if(readToken.is_open()){
+        std::cout << "=== Lexer Output ===\n";
+        std::cout << readToken.rdbuf();
+        readToken.close();
+    }
+
     // parser
     std::cout << "\n=== Parse Tree ===\n";
-    std::vector<Token> tokens = readTokensFromFile(token_path);
 
     std::ofstream treeFile(out_path);
     if (!treeFile.is_open()) {

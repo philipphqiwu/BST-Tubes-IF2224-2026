@@ -9,18 +9,7 @@
 #include <vector>
 #include <initializer_list>
 
-struct Token {
-    std::string type;
-    std::string value;
-    int line;
-
-    Token(std::string t = "", std::string v = "", int l = 0) : type(std::move(t)), value(std::move(v)), line(l) {}
-
-    std::string display() const {
-        if (value.empty()) return type;
-        return type + "(" + value + ")";
-    }
-};
+#include "lexer/header/token.hpp"
 
 struct ParseNode {
     std::string label;
@@ -114,7 +103,6 @@ class Parser {
         bool isMulOp() const;
 };
 
-std::vector<Token> readTokensFromFile(const std::string& path);
 void printTree(ParseNode* node, std::ostream& out);
 void runParser(const std::vector<Token>& tokens, std::ostream& out);
 #endif

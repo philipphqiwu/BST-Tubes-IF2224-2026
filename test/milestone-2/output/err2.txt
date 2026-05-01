@@ -1,7 +1,7 @@
 <program>
 ├── <program-header>
 │   ├── programsy
-│   ├── ident (SyntaxError1)
+│   ├── ident (SyntaxError2)
 │   └── semicolon
 ├── <declaration-part>
 │   └── <var-declaration>
@@ -23,11 +23,11 @@
 │   │               └── <simple-expression>
 │   │                   └── <term>
 │   │                       └── <factor>
-│   │                           └── intcon (5)
 │   └── [missing:endsy]
 └── [missing:period]
 
 --- Syntax Errors ---
+Syntax error: expected factor, got "semicolon"
 Syntax error: expected "endsy", got "ident (writeln)" (near token line 8)
 Syntax error: expected "period", got "ident (writeln)" (near token line 8)
 Syntax error: unexpected tokens after program end ("ident (writeln)")

@@ -1,0 +1,23 @@
+program Arithmetic;
+
+const
+  MAX == 100;
+  PI == 3.14;
+
+var
+  x, y, z: integer;
+  r: real;
+
+begin
+  x := 10;
+  y := 3;
+  z := x + y * 2;
+  r := x / y;
+  if z > 10 then
+    writeln('z is greater than 10')
+  else
+    writeln('z is not greater than 10');
+  while x > 0 do
+    x := x - 1;
+  writeln('Done');
+end.

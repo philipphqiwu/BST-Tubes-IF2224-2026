@@ -1,0 +1,25 @@
+program SubprogramDemo;
+
+var
+  n, result: integer;
+
+function factorial(n: integer): integer;
+var
+  i, f: integer;
+begin
+  f := 1;
+  for i := 1 to n do
+    f := f * i;
+  result := f;
+end;
+
+procedure printResult(val: integer);
+begin
+  writeln('Result = ', val);
+end;
+
+begin
+  n := 5;
+  factorial(n);
+  printResult(result);
+end.

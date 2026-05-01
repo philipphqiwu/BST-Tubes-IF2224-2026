@@ -1,0 +1,61 @@
+programsy
+ident (Loops)
+semicolon
+
+varsy
+ident (i)
+comma
+ident (s)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (s)
+becomes
+intcon (0)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (10)
+dosy
+ident (s)
+becomes
+ident (s)
+plus
+ident (i)
+semicolon
+
+ident (writeln)
+lparent
+ident (s)
+rparent
+semicolon
+
+repeatsy
+ident (s)
+becomes
+ident (s)
+minus
+intcon (1)
+semicolon
+
+ident (writeln)
+lparent
+ident (s)
+rparent
+semicolon
+
+untilsy
+ident (s)
+eql
+unknown (==)
+intcon (0)
+semicolon
+
+endsy
+period

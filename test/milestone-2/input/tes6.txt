@@ -1,0 +1,14 @@
+program CaseDemo;
+
+var
+  day: integer;
+
+begin
+  day := 3;
+  case day of
+    1: writeln('Monday');
+    2: writeln('Tuesday');
+    3: writeln('Wednesday');
+    4, 5: writeln('Thursday or Friday');
+  end;
+end.

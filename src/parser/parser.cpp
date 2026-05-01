@@ -2,25 +2,6 @@
 #include <regex>
 #include <stdexcept>
 
-// token reader from lexer output
-std::vector<Token> readTokensFromFile(const std::string& path) {
-    std::ifstream f(path);
-    if (!f.is_open()) throw std::runtime_error("Tidak dapat membuka file token: " + path);
-    std::vector<Token> toks;
-    std::string line;
-    int lineno = 0;
-    std::regex valued(R"(^(\w+)\s+\((.+)\)$)");
-    while (std::getline(f, line)) {
-        ++lineno;
-        if (!line.empty() && line.back() == '\r') line.pop_back();
-        if (line.empty() || line == "comment") continue;
-        std::smatch m;
-        if (std::regex_match(line, m, valued)) toks.emplace_back(m[1].str(), m[2].str(), lineno);
-        else toks.emplace_back(line, "", lineno);
-    }
-    return toks;
-}
-
 // print tree
 static void printHelper(ParseNode* n, const std::string& pfx, bool isLast, std::ostream& out) {
     if (!n) return;
@@ -135,7 +116,10 @@ ParseNode* Parser::parseConstant() {
     } else {
         if (checkAny({"plus","minus"})) {n->addChild(new ParseNode(cur().display())); ++pos;}
         if (checkAny({"ident","intcon","realcon"})) {n->addChild(new ParseNode(cur().display())); ++pos;}
-        else {addError("Syntax error: expected constant, got \"" + cur().display() + "\"");}
+        else {
+            addError("Syntax error: expected constant, got \"" + cur().display() + "\"");
+            if (!atEnd()) ++pos;
+        }
     }
     return n;
 }
@@ -184,7 +168,10 @@ ParseNode* Parser::parseType() {
     else if (check("recordsy")) n->addChild(parseRecordType());
     else if (isRangeHere()) n->addChild(parseRange());
     else if (check("ident")) { n->addChild(new ParseNode(cur().display())); ++pos;}
-    else {addError("Syntax error: expected type, got \"" + cur().display() + "\"");}
+    else {
+        addError("Syntax error: expected type, got \"" + cur().display() + "\"");
+        if (!atEnd()) ++pos;
+    }
     return n;
 }
 
@@ -192,8 +179,11 @@ ParseNode* Parser::parseArrayType() {
     auto* n = new ParseNode("<array-type>");
     n->addChild(expect("arraysy"));
     n->addChild(expect("lbrack"));
-    if (isRangeHere()) n->addChild(parseRange());
-    else n->addChild(expect("ident"));
+    if (isConstantStart(0)) {
+        n->addChild(parseRange());
+    } else {
+        n->addChild(expect("ident"));
+    }    
     n->addChild(expect("rbrack"));
     n->addChild(expect("ofsy"));
     n->addChild(parseType());
@@ -334,7 +324,7 @@ ParseNode* Parser::parseStatementList(const std::string& terminator) {
 ParseNode* Parser::parseStatement() {
     auto* n = new ParseNode("<statement>");
     if (check("ident")) {
-        if (peek().type == "becomes") n->addChild(parseAssignmentStatement());
+        if (peek().type == "becomes" || peek().type == "lbrack") n->addChild(parseAssignmentStatement());
         else n->addChild(parseProcFuncCall());
     } else if (check("ifsy")) n->addChild(parseIfStatement());
     else if (check("casesy")) n->addChild(parseCaseStatement());
@@ -348,6 +338,11 @@ ParseNode* Parser::parseStatement() {
 ParseNode* Parser::parseAssignmentStatement() {
     auto* n = new ParseNode("<assignment-statement>");
     n->addChild(expect("ident"));
+    if (check("lbrack")) {
+        n->addChild(expect("lbrack"));
+        n->addChild(parseExpression());
+        n->addChild(expect("rbrack"));
+    }
     n->addChild(expect("becomes"));
     n->addChild(parseExpression());
     return n;
@@ -492,7 +487,14 @@ ParseNode* Parser::parseFactor() {
     auto* n = new ParseNode("<factor>");
     if (check("ident")) {
         if (peek().type == "lparent") n->addChild(parseProcFuncCall());
-        else { n->addChild(new ParseNode(cur().display())); ++pos; }
+        else { 
+            n->addChild(new ParseNode(cur().display())); ++pos; 
+            if (check("lbrack")) {
+                n->addChild(expect("lbrack"));
+                n->addChild(parseExpression());
+                n->addChild(expect("rbrack"));
+            }
+        }
     } else if (checkAny({"intcon","realcon","charcon","string"})) {
         n->addChild(new ParseNode(cur().display())); ++pos;
     } else if (check("lparent")) {

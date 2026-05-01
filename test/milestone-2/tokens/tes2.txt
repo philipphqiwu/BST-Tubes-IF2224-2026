@@ -1,0 +1,95 @@
+programsy
+ident (Arithmetic)
+semicolon
+
+constsy
+ident (MAX)
+eql
+unknown (==)
+intcon (100)
+semicolon
+
+ident (PI)
+eql
+unknown (==)
+realcon (3.14)
+semicolon
+
+varsy
+ident (x)
+comma
+ident (y)
+comma
+ident (z)
+colon
+ident (integer)
+semicolon
+
+ident (r)
+colon
+ident (real)
+semicolon
+
+beginsy
+ident (x)
+becomes
+intcon (10)
+semicolon
+
+ident (y)
+becomes
+intcon (3)
+semicolon
+
+ident (z)
+becomes
+ident (x)
+plus
+ident (y)
+times
+intcon (2)
+semicolon
+
+ident (r)
+becomes
+ident (x)
+rdiv
+ident (y)
+semicolon
+
+ifsy
+ident (z)
+gtr
+intcon (10)
+thensy
+ident (writeln)
+lparent
+string ('z is greater than 10')
+rparent
+elsesy
+ident (writeln)
+lparent
+string ('z is not greater than 10')
+rparent
+semicolon
+
+whilesy
+ident (x)
+gtr
+intcon (0)
+dosy
+ident (x)
+becomes
+ident (x)
+minus
+intcon (1)
+semicolon
+
+ident (writeln)
+lparent
+string ('Done')
+rparent
+semicolon
+
+endsy
+period

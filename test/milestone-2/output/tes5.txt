@@ -1,0 +1,26 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (TypeDemo)
+│   └── semicolon
+├── <declaration-part>
+│   └── <type-declaration>
+│       ├── typesy
+│       ├── ident (Range)
+│       ├── eql
+│       ├── <type>
+│       └── [missing:semicolon]
+├── <compound-statement>
+│   ├── [missing:beginsy]
+│   ├── <statement-list>
+│   │   └── <statement>
+│   └── [missing:endsy]
+└── [missing:period]
+
+--- Syntax Errors ---
+Syntax error: expected type, got "unknown (==)"
+Syntax error: expected "semicolon", got "intcon (1)" (near token line 4)
+Syntax error: expected "beginsy", got "intcon (1)" (near token line 4)
+Syntax error: expected "endsy", got "intcon (1)" (near token line 4)
+Syntax error: expected "period", got "intcon (1)" (near token line 4)
+Syntax error: unexpected tokens after program end ("intcon (1)")

@@ -1,0 +1,58 @@
+programsy
+ident (CaseDemo)
+semicolon
+
+varsy
+ident (day)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (day)
+becomes
+intcon (3)
+semicolon
+
+casesy
+ident (day)
+ofsy
+intcon (1)
+colon
+ident (writeln)
+lparent
+string ('Monday')
+rparent
+semicolon
+
+intcon (2)
+colon
+ident (writeln)
+lparent
+string ('Tuesday')
+rparent
+semicolon
+
+intcon (3)
+colon
+ident (writeln)
+lparent
+string ('Wednesday')
+rparent
+semicolon
+
+intcon (4)
+comma
+intcon (5)
+colon
+ident (writeln)
+lparent
+string ('Thursday or Friday')
+rparent
+semicolon
+
+endsy
+semicolon
+
+endsy
+period

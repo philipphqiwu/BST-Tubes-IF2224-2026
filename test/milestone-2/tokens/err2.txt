@@ -1,5 +1,5 @@
 programsy
-ident (SyntaxError1)
+ident (SyntaxError2)
 semicolon
 
 varsy
@@ -11,7 +11,8 @@ semicolon
 beginsy
 ident (x)
 becomes
-intcon (5)
+semicolon
+
 ident (writeln)
 lparent
 ident (x)
