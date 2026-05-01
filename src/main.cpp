@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "lexer.hpp"
+#include "lexer/header/lexer.hpp"
 
 int main(){
     std::string filename = "";

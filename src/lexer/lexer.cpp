@@ -1,4 +1,4 @@
-#include "lexer.hpp"
+#include "header/lexer.hpp"
 
 void lexer(std::ifstream& input, std::ofstream& output){
     int state = Start;

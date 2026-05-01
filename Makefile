@@ -12,8 +12,7 @@ BUILDDIR := build
 # Target executable
 TARGET := main
 
-# Find all C++ sources under src/
-SRCS := $(wildcard $(SRCDIR)/*.cpp)
+SRCS := $(shell find $(SRCDIR) -name '*.cpp')
 
 # Map sources to object files under build/
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
@@ -25,7 +24,6 @@ DEPS := $(OBJS:.o=.d)
 
 all: dirs $(TARGET)
 
-# Create build directory
 dirs:
 	@mkdir -p $(BUILDDIR)
 
@@ -38,6 +36,7 @@ $(TARGET): $(OBJS)
 
 # Compile rule: produce .o and .d files
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
 # Include generated dependency files if present
