@@ -53,7 +53,7 @@ static int runMilestone2(const std::string& filename) {
 
     // parser
     std::cout << "\n=== Parse Tree ===\n";
-    //std::vector<Token> tokens = readTokensFromFile(token_path);
+    std::vector<Token> tokens = readTokensFromFile(token_path);
 
     std::ofstream treeFile(out_path);
     if (!treeFile.is_open()) {
@@ -62,7 +62,7 @@ static int runMilestone2(const std::string& filename) {
     }
 
     std::ostringstream buf;
-    // runParser(tokens, buf);
+    runParser(tokens, buf);
     std::string result = buf.str();
     std::cout << result;
     treeFile << result;
