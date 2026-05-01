@@ -4,6 +4,12 @@ var
   a, b: integer;
 
 begin
+  katasambung;
+  kata pisah;
+  c:=kata;
+  d:=1.23;
+  ident:=1;
+  e:=.23.e-+/1.e-+/1;
   a := 5;
   b := a + 10;
   writeln('Result = ', b);

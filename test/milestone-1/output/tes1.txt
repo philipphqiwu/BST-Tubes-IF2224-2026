@@ -11,6 +11,34 @@ ident (integer)
 semicolon
 
 beginsy
+ident (katasambung)
+semicolon
+
+ident (kata)
+ident (pisah)
+semicolon
+
+ident (c)
+becomes
+ident (kata)
+semicolon
+
+ident (d)
+becomes
+realcon (1.23)
+semicolon
+
+ident (ident)
+becomes
+intcon (1)
+semicolon
+
+ident (e)
+becomes
+period
+unknown (23.e-+/1.e-+/1)
+semicolon
+
 ident (a)
 becomes
 intcon (5)

@@ -61,7 +61,8 @@ void lexer(std::ifstream& input, std::ofstream& output){
 
             case RealBegin:
                 if(!isNumber(c)){
-                    errorMsg(output, lineCnt, c, shouldExit);
+                    state = Unknown;
+                    str += c;
                 } else if(isNumber(c)){
                     str += c;
                     state = Real;
@@ -110,8 +111,9 @@ void lexer(std::ifstream& input, std::ofstream& output){
                 break;
             case String:
                 if (c == '\n'){
-                    errorMsg(output, lineCnt, c, shouldExit);
-                    // return;
+                    output << "unknown (" << str << ")\n";
+                    str = "";
+                    state = Start;
                 }
                 if (c == '\'') {
                     if (input.peek() == '\''){
@@ -151,8 +153,14 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     output << "eql\n";
                     state = Start;
                 } else{
-                    errorMsg(output, lineCnt, c, shouldExit);
-                    return;
+                    str = "=";
+                    if (!isWhitespace(c)) {
+                        str += c;
+                        state = Unknown;
+                    } else {
+                        output << "unknown (=)\n";
+                        state = Start;
+                    }
                 }
                 break;
             case sy_lss:
@@ -203,21 +211,31 @@ void lexer(std::ifstream& input, std::ofstream& output){
                     startBehavior(output, lineCnt, c, state, str, shouldExit);
                 }
                 break;
+            case Unknown:
+                if (isWhitespace(c) || c == ';' || c == ',' || c == '(' || c == ')' || c == '[' || c == ']') {
+                    output << "unknown (" << str << ")\n";
+                    str = "";
+                    state = Start;
+                    startBehavior(output, lineCnt, c, state, str, shouldExit);
+                } else {
+                    str += c;
+                }
+                break;
         }
     }
 
     // Process at EOF
     if(input.eof() && state != Start){
-        if(state == CommentCurly || state == CommentStar || state == CommentStarClose || state == RealBegin || state == CharBegin || state == Char || state == String || state == sy_eql){
-            errorMsg(output, lineCnt, c, shouldExit);
+        if(state == CommentCurly || state == CommentStar || state == CommentStarClose){
+            output << "unknown (unclosed_comment)\n";
+        } else if(state == RealBegin || state == CharBegin || state == Char || state == String || state == Unknown){
+            output << "unknown (" << str << ")\n";
+        } else if(state == sy_eql){
+            output << "unknown (=)\n";
         } else if(state == Number){
             output << "intcon (" << str << ")\n";
         } else if(state == Real){
             output << "realcon (" << str << ")\n";
-        } else if(state == Char){
-            output << "charcon (" << str << ")\n";
-        } else if(state == String){
-            output << "string ('" << str << "')\n";
         } else if(state == sy_minus){
              output << "minus\n";
         } else if(state == sy_lss){
@@ -255,14 +273,6 @@ bool isJunk(char c){
 }
 bool isWhitespace(char c){
     return (c == '\n' || c == '\r' || c == ' ');
-}
-void errorMsg(std::ofstream& output, int lineCnt, char c, bool& shouldExit){
-    if (c == '\n'){
-        output << "Error at line " << lineCnt-1 << " at newline character \'\\n\' \n";
-    } else{
-        output << "Error at line " << lineCnt << " at character '" << c << "'\n";
-    }
-    shouldExit = true;
 }
 void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit){
     switch(c){
@@ -326,8 +336,8 @@ void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::
             str += c;
             state = ident;
         } else if(!isWhitespace(c) && !isSymbol(c)){
-            errorMsg(output, lineCnt, c, shouldExit);
-            return;
+            str += c;
+            state = Unknown;  
         } 
     }
 }

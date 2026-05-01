@@ -27,6 +27,7 @@ enum State {
     sy_gt,
     sy_lpar,
     sy_colon,
+    Unknown
 };
 
 extern std::unordered_map<std::string, std::string> keywordLookupTable;
@@ -37,7 +38,6 @@ bool isAlphabet(char c);
 bool isSymbol(char c);
 bool isWhitespace(char c);
 bool isJunk(char c);
-void errorMsg(std::ofstream& output, int lineCnt, char c, bool& shouldExit);
 void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
 void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
 std::string keywordLookup(std::string str);
