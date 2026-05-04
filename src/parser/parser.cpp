@@ -324,8 +324,12 @@ ParseNode* Parser::parseStatementList(const std::string& terminator) {
 ParseNode* Parser::parseStatement() {
     auto* n = new ParseNode("<statement>");
     if (check("ident")) {
-        if (peek().type == "becomes" || peek().type == "lbrack") n->addChild(parseAssignmentStatement());
-        else n->addChild(parseProcFuncCall());
+        const std::string& nextType = peek().type;
+        if (nextType == "becomes" || nextType == "lbrack" || nextType == "period") {
+            n->addChild(parseAssignmentStatement());
+        } else {
+            n->addChild(parseProcFuncCall());
+        }
     } else if (check("ifsy")) n->addChild(parseIfStatement());
     else if (check("casesy")) n->addChild(parseCaseStatement());
     else if (check("whilesy")) n->addChild(parseWhileStatement());
@@ -337,12 +341,7 @@ ParseNode* Parser::parseStatement() {
 
 ParseNode* Parser::parseAssignmentStatement() {
     auto* n = new ParseNode("<assignment-statement>");
-    n->addChild(expect("ident"));
-    if (check("lbrack")) {
-        n->addChild(expect("lbrack"));
-        n->addChild(parseExpression());
-        n->addChild(expect("rbrack"));
-    }
+    n->addChild(parseVariable());
     n->addChild(expect("becomes"));
     n->addChild(parseExpression());
     return n;
@@ -486,14 +485,10 @@ ParseNode* Parser::parseTerm() {
 ParseNode* Parser::parseFactor() {
     auto* n = new ParseNode("<factor>");
     if (check("ident")) {
-        if (peek().type == "lparent") n->addChild(parseProcFuncCall());
-        else { 
-            n->addChild(new ParseNode(cur().display())); ++pos; 
-            if (check("lbrack")) {
-                n->addChild(expect("lbrack"));
-                n->addChild(parseExpression());
-                n->addChild(expect("rbrack"));
-            }
+        if (peek().type == "lparent") {
+            n->addChild(parseProcFuncCall());
+        } else { 
+            n->addChild(parseVariable());
         }
     } else if (checkAny({"intcon","realcon","charcon","string"})) {
         n->addChild(new ParseNode(cur().display())); ++pos;
@@ -524,6 +519,54 @@ ParseNode* Parser::parseAdditiveOperator() {
 ParseNode* Parser::parseMultiplicativeOperator() {
     auto* n = new ParseNode("<multiplicative-operator>");
     n->addChild(new ParseNode(cur().display())); ++pos;
+    return n;
+}
+
+ParseNode* Parser::parseVariable() {
+    auto* n = new ParseNode("<variable>");
+    n->addChild(expect("ident"));
+    
+    while (check("lbrack") || check("period")) {
+        n->addChild(parseComponentVariable());
+    }
+    return n;
+}
+
+ParseNode* Parser::parseComponentVariable() {
+    auto* n = new ParseNode("<component-variable>");
+    if (check("lbrack")) {
+        n->addChild(expect("lbrack"));
+        n->addChild(parseIndexList());
+        n->addChild(expect("rbrack"));
+    } else if (check("period")) {
+        n->addChild(expect("period"));
+        n->addChild(expect("ident"));
+    } else {
+        addError("Syntax error: expected '[' or '.', got \"" + cur().display() + "\"");
+        if (!atEnd()) ++pos;
+    }
+    return n;
+}
+
+ParseNode* Parser::parseIndexList() {
+    auto* n = new ParseNode("<index-list>");
+    
+    if (checkAny({"intcon", "charcon", "ident"})) {
+        n->addChild(new ParseNode(cur().display())); ++pos;
+    } else {
+        addError("Syntax error: expected intcon, charcon, or ident in index-list");
+        if (!atEnd()) ++pos;
+    }
+
+    while (check("comma")) {
+        n->addChild(expect("comma"));
+        if (checkAny({"intcon", "charcon", "ident"})) {
+            n->addChild(new ParseNode(cur().display())); ++pos;
+        } else {
+            addError("Syntax error: expected intcon, charcon, or ident after comma");
+            if (!atEnd()) ++pos;
+        }
+    }
     return n;
 }
 

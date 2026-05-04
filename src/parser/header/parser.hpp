@@ -94,6 +94,10 @@ class Parser {
         ParseNode* parseAdditiveOperator();
         ParseNode* parseMultiplicativeOperator();
 
+        ParseNode* parseVariable();
+        ParseNode* parseComponentVariable();
+        ParseNode* parseIndexList();
+
         // helper
         bool isConstantStart(int off = 0) const;
         bool isRangeHere() const;

@@ -19,7 +19,8 @@
 │   ├── <statement-list>
 │   │   ├── <statement>
 │   │   │   └── <assignment-statement>
-│   │   │       ├── ident (a)
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (a)
 │   │   │       ├── becomes
 │   │   │       └── <expression>
 │   │   │           └── <simple-expression>
@@ -29,13 +30,15 @@
 │   │   ├── semicolon
 │   │   ├── <statement>
 │   │   │   └── <assignment-statement>
-│   │   │       ├── ident (b)
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (b)
 │   │   │       ├── becomes
 │   │   │       └── <expression>
 │   │   │           └── <simple-expression>
 │   │   │               ├── <term>
 │   │   │               │   └── <factor>
-│   │   │               │       └── ident (a)
+│   │   │               │       └── <variable>
+│   │   │               │           └── ident (a)
 │   │   │               ├── <additive-operator>
 │   │   │               │   └── plus
 │   │   │               └── <term>
@@ -57,7 +60,8 @@
 │   │   │       │       └── <simple-expression>
 │   │   │       │           └── <term>
 │   │   │       │               └── <factor>
-│   │   │       │                   └── ident (b)
+│   │   │       │                   └── <variable>
+│   │   │       │                       └── ident (b)
 │   │   │       └── rparent
 │   │   └── semicolon
 │   └── endsy
