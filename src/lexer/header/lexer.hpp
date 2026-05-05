@@ -8,6 +8,7 @@
 #include <fstream>
 #include <cctype>
 #include <algorithm>
+#include <vector>
 
 #include "token.hpp"
 
