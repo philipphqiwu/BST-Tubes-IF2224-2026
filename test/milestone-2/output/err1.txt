@@ -1,13 +1,13 @@
 <program>
 ├── <program-header>
 │   ├── programsy
-│   ├── ident (SyntaxError1)
-│   └── semicolon
+│   ├── ident (MissingSemicolon)
+│   └── [missing:semicolon]
 ├── <declaration-part>
 │   └── <var-declaration>
 │       ├── varsy
 │       ├── <identifier-list>
-│       │   └── ident (x)
+│       │   └── ident (a)
 │       ├── colon
 │       ├── <type>
 │       │   └── ident (integer)
@@ -15,19 +15,19 @@
 ├── <compound-statement>
 │   ├── beginsy
 │   ├── <statement-list>
-│   │   └── <statement>
-│   │       └── <assignment-statement>
-│   │           ├── ident (x)
-│   │           ├── becomes
-│   │           └── <expression>
-│   │               └── <simple-expression>
-│   │                   └── <term>
-│   │                       └── <factor>
-│   │                           └── intcon (5)
-│   └── [missing:endsy]
-└── [missing:period]
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (a)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (1)
+│   │   └── semicolon
+│   └── endsy
+└── period
 
 --- Syntax Errors ---
-Syntax error: expected "endsy", got "ident (writeln)" (near token line 8)
-Syntax error: expected "period", got "ident (writeln)" (near token line 8)
-Syntax error: unexpected tokens after program end ("ident (writeln)")
+Syntax error: expected "semicolon", got "varsy" (near token line 4)

@@ -1,9 +1,8 @@
-program SyntaxError1;
+program MissingSemicolon
 
 var
-  x: integer;
+  a: integer;
 
 begin
-  x := 5
-  writeln(x);
+  a := 1;
 end.

@@ -1,0 +1,42 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (BadStatement)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (x)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (integer)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   └── <statement>
+│   │       └── <if-statement>
+│   │           ├── ifsy
+│   │           ├── <expression>
+│   │           │   ├── <simple-expression>
+│   │           │   │   └── <term>
+│   │           │   │       └── <factor>
+│   │           │   │           └── <variable>
+│   │           │   │               └── ident (x)
+│   │           │   ├── <relational-operator>
+│   │           │   │   └── eql
+│   │           │   └── <simple-expression>
+│   │           │       └── <term>
+│   │           │           └── <factor>
+│   │           ├── [missing:thensy]
+│   │           └── <statement>
+│   └── [missing:endsy]
+└── [missing:period]
+
+--- Syntax Errors ---
+Syntax error: expected factor, got "unknown (==)"
+Syntax error: expected "thensy", got "intcon (0)" (near token line 7)
+Syntax error: expected "endsy", got "intcon (0)" (near token line 7)
+Syntax error: expected "period", got "intcon (0)" (near token line 7)
+Syntax error: unexpected tokens after program end ("intcon (0)")

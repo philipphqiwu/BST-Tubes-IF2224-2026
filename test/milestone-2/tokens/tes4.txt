@@ -1,99 +1,73 @@
 programsy
-ident (SubprogramDemo)
+ident (ArraysRecords)
 semicolon
 
 varsy
-ident (n)
-comma
-ident (result)
+ident (m)
 colon
-ident (integer)
-semicolon
-
-functionsy
-ident (factorial)
-lparent
-ident (n)
-colon
-ident (integer)
-rparent
-colon
-ident (integer)
-semicolon
-
-varsy
-ident (i)
-comma
-ident (f)
-colon
-ident (integer)
-semicolon
-
-beginsy
-ident (f)
-becomes
+arraysy
+lbrack
 intcon (1)
-semicolon
-
-forsy
-ident (i)
-becomes
+period
+period
+intcon (2)
+rbrack
+ofsy
+arraysy
+lbrack
 intcon (1)
-tosy
-ident (n)
-dosy
-ident (f)
-becomes
-ident (f)
-times
-ident (i)
+period
+period
+intcon (2)
+rbrack
+ofsy
+ident (integer)
 semicolon
 
-ident (result)
-becomes
-ident (f)
-semicolon
-
-endsy
-semicolon
-
-proceduresy
-ident (printResult)
-lparent
-ident (val)
+ident (p)
+colon
+recordsy
+ident (age)
 colon
 ident (integer)
-rparent
 semicolon
 
-beginsy
-ident (writeln)
-lparent
-string ('Result = ')
-comma
-ident (val)
-rparent
-semicolon
-
+ident (name)
+colon
+ident (string)
 endsy
 semicolon
 
 beginsy
-ident (n)
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
 becomes
-intcon (5)
+intcon (7)
 semicolon
 
-ident (factorial)
-lparent
-ident (n)
-rparent
+ident (p)
+period
+ident (age)
+becomes
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
 semicolon
 
-ident (printResult)
-lparent
-ident (result)
-rparent
+ident (p)
+period
+ident (name)
+becomes
+string ('abc')
 semicolon
 
 endsy

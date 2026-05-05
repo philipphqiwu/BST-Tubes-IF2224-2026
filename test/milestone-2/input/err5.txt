@@ -1,0 +1,5 @@
+program BadEnd;
+
+begin
+  writeln('hello');
+end

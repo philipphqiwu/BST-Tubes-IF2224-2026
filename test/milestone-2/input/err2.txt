@@ -1,9 +1,7 @@
-program SyntaxError2;
+program BadConst;
 
-var
-  x: integer;
+const
+  A == ;
 
 begin
-  x := ;
-  writeln(x);
 end.

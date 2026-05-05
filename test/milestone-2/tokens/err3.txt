@@ -1,16 +1,27 @@
-ident (Hello)
+programsy
+ident (BadType)
 semicolon
 
 varsy
-ident (x)
+ident (a)
 colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+ofsy
 ident (integer)
 semicolon
 
 beginsy
-ident (x)
+ident (a)
+lbrack
+intcon (1)
+rbrack
 becomes
-intcon (5)
+intcon (10)
 semicolon
 
 endsy

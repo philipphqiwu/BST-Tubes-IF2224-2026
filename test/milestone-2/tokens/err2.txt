@@ -1,23 +1,13 @@
 programsy
-ident (SyntaxError2)
+ident (BadConst)
 semicolon
 
-varsy
-ident (x)
-colon
-ident (integer)
+constsy
+ident (A)
+eql
+unknown (==)
 semicolon
 
 beginsy
-ident (x)
-becomes
-semicolon
-
-ident (writeln)
-lparent
-ident (x)
-rparent
-semicolon
-
 endsy
 period

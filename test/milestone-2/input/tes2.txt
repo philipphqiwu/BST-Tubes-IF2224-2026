@@ -1,23 +1,24 @@
-program Arithmetic;
-
-const
-  MAX == 100;
-  PI == 3.14;
+program Subprograms;
 
 var
-  x, y, z: integer;
-  r: real;
+  i, total: integer;
+
+procedure AddToTotal(x: integer; y: integer);
+begin
+  total := total + x + y;
+end;
+
+function NextVal(v: integer): integer;
+begin
+  NextVal := v + 1;
+end;
 
 begin
-  x := 10;
-  y := 3;
-  z := x + y * 2;
-  r := x / y;
-  if z > 10 then
-    writeln('z is greater than 10')
+  i := 1;
+  total := 0;
+  AddToTotal(i, NextVal(i));
+  if total > 0 then
+    total := total + 1
   else
-    writeln('z is not greater than 10');
-  while x > 0 do
-    x := x - 1;
-  writeln('Done');
+    total := total - 1;
 end.

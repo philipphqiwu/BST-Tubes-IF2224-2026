@@ -1,32 +1,51 @@
 <program>
 ├── <program-header>
-│   ├── [missing:programsy]
-│   ├── ident (Hello)
+│   ├── programsy
+│   ├── ident (BadType)
 │   └── semicolon
 ├── <declaration-part>
 │   └── <var-declaration>
 │       ├── varsy
 │       ├── <identifier-list>
-│       │   └── ident (x)
+│       │   └── ident (a)
 │       ├── colon
 │       ├── <type>
-│       │   └── ident (integer)
+│       │   └── <array-type>
+│       │       ├── arraysy
+│       │       ├── lbrack
+│       │       ├── <range>
+│       │       │   ├── <constant>
+│       │       │   │   └── intcon (1)
+│       │       │   ├── period
+│       │       │   ├── period
+│       │       │   └── <constant>
+│       │       │       └── intcon (3)
+│       │       ├── [missing:rbrack]
+│       │       ├── ofsy
+│       │       └── <type>
+│       │           └── ident (integer)
 │       └── semicolon
 ├── <compound-statement>
 │   ├── beginsy
 │   ├── <statement-list>
 │   │   ├── <statement>
 │   │   │   └── <assignment-statement>
-│   │   │       ├── ident (x)
+│   │   │       ├── <variable>
+│   │   │       │   ├── ident (a)
+│   │   │       │   └── <component-variable>
+│   │   │       │       ├── lbrack
+│   │   │       │       ├── <index-list>
+│   │   │       │       │   └── intcon (1)
+│   │   │       │       └── rbrack
 │   │   │       ├── becomes
 │   │   │       └── <expression>
 │   │   │           └── <simple-expression>
 │   │   │               └── <term>
 │   │   │                   └── <factor>
-│   │   │                       └── intcon (5)
+│   │   │                       └── intcon (10)
 │   │   └── semicolon
 │   └── endsy
 └── period
 
 --- Syntax Errors ---
-Syntax error: expected "programsy", got "ident (Hello)" (near token line 1)
+Syntax error: expected "rbrack", got "ofsy" (near token line 4)

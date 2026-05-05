@@ -1,26 +1,211 @@
 <program>
 ├── <program-header>
 │   ├── programsy
-│   ├── ident (Arithmetic)
+│   ├── ident (Subprograms)
 │   └── semicolon
 ├── <declaration-part>
-│   └── <const-declaration>
-│       ├── constsy
-│       ├── ident (MAX)
-│       ├── eql
-│       ├── <constant>
-│       └── [missing:semicolon]
+│   ├── <var-declaration>
+│   │   ├── varsy
+│   │   ├── <identifier-list>
+│   │   │   ├── ident (i)
+│   │   │   ├── comma
+│   │   │   └── ident (total)
+│   │   ├── colon
+│   │   ├── <type>
+│   │   │   └── ident (integer)
+│   │   └── semicolon
+│   ├── <subprogram-declaration>
+│   │   └── <procedure-declaration>
+│   │       ├── proceduresy
+│   │       ├── ident (AddToTotal)
+│   │       ├── <formal-parameter-list>
+│   │       │   ├── lparent
+│   │       │   ├── <parameter-group>
+│   │       │   │   ├── <identifier-list>
+│   │       │   │   │   └── ident (x)
+│   │       │   │   ├── colon
+│   │       │   │   └── ident (integer)
+│   │       │   ├── semicolon
+│   │       │   ├── <parameter-group>
+│   │       │   │   ├── <identifier-list>
+│   │       │   │   │   └── ident (y)
+│   │       │   │   ├── colon
+│   │       │   │   └── ident (integer)
+│   │       │   └── rparent
+│   │       ├── semicolon
+│   │       ├── <block>
+│   │       │   ├── <declaration-part>
+│   │       │   └── <compound-statement>
+│   │       │       ├── beginsy
+│   │       │       ├── <statement-list>
+│   │       │       │   ├── <statement>
+│   │       │       │   │   └── <assignment-statement>
+│   │       │       │   │       ├── <variable>
+│   │       │       │   │       │   └── ident (total)
+│   │       │       │   │       ├── becomes
+│   │       │       │   │       └── <expression>
+│   │       │       │   │           └── <simple-expression>
+│   │       │       │   │               ├── <term>
+│   │       │       │   │               │   └── <factor>
+│   │       │       │   │               │       └── <variable>
+│   │       │       │   │               │           └── ident (total)
+│   │       │       │   │               ├── <additive-operator>
+│   │       │       │   │               │   └── plus
+│   │       │       │   │               ├── <term>
+│   │       │       │   │               │   └── <factor>
+│   │       │       │   │               │       └── <variable>
+│   │       │       │   │               │           └── ident (x)
+│   │       │       │   │               ├── <additive-operator>
+│   │       │       │   │               │   └── plus
+│   │       │       │   │               └── <term>
+│   │       │       │   │                   └── <factor>
+│   │       │       │   │                       └── <variable>
+│   │       │       │   │                           └── ident (y)
+│   │       │       │   └── semicolon
+│   │       │       └── endsy
+│   │       └── semicolon
+│   └── <subprogram-declaration>
+│       └── <function-declaration>
+│           ├── functionsy
+│           ├── ident (NextVal)
+│           ├── <formal-parameter-list>
+│           │   ├── lparent
+│           │   ├── <parameter-group>
+│           │   │   ├── <identifier-list>
+│           │   │   │   └── ident (v)
+│           │   │   ├── colon
+│           │   │   └── ident (integer)
+│           │   └── rparent
+│           ├── colon
+│           ├── ident (integer)
+│           ├── semicolon
+│           ├── <block>
+│           │   ├── <declaration-part>
+│           │   └── <compound-statement>
+│           │       ├── beginsy
+│           │       ├── <statement-list>
+│           │       │   ├── <statement>
+│           │       │   │   └── <assignment-statement>
+│           │       │   │       ├── <variable>
+│           │       │   │       │   └── ident (NextVal)
+│           │       │   │       ├── becomes
+│           │       │   │       └── <expression>
+│           │       │   │           └── <simple-expression>
+│           │       │   │               ├── <term>
+│           │       │   │               │   └── <factor>
+│           │       │   │               │       └── <variable>
+│           │       │   │               │           └── ident (v)
+│           │       │   │               ├── <additive-operator>
+│           │       │   │               │   └── plus
+│           │       │   │               └── <term>
+│           │       │   │                   └── <factor>
+│           │       │   │                       └── intcon (1)
+│           │       │   └── semicolon
+│           │       └── endsy
+│           └── semicolon
 ├── <compound-statement>
-│   ├── [missing:beginsy]
+│   ├── beginsy
 │   ├── <statement-list>
-│   │   └── <statement>
-│   └── [missing:endsy]
-└── [missing:period]
-
---- Syntax Errors ---
-Syntax error: expected constant, got "unknown (==)"
-Syntax error: expected "semicolon", got "intcon (100)" (near token line 4)
-Syntax error: expected "beginsy", got "intcon (100)" (near token line 4)
-Syntax error: expected "endsy", got "intcon (100)" (near token line 4)
-Syntax error: expected "period", got "intcon (100)" (near token line 4)
-Syntax error: unexpected tokens after program end ("intcon (100)")
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (i)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (1)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (total)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (0)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <procedure/function-call>
+│   │   │       ├── ident (AddToTotal)
+│   │   │       ├── lparent
+│   │   │       ├── <parameter-list>
+│   │   │       │   ├── <expression>
+│   │   │       │   │   └── <simple-expression>
+│   │   │       │   │       └── <term>
+│   │   │       │   │           └── <factor>
+│   │   │       │   │               └── <variable>
+│   │   │       │   │                   └── ident (i)
+│   │   │       │   ├── comma
+│   │   │       │   └── <expression>
+│   │   │       │       └── <simple-expression>
+│   │   │       │           └── <term>
+│   │   │       │               └── <factor>
+│   │   │       │                   └── <procedure/function-call>
+│   │   │       │                       ├── ident (NextVal)
+│   │   │       │                       ├── lparent
+│   │   │       │                       ├── <parameter-list>
+│   │   │       │                       │   └── <expression>
+│   │   │       │                       │       └── <simple-expression>
+│   │   │       │                       │           └── <term>
+│   │   │       │                       │               └── <factor>
+│   │   │       │                       │                   └── <variable>
+│   │   │       │                       │                       └── ident (i)
+│   │   │       │                       └── rparent
+│   │   │       └── rparent
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <if-statement>
+│   │   │       ├── ifsy
+│   │   │       ├── <expression>
+│   │   │       │   ├── <simple-expression>
+│   │   │       │   │   └── <term>
+│   │   │       │   │       └── <factor>
+│   │   │       │   │           └── <variable>
+│   │   │       │   │               └── ident (total)
+│   │   │       │   ├── <relational-operator>
+│   │   │       │   │   └── gtr
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (0)
+│   │   │       ├── thensy
+│   │   │       ├── <statement>
+│   │   │       │   └── <assignment-statement>
+│   │   │       │       ├── <variable>
+│   │   │       │       │   └── ident (total)
+│   │   │       │       ├── becomes
+│   │   │       │       └── <expression>
+│   │   │       │           └── <simple-expression>
+│   │   │       │               ├── <term>
+│   │   │       │               │   └── <factor>
+│   │   │       │               │       └── <variable>
+│   │   │       │               │           └── ident (total)
+│   │   │       │               ├── <additive-operator>
+│   │   │       │               │   └── plus
+│   │   │       │               └── <term>
+│   │   │       │                   └── <factor>
+│   │   │       │                       └── intcon (1)
+│   │   │       ├── elsesy
+│   │   │       └── <statement>
+│   │   │           └── <assignment-statement>
+│   │   │               ├── <variable>
+│   │   │               │   └── ident (total)
+│   │   │               ├── becomes
+│   │   │               └── <expression>
+│   │   │                   └── <simple-expression>
+│   │   │                       ├── <term>
+│   │   │                       │   └── <factor>
+│   │   │                       │       └── <variable>
+│   │   │                       │           └── ident (total)
+│   │   │                       ├── <additive-operator>
+│   │   │                       │   └── minus
+│   │   │                       └── <term>
+│   │   │                           └── <factor>
+│   │   │                               └── intcon (1)
+│   │   └── semicolon
+│   └── endsy
+└── period

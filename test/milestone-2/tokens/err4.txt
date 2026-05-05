@@ -1,13 +1,20 @@
 programsy
-ident (MissingSemicolon)
+ident (BadStatement)
+semicolon
+
 varsy
-ident (a)
+ident (x)
 colon
 ident (integer)
 semicolon
 
 beginsy
-ident (a)
+ifsy
+ident (x)
+eql
+unknown (==)
+intcon (0)
+ident (x)
 becomes
 intcon (1)
 semicolon

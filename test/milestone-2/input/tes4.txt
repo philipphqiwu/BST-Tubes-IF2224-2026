@@ -1,25 +1,14 @@
-program SubprogramDemo;
+program ArraysRecords;
 
 var
-  n, result: integer;
-
-function factorial(n: integer): integer;
-var
-  i, f: integer;
-begin
-  f := 1;
-  for i := 1 to n do
-    f := f * i;
-  result := f;
-end;
-
-procedure printResult(val: integer);
-begin
-  writeln('Result = ', val);
-end;
+  m: array[1..2] of array[1..2] of integer;
+  p: record
+    age: integer;
+    name: string
+  end;
 
 begin
-  n := 5;
-  factorial(n);
-  printResult(result);
+  m[1][2] := 7;
+  p.age := m[1][2];
+  p.name := 'abc';
 end.

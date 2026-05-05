@@ -1,33 +1,21 @@
 <program>
 ├── <program-header>
 │   ├── programsy
-│   ├── ident (SyntaxError2)
+│   ├── ident (BadConst)
 │   └── semicolon
 ├── <declaration-part>
-│   └── <var-declaration>
-│       ├── varsy
-│       ├── <identifier-list>
-│       │   └── ident (x)
-│       ├── colon
-│       ├── <type>
-│       │   └── ident (integer)
+│   └── <const-declaration>
+│       ├── constsy
+│       ├── ident (A)
+│       ├── eql
+│       ├── <constant>
 │       └── semicolon
 ├── <compound-statement>
 │   ├── beginsy
 │   ├── <statement-list>
 │   │   └── <statement>
-│   │       └── <assignment-statement>
-│   │           ├── ident (x)
-│   │           ├── becomes
-│   │           └── <expression>
-│   │               └── <simple-expression>
-│   │                   └── <term>
-│   │                       └── <factor>
-│   └── [missing:endsy]
-└── [missing:period]
+│   └── endsy
+└── period
 
 --- Syntax Errors ---
-Syntax error: expected factor, got "semicolon"
-Syntax error: expected "endsy", got "ident (writeln)" (near token line 8)
-Syntax error: expected "period", got "ident (writeln)" (near token line 8)
-Syntax error: unexpected tokens after program end ("ident (writeln)")
+Syntax error: expected constant, got "unknown (==)"

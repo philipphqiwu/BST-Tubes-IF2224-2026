@@ -1,0 +1,12 @@
+programsy
+ident (BadEnd)
+semicolon
+
+beginsy
+ident (writeln)
+lparent
+string ('hello')
+rparent
+semicolon
+
+endsy

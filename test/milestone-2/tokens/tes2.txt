@@ -1,94 +1,102 @@
 programsy
-ident (Arithmetic)
-semicolon
-
-constsy
-ident (MAX)
-eql
-unknown (==)
-intcon (100)
-semicolon
-
-ident (PI)
-eql
-unknown (==)
-realcon (3.14)
+ident (Subprograms)
 semicolon
 
 varsy
-ident (x)
+ident (i)
 comma
-ident (y)
-comma
-ident (z)
+ident (total)
 colon
 ident (integer)
 semicolon
 
-ident (r)
+proceduresy
+ident (AddToTotal)
+lparent
+ident (x)
 colon
-ident (real)
+ident (integer)
+semicolon
+
+ident (y)
+colon
+ident (integer)
+rparent
 semicolon
 
 beginsy
-ident (x)
+ident (total)
 becomes
-intcon (10)
-semicolon
-
-ident (y)
-becomes
-intcon (3)
-semicolon
-
-ident (z)
-becomes
+ident (total)
+plus
 ident (x)
 plus
 ident (y)
-times
-intcon (2)
 semicolon
 
-ident (r)
-becomes
-ident (x)
-rdiv
-ident (y)
+endsy
 semicolon
 
-ifsy
-ident (z)
-gtr
-intcon (10)
-thensy
-ident (writeln)
+functionsy
+ident (NextVal)
 lparent
-string ('z is greater than 10')
+ident (v)
+colon
+ident (integer)
 rparent
-elsesy
-ident (writeln)
-lparent
-string ('z is not greater than 10')
-rparent
+colon
+ident (integer)
 semicolon
 
-whilesy
-ident (x)
-gtr
-intcon (0)
-dosy
-ident (x)
+beginsy
+ident (NextVal)
 becomes
-ident (x)
-minus
+ident (v)
+plus
 intcon (1)
 semicolon
 
-ident (writeln)
+endsy
+semicolon
+
+beginsy
+ident (i)
+becomes
+intcon (1)
+semicolon
+
+ident (total)
+becomes
+intcon (0)
+semicolon
+
+ident (AddToTotal)
 lparent
-string ('Done')
+ident (i)
+comma
+ident (NextVal)
+lparent
+ident (i)
 rparent
+rparent
+semicolon
+
+ifsy
+ident (total)
+gtr
+intcon (0)
+thensy
+ident (total)
+becomes
+ident (total)
+plus
+intcon (1)
+elsesy
+ident (total)
+becomes
+ident (total)
+minus
+intcon (1)
 semicolon
 
 endsy
