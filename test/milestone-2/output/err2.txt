@@ -1,0 +1,21 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (BadConst)
+│   └── semicolon
+├── <declaration-part>
+│   └── <const-declaration>
+│       ├── constsy
+│       ├── ident (A)
+│       ├── eql
+│       ├── <constant>
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   └── <statement>
+│   └── endsy
+└── period
+
+--- Syntax Errors ---
+Syntax error: expected constant, got "unknown (==)"

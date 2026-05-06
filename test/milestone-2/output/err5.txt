@@ -1,0 +1,26 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (BadEnd)
+│   └── semicolon
+├── <declaration-part>
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <procedure/function-call>
+│   │   │       ├── ident (writeln)
+│   │   │       ├── lparent
+│   │   │       ├── <parameter-list>
+│   │   │       │   └── <expression>
+│   │   │       │       └── <simple-expression>
+│   │   │       │           └── <term>
+│   │   │       │               └── <factor>
+│   │   │       │                   └── string ('hello')
+│   │   │       └── rparent
+│   │   └── semicolon
+│   └── endsy
+└── [missing:period]
+
+--- Syntax Errors ---
+Syntax error: expected "period", got "EOF"

@@ -1,0 +1,33 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (MissingSemicolon)
+│   └── [missing:semicolon]
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (a)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (integer)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (a)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (1)
+│   │   └── semicolon
+│   └── endsy
+└── period
+
+--- Syntax Errors ---
+Syntax error: expected "semicolon", got "varsy" (near token line 4)

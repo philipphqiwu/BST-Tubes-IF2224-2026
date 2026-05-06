@@ -1,0 +1,61 @@
+program Everything;
+
+var
+  i, j: integer;
+  x: real;
+  ch: char;
+  e: (A, B, C);
+  r: 1..3;
+  mat: array[1..3] of array[1..3] of integer;
+  rec: record
+    age: integer;
+    code: integer
+  end;
+
+procedure Update(a, b: integer; v: array[1..3] of integer);
+begin
+  v[1] := a + b;
+  v[2] := (a * 2) div 2;
+  v[3] := (v[1] + v[2]) mod 3;
+end;
+
+function NextVal(n: integer): integer;
+begin
+  NextVal := n + 1;
+end;
+
+begin
+  i := 1;
+  j := -i + 2 * 3 div 2 mod 2;
+  x := 6 / 2;
+  ch := 'z';
+  mat[1,2] := j;
+  rec.age := mat[1][2];
+  rec.code := NextVal(rec.age);
+
+  if not (j <= 0) or (i <> 0) then
+    j := j + 1
+  else
+    j := j - 1;
+
+  case j of
+    1: j := 10;
+    2, 3: j := 20;
+  end;
+
+  while (j > 0) and (i < 10) do
+    j := j - 1;
+
+  repeat
+    j := j + 1;
+  until j >= 2;
+
+  for i := 1 to 3 do
+    Update(i, j, mat[1]);
+
+  for i := 3 downto 1 do
+    j := j + i;
+
+  Update(i, j, mat[2]);
+  writeln('done', j, x, ch);
+end.

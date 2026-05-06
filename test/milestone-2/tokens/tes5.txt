@@ -1,0 +1,7 @@
+programsy
+ident (Minimal)
+semicolon
+
+beginsy
+endsy
+period

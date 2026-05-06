@@ -8,6 +8,9 @@
 #include <fstream>
 #include <cctype>
 #include <algorithm>
+#include <vector>
+
+#include "token.hpp"
 
 enum State {
     Start,
@@ -27,19 +30,20 @@ enum State {
     sy_gt,
     sy_lpar,
     sy_colon,
+    sy_period,
     Unknown
 };
 
 extern std::unordered_map<std::string, std::string> keywordLookupTable;
 
-void lexer(std::ifstream& input, std::ofstream& output);
+std::vector<Token> lexer(std::ifstream& input, std::ofstream& output);
 bool isNumber(char c);
 bool isAlphabet(char c);
 bool isSymbol(char c);
 bool isWhitespace(char c);
 bool isJunk(char c);
-void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
-void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit);
+void startBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit, std::vector<Token>& tokens);
+void identBehavior(std::ofstream& output, int lineCnt, char c, int& state, std::string& str, bool& shouldExit, std::vector<Token>& tokens);
 std::string keywordLookup(std::string str);
 
 #endif

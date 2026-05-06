@@ -1,0 +1,74 @@
+programsy
+ident (ArraysRecords)
+semicolon
+
+varsy
+ident (m)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (2)
+rbrack
+ofsy
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (2)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (p)
+colon
+recordsy
+ident (age)
+colon
+ident (integer)
+semicolon
+
+ident (name)
+colon
+ident (string)
+endsy
+semicolon
+
+beginsy
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
+becomes
+intcon (7)
+semicolon
+
+ident (p)
+period
+ident (age)
+becomes
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
+semicolon
+
+ident (p)
+period
+ident (name)
+becomes
+string ('abc')
+semicolon
+
+endsy
+period

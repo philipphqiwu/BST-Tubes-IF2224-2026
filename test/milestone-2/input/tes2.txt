@@ -1,0 +1,24 @@
+program Subprograms;
+
+var
+  i, total: integer;
+
+procedure AddToTotal(x: integer; y: integer);
+begin
+  total := total + x + y;
+end;
+
+function NextVal(v: integer): integer;
+begin
+  NextVal := v + 1;
+end;
+
+begin
+  i := 1;
+  total := 0;
+  AddToTotal(i, NextVal(i));
+  if total > 0 then
+    total := total + 1
+  else
+    total := total - 1;
+end.
