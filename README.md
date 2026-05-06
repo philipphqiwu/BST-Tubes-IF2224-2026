@@ -2,8 +2,8 @@
 
 ## About The Project
 Compiler and Interpreter for "Arion" programming language.<br/>
-Milestone 1: Lexical Analysis <b><- WE ARE HERE<br/></b>
-Milestone 2: Syntax Analysis<br/>
+Milestone 1: Lexical Analysis <br/>
+Milestone 2: Syntax Analysis <b><- WE ARE HERE<br/></b>
 Milestone 3: Semantic Analysis <br/>
 Milestone 4: Intermediate Code Generation dan Interpreter<br/>
 
@@ -23,9 +23,9 @@ make run
 
 
 ## Team Members
-| NIM | Nama | Pembagian Tugas |
+| NIM | Nama | Pembagian Tugas (Milestone 2) |
 | :---: | :--- | :--- |
-| **13524019** | Kevin Wirya Valerian | Laporan & Perancangan DFA |
-| **13524033** | Ray Owen Martin | Perancangan & Pembuatan Diagram DFA |
-| **13524043** | Emilio Justin | Laporan & Perancangan DFA |
-| **13524101** | Philipp Hamara | Implementasi kode program |
+| **13524019** | Kevin Wirya Valerian | Implementasi Parser |
+| **13524033** | Ray Owen Martin | Laporan |
+| **13524043** | Emilio Justin | Revisi Milestone 1 & Implementasi Parser |
+| **13524101** | Philipp Hamara | Laporan |
