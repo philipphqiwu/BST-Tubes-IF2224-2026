@@ -308,14 +308,22 @@ ParseNode* Parser::parseCompoundStatement() {
 
 ParseNode* Parser::parseStatementList(const std::string& terminator) {
     auto* n = new ParseNode("<statement-list>");
-    n->addChild(parseStatement());
-    while (check("semicolon")) {
-        if (peek().type == terminator) {
-            n->addChild(new ParseNode("semicolon")); ++pos;
+    
+    while (!atEnd() && !check(terminator)) {
+        // Jika token merupakan awal statement, parse sebagai statement
+        if (isStatementStart()) {
+            n->addChild(parseStatement());
+        }
+        
+        // Jika ada semicolon, langsung konsumsi. 
+        // Ini menangani pemisah statement maupun "empty statement" (misal: "begin ; end")
+        if (check("semicolon")) {
+            n->addChild(expect("semicolon"));
+        } else if (!isStatementStart()) {
+            // Jika bukan semicolon dan juga bukan awal dari statement (misal ada sintaks tidak valid),
+            // hentikan iterasi agar tidak infinite loop.
             break;
         }
-        n->addChild(new ParseNode("semicolon")); ++pos;
-        n->addChild(parseStatement());
     }
     return n;
 }
@@ -590,8 +598,13 @@ bool Parser::isRangeHere() const {
 }
 
 bool Parser::isStatementStart() const {
-    return checkAny({"ident","ifsy","casesy","whilesy","repeatsy","forsy","beginsy"});
+    const std::string& type = peek(0).type;
+    return type == "ident" || type == "ifsy" || type == "casesy" || type == "whilesy" || type == "repeatsy" || type == "forsy" || type == "beginsy";
 }
+
+// bool Parser::isStatementStart() const {
+//     return checkAny({"ident","ifsy","casesy","whilesy","repeatsy","forsy","beginsy"});
+// }
 bool Parser::isRelOp() const {
     return checkAny({"eql","neq","gtr","geq","lss","leq"});
 }

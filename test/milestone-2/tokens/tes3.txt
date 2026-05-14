@@ -6,6 +6,8 @@ varsy
 ident (i)
 comma
 ident (x)
+comma
+ident (y)
 colon
 ident (integer)
 semicolon
@@ -23,6 +25,7 @@ intcon (1)
 tosy
 intcon (3)
 dosy
+beginsy
 ident (x)
 becomes
 ident (x)
@@ -30,16 +33,33 @@ plus
 ident (i)
 semicolon
 
+ident (y)
+becomes
+intcon (1)
+semicolon
+
+endsy
+semicolon
+
 whilesy
 ident (x)
 gtr
 intcon (0)
 dosy
+beginsy
 ident (x)
 becomes
 ident (x)
 minus
 intcon (1)
+semicolon
+
+ident (y)
+becomes
+intcon (0)
+semicolon
+
+endsy
 semicolon
 
 repeatsy

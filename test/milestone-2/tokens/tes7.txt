@@ -1,0 +1,9 @@
+programsy
+ident (TesKosong)
+semicolon
+
+beginsy
+semicolon
+
+endsy
+period

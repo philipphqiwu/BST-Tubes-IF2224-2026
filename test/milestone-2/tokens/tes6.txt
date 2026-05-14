@@ -297,11 +297,15 @@ lss
 intcon (10)
 rparent
 dosy
+beginsy
 ident (j)
 becomes
 ident (j)
 minus
 intcon (1)
+semicolon
+
+endsy
 semicolon
 
 repeatsy
@@ -325,6 +329,7 @@ intcon (1)
 tosy
 intcon (3)
 dosy
+beginsy
 ident (Update)
 lparent
 ident (i)
@@ -338,6 +343,9 @@ rbrack
 rparent
 semicolon
 
+endsy
+semicolon
+
 forsy
 ident (i)
 becomes
@@ -345,11 +353,15 @@ intcon (3)
 downtosy
 intcon (1)
 dosy
+beginsy
 ident (j)
 becomes
 ident (j)
 plus
 ident (i)
+semicolon
+
+endsy
 semicolon
 
 ident (Update)

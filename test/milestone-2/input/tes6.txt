@@ -44,17 +44,23 @@ begin
   end;
 
   while (j > 0) and (i < 10) do
-    j := j - 1;
+    begin
+      j := j - 1;
+    end;
 
   repeat
     j := j + 1;
   until j >= 2;
 
   for i := 1 to 3 do
-    Update(i, j, mat[1]);
+    begin
+      Update(i, j, mat[1]);
+    end;
 
   for i := 3 downto 1 do
-    j := j + i;
+    begin
+      j := j + i;
+    end;
 
   Update(i, j, mat[2]);
   writeln('done', j, x, ch);

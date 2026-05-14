@@ -1,15 +1,21 @@
 program ControlFlow;
 
 var
-  i, x: integer;
+  i, x, y: integer;
 
 begin
   x := 0;
   for i := 1 to 3 do
-    x := x + i;
+    begin
+      x := x + i;
+      y := 1;
+    end;
 
   while x > 0 do
-    x := x - 1;
+    begin 
+      x := x - 1;
+      y := 0;
+    end;
 
   repeat
     x := x + 2;
