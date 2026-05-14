@@ -310,6 +310,10 @@ ParseNode* Parser::parseStatementList(const std::string& terminator) {
     auto* n = new ParseNode("<statement-list>");
     
     while (!atEnd() && !check(terminator)) {
+        if (check("comment")) {
+            ++pos;
+            continue;
+        }
         // Jika token merupakan awal statement, parse sebagai statement
         if (isStatementStart()) {
             n->addChild(parseStatement());
@@ -319,6 +323,9 @@ ParseNode* Parser::parseStatementList(const std::string& terminator) {
         // Ini menangani pemisah statement maupun "empty statement" (misal: "begin ; end")
         if (check("semicolon")) {
             n->addChild(expect("semicolon"));
+            while (check("comment")) {
+                ++pos;
+            }
         } else if (!isStatementStart()) {
             // Jika bukan semicolon dan juga bukan awal dari statement (misal ada sintaks tidak valid),
             // hentikan iterasi agar tidak infinite loop.

@@ -1,5 +1,5 @@
 program TesKosong;
 
 begin
-;
+; {ini komentar}
 end.
