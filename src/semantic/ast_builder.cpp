@@ -1,16 +1,16 @@
 #include "header/ast_builder.hpp"
 
 std::string ASTBuilder::extractValue(const std::string& label) {
-    size_t start = label.find('(');
+    size_t start = label.find(" (");
     size_t end = label.rfind(')');
-    if (start != std::string::npos && end != std::string::npos && end > start) {
-        return label.substr(start + 1, end - start - 1);
+    if (start != std::string::npos && end != std::string::npos && end > start + 1) {
+        return label.substr(start + 2, end - start - 2);
     }
     return "";
 }
 
 std::string ASTBuilder::extractType(const std::string& label) {
-    size_t start = label.find('(');
+    size_t start = label.find(" (");
     if (start != std::string::npos) {
         return label.substr(0, start);
     }
@@ -271,11 +271,10 @@ StmtNode* ASTBuilder::buildStatement(ParseNode* node) {
         }
         return new ForStmtNode(name, init, dir, fin, body);
     } else if (child->label == "<procedure/function-call>") {
-        std::string name;
+        std::string name = extractValue(child->children[0]->label);
         std::vector<ExprNode*> args;
         for (ParseNode* pc : child->children) {
-            if (extractType(pc->label) == "ident") name = extractValue(pc->label);
-            else if (pc->label == "<parameter-list>") {
+            if (pc->label == "<parameter-list>") {
                 for (ParseNode* ac : pc->children) {
                     if (ac->label == "<expression>") args.push_back(buildExpression(ac));
                 }
