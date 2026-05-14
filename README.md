@@ -3,8 +3,8 @@
 ## About The Project
 Compiler and Interpreter for "Arion" programming language.<br/>
 Milestone 1: Lexical Analysis <br/>
-Milestone 2: Syntax Analysis <b><- WE ARE HERE<br/></b>
-Milestone 3: Semantic Analysis <br/>
+Milestone 2: Syntax Analysis <br/>
+Milestone 3: Semantic Analysis <b><- WE ARE HERE<br/></b>
 Milestone 4: Intermediate Code Generation dan Interpreter<br/>
 
 ## Requirements
