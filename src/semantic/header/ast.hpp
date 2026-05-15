@@ -239,6 +239,7 @@ public:
 class VarDeclNode : public DeclNode {
 public:
     std::vector<std::string> names;
+    std::vector<int> tab_indices; 
     TypeNode* type;
     VarDeclNode(std::vector<std::string> names, TypeNode* t) : names(names), type(t) {}
     ~VarDeclNode() { delete type; }
@@ -272,6 +273,7 @@ public:
 
 class BlockNode : public ASTNode {
 public:
+    int block_index = -1;
     std::vector<DeclNode*> declarations;
     CompoundStmtNode* compound_stmt;
     ~BlockNode() {

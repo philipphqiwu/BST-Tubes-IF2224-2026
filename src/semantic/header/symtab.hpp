@@ -52,6 +52,7 @@ public:
 
     std::vector<int> display;
     int current_level;
+    int predefined_count;
 
     SymbolTable();
 
@@ -61,6 +62,7 @@ public:
     void leaveBlock();
 
     int insertTab(const std::string& name, ObjClass obj, int type, int ref, int nrm, int adr);
+    int insertTabAtLevel(int level, const std::string& name, ObjClass obj, int type, int ref, int nrm, int adr);
     int insertBTab();
     int insertATab(int xtyp, int etyp, int eref, int low, int high, int elsz, int size);
 
