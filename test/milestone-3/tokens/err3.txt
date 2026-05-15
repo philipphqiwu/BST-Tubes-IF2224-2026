@@ -1,0 +1,28 @@
+programsy
+ident (BadType)
+semicolon
+
+varsy
+ident (a)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+ofsy
+ident (integer)
+semicolon
+
+beginsy
+ident (a)
+lbrack
+intcon (1)
+rbrack
+becomes
+intcon (10)
+semicolon
+
+endsy
+period

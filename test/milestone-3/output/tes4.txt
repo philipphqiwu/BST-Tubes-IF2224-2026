@@ -1,0 +1,39 @@
+=== SEMANTIC ANALYSIS BERHASIL (TIDAK ADA ERROR) ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    ArraysRecords  program     0     0     1     0     0     0     
+34    m              variable    0     0     1     0     0     33    
+35    age            field       1     0     1     0     0     34    
+36    name           field       5     0     1     0     0     35    
+37    p              variable    0     1     1     0     1     36    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     37      0       0       2         <- global block (program)
+1     36      0       0       0       
+2     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+idx   xtyp    etyp    eref    low     high    elsz    size    
+--------------------------------------------------------------
+0     1       1       0       0       0       1       1       
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'ArraysRecords') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('m') → tab_index:34, type:array, lev:0
+   │  └─ VarDecl('p') → tab_index:37, type:record, lev:0
+   └─ Block → block_index:2, lev:1
+      ├─ Assign('m' := 7) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 7 → type:integer
+      ├─ Assign('p' := m) → type:void
+      │  ├─ target 'p' → tab_index:37, type:integer
+      │  └─ value 'm' → tab_index:34, type:integer
+      └─ Assign('p' := 'abc') → type:void
+         ├─ target 'p' → tab_index:37, type:string
+         └─ value 'abc' → type:string

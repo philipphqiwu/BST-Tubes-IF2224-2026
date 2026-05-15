@@ -1,0 +1,20 @@
+=== SEMANTIC ANALYSIS BERHASIL (TIDAK ADA ERROR) ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    Minimal        program     0     0     1     0     0     0     
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     33      0       0       0         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'Minimal') → tab_index:33, lev:0
+   └─ Block → block_index:1, lev:1

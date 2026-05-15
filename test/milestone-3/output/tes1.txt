@@ -1,35 +1,38 @@
 === SEMANTIC ANALYSIS BERHASIL (TIDAK ADA ERROR) ===
 
 === SYMBOL TABLE (tab) ===
-IDX  NAME           OBJ_CLASS      TYPE LEV  LINK 
---------------------------------------------------
-33   integer        TYPE           1    0    0    
-34   real           TYPE           2    0    33   
-35   boolean        TYPE           3    0    34   
-36   char           TYPE           4    0    35   
-37   string         TYPE           5    0    36   
-38   true           CONSTANT       3    0    37   
-39   false          CONSTANT       3    0    38   
-40   writeln        PROCEDURE      0    0    39   
-41   readln         PROCEDURE      0    0    40   
-42   Hello          PROGRAM        0    0    41   
-43   a              VARIABLE       1    0    42   
-44   b              VARIABLE       1    0    43   
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    Hello          program     0     0     1     0     0     0     
+34    a              variable    1     0     1     0     0     33    
+35    b              variable    1     0     1     0     1     34    
+36    writeln        procedure   0     0     1     0     0     35    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     36      0       0       2         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
 
 === DECORATED AST ===
-└── ProgramNode(Hello) -> [type:void]
-    └── Block
-        ├── VarDecl(a,b) -> [type:void]
-        │   └── Type(integer) -> [type:void]
-        └── CompoundStmt -> [type:void]
-            ├── AssignStmt -> [type:void]
-            │   ├── Var(a) -> [type:integer, tab_idx:43, lev:0]
-            │   └── Literal(5 : intcon) -> [type:integer]
-            ├── AssignStmt -> [type:void]
-            │   ├── Var(b) -> [type:integer, tab_idx:44, lev:0]
-            │   └── BinOp(plus) -> [type:integer]
-            │       ├── Var(a) -> [type:integer, tab_idx:43, lev:0]
-            │       └── Literal(10 : intcon) -> [type:integer]
-            └── ProcCall(writeln) -> [type:void]
-                ├── Literal('Result = ' : string) -> [type:string]
-                └── Var(b) -> [type:integer, tab_idx:44, lev:0]
+└─ ProgramNode(name: 'Hello') → tab_index:33, lev:0
+   ├─ Declarations
+   │  └─ VarDecl('a') → tab_index:34, type:integer, lev:0
+   │  └─ VarDecl('b') → tab_index:35, type:integer, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('a' := 5) → type:void
+      │  ├─ target 'a' → tab_index:34, type:integer
+      │  └─ value 5 → type:integer
+      ├─ Assign('b' := a+10) → type:void
+      │  ├─ target 'b' → tab_index:35, type:integer
+      │  └─ value 
+      │     └─ BinOp '+' → type:integer
+      │        ├─ 'a' → tab_index:34, type:integer
+      │        └─ 10 → type:integer
+      └─ writeln(...) → predefined, tab_index:36
+         ├─ 'Result = ' → type:string
+         └─ 'b' → tab_index:35, type:integer
