@@ -1,0 +1,23 @@
+programsy
+ident (BadStatement)
+semicolon
+
+varsy
+ident (x)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ifsy
+ident (x)
+eql
+unknown (==)
+intcon (0)
+ident (x)
+becomes
+intcon (1)
+semicolon
+
+endsy
+period

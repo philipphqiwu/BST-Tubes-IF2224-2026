@@ -1,0 +1,14 @@
+program ArraysRecords;
+
+var
+  m: array[1..2] of array[1..2] of integer;
+  p: record
+    age: integer;
+    name: string
+  end;
+
+begin
+  m[1][2] := 7;
+  p.age := m[1][2];
+  p.name := 'abc';
+end.

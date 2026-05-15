@@ -1,0 +1,13 @@
+programsy
+ident (BadConst)
+semicolon
+
+constsy
+ident (A)
+eql
+unknown (==)
+semicolon
+
+beginsy
+endsy
+period
