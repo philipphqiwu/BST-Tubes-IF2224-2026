@@ -15,37 +15,117 @@
 #include "semantic/header/ast.hpp"
 #include "semantic/header/ast_builder.hpp" 
 
-static void printSymbolTable(const SymbolTable& symtab, std::ostream& out) {
+static std::string objClassToStr(ObjClass obj) {
+    switch(obj) {
+        case ObjClass::CONSTANT:  return "constant";
+        case ObjClass::VARIABLE:  return "variable";
+        case ObjClass::TYPE:      return "type";
+        case ObjClass::PROCEDURE: return "procedure";
+        case ObjClass::FUNCTION:  return "function";
+        case ObjClass::PROGRAM:   return "program";
+        case ObjClass::FIELD:     return "field";
+        default:                  return "unknown";
+    }
+}
+
+static void printTab(const SymbolTable& symtab, std::ostream& out) {
     out << "\n=== SYMBOL TABLE (tab) ===\n";
     out << std::left 
-        << std::setw(5)  << "IDX" 
-        << std::setw(15) << "NAME" 
-        << std::setw(15) << "OBJ_CLASS" 
-        << std::setw(5)  << "TYPE" 
-        << std::setw(5)  << "LEV" 
-        << std::setw(5)  << "LINK" << "\n";
-    out << std::string(50, '-') << "\n";
+        << std::setw(6)  << "idx" 
+        << std::setw(15) << "id" 
+        << std::setw(12) << "obj" 
+        << std::setw(6)  << "type" 
+        << std::setw(6)  << "ref" 
+        << std::setw(6)  << "nrm" 
+        << std::setw(6)  << "lev" 
+        << std::setw(6)  << "adr" 
+        << std::setw(6)  << "link" << "\n";
+    out << std::string(69, '-') << "\n";
     
+    // Print reserved words placeholder (0-32)
+    out << "...  (reserved words 0-32)\n";
+    
+    // Print entries from index 33 onwards
     for (size_t i = 33; i < symtab.tab.size(); ++i) {
-        std::string obj_str = "";
-        switch(symtab.tab[i].obj) {
-            case ObjClass::CONSTANT: obj_str = "CONSTANT"; break;
-            case ObjClass::VARIABLE: obj_str = "VARIABLE"; break;
-            case ObjClass::TYPE: obj_str = "TYPE"; break;
-            case ObjClass::PROCEDURE: obj_str = "PROCEDURE"; break;
-            case ObjClass::FUNCTION: obj_str = "FUNCTION"; break;
-            case ObjClass::PROGRAM: obj_str = "PROGRAM"; break;
-            default: obj_str = "UNKNOWN";
-        }
-        
+        const auto& entry = symtab.tab[i];
         out << std::left 
-            << std::setw(5)  << i 
-            << std::setw(15) << symtab.tab[i].name 
-            << std::setw(15) << obj_str 
-            << std::setw(5)  << symtab.tab[i].type 
-            << std::setw(5)  << symtab.tab[i].lev 
-            << std::setw(5)  << symtab.tab[i].link << "\n";
+            << std::setw(6)  << i 
+            << std::setw(15) << entry.name 
+            << std::setw(12) << objClassToStr(entry.obj)
+            << std::setw(6)  << entry.type
+            << std::setw(6)  << entry.ref 
+            << std::setw(6)  << entry.nrm 
+            << std::setw(6)  << entry.lev 
+            << std::setw(6)  << entry.adr 
+            << std::setw(6)  << entry.link << "\n";
     }
+}
+
+// Print the btab (block table) 
+static void printBTab(const SymbolTable& symtab, std::ostream& out) {
+    out << "\n=== BLOCK TABLE (btab) ===\n";
+    out << std::left 
+        << std::setw(6)  << "idx" 
+        << std::setw(8)  << "last" 
+        << std::setw(8)  << "lpar" 
+        << std::setw(8)  << "psze" 
+        << std::setw(8)  << "vsze" << "\n";
+    out << std::string(38, '-') << "\n";
+    
+    for (size_t i = 0; i < symtab.btab.size(); ++i) {
+        const auto& entry = symtab.btab[i];
+        out << std::left 
+            << std::setw(6)  << i 
+            << std::setw(8)  << entry.last
+            << std::setw(8)  << entry.lpar 
+            << std::setw(8)  << entry.psze 
+            << std::setw(8)  << entry.vsze;
+        
+        // Add descriptive comments for blocks
+        if (i == 0) {
+            out << "  <- global block (program)";
+        }
+        out << "\n";
+    }
+}
+
+// Print the atab (array table) 
+static void printATab(const SymbolTable& symtab, std::ostream& out) {
+    out << "\n=== ARRAY TABLE (atab) ===\n";
+    if (symtab.atab.empty()) {
+        out << "(kosong karena tidak ada array)\n";
+        return;
+    }
+    out << std::left 
+        << std::setw(6)  << "idx" 
+        << std::setw(8)  << "xtyp" 
+        << std::setw(8)  << "etyp" 
+        << std::setw(8)  << "eref" 
+        << std::setw(8)  << "low" 
+        << std::setw(8)  << "high" 
+        << std::setw(8)  << "elsz" 
+        << std::setw(8)  << "size" << "\n";
+    out << std::string(62, '-') << "\n";
+    
+    for (size_t i = 0; i < symtab.atab.size(); ++i) {
+        const auto& entry = symtab.atab[i];
+        out << std::left 
+            << std::setw(6)  << i 
+            << std::setw(8)  << entry.xtyp 
+            << std::setw(8)  << entry.etyp 
+            << std::setw(8)  << entry.eref 
+            << std::setw(8)  << entry.low 
+            << std::setw(8)  << entry.high 
+            << std::setw(8)  << entry.elsz 
+            << std::setw(8)  << entry.size << "\n";
+    }
+}
+
+// Print all three symbol tables (tab, btab, atab)
+static void printAllSymbolTables(const SymbolTable& symtab, std::ostream& out) {
+    printTab(symtab, out);
+    printBTab(symtab, out);
+    printATab(symtab, out);
 }
 
 // milestone 1
@@ -188,8 +268,9 @@ int runMilestone3(const std::string& filename) {
         if (outFile.is_open()) outFile << "=== SEMANTIC ANALYSIS BERHASIL (TIDAK ADA ERROR) ===\n";
     }
 
-    printSymbolTable(semantic.symtab, std::cout);
-    if (outFile.is_open()) printSymbolTable(semantic.symtab, outFile);
+    // Print all three symbol tables (tab, btab, atab)
+    printAllSymbolTables(semantic.symtab, std::cout);
+    if (outFile.is_open()) printAllSymbolTables(semantic.symtab, outFile);
     
     std::cout << "\n=== DECORATED AST ===\n";
     printAST(astRoot, std::cout, true); 
