@@ -1,22 +1,20 @@
 programsy
-ident (BadStatement)
+ident (SubrangeBoundError)
 semicolon
 
 varsy
-ident (x)
+ident (range)
 colon
-ident (integer)
+intcon (10)
+period
+period
+intcon (5)
 semicolon
 
 beginsy
-ifsy
-ident (x)
-eql
-unknown (==)
-intcon (0)
-ident (x)
+ident (range)
 becomes
-intcon (1)
+intcon (7)
 semicolon
 
 endsy

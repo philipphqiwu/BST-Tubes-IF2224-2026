@@ -1,0 +1,27 @@
+=== SEMANTIC ERRORS ===
+Semantic Error: Subrange: lower bound cannot be greater than upper bound
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    SubrangeBoundErrorprogram     0     0     1     0     0     0     
+34    range          variable    0     0     1     0     0     33    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     34      0       0       1         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'SubrangeBoundError') → tab_index:33, lev:0
+   ├─ Declarations
+   │  └─ VarDecl('range') → tab_index:34, type:unknown, lev:0
+   └─ Block → block_index:1, lev:1
+      └─ Assign('range' := 7) → type:void
+         ├─ target 'range' → tab_index:34, type:unknown
+         └─ value 7 → type:integer

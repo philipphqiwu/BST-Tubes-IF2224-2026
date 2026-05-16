@@ -1,0 +1,66 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (ArrayIndexTypeError)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (arr)
+│       ├── colon
+│       ├── <type>
+│       │   └── <array-type>
+│       │       ├── arraysy
+│       │       ├── lbrack
+│       │       ├── <range>
+│       │       │   ├── <constant>
+│       │       │   │   └── intcon (1)
+│       │       │   ├── period
+│       │       │   ├── period
+│       │       │   └── <constant>
+│       │       │       └── intcon (10)
+│       │       ├── rbrack
+│       │       ├── ofsy
+│       │       └── <type>
+│       │           └── ident (integer)
+│       ├── semicolon
+│       ├── <identifier-list>
+│       │   └── ident (index)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (boolean)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (index)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── <variable>
+│   │   │                           └── ident (true)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   ├── ident (arr)
+│   │   │       │   └── <component-variable>
+│   │   │       │       ├── lbrack
+│   │   │       │       ├── <index-list>
+│   │   │       │       │   └── ident (index)
+│   │   │       │       └── rbrack
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (42)
+│   │   └── semicolon
+│   └── endsy
+└── period

@@ -1,0 +1,33 @@
+=== SEMANTIC ERRORS ===
+Semantic Error: Undeclared identifier: b
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    UndeclaredIdentifierprogram     0     0     1     0     0     0     
+34    a              variable    1     0     1     0     0     33    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     34      0       0       1         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'UndeclaredIdentifier') → tab_index:33, lev:0
+   ├─ Declarations
+   │  └─ VarDecl('a') → tab_index:34, type:integer, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('a' := 5) → type:void
+      │  ├─ target 'a' → tab_index:34, type:integer
+      │  └─ value 5 → type:integer
+      └─ Assign('b' := a+1) → type:void
+         ├─ target 'b' → tab_index:-1, type:unknown
+         └─ value 
+            └─ BinOp '+' → type:integer
+               ├─ 'a' → tab_index:34, type:integer
+               └─ 1 → type:integer

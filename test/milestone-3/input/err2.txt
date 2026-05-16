@@ -1,7 +1,11 @@
-program BadConst;
+program TypeMismatchAssignment;
 
-const
-  A == ;
+var
+  intVar: integer;
+  boolVar: boolean;
 
 begin
+  intVar := 42;
+  boolVar := true;
+  intVar := boolVar;
 end.

@@ -1,27 +1,34 @@
 programsy
-ident (BadType)
+ident (IncompatibleOperands)
 semicolon
 
 varsy
-ident (a)
+ident (x)
 colon
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (3)
-ofsy
 ident (integer)
 semicolon
 
+ident (flag)
+colon
+ident (boolean)
+semicolon
+
 beginsy
-ident (a)
-lbrack
-intcon (1)
-rbrack
+ident (x)
 becomes
 intcon (10)
+semicolon
+
+ident (flag)
+becomes
+ident (true)
+semicolon
+
+ident (x)
+becomes
+ident (x)
+plus
+ident (flag)
 semicolon
 
 endsy

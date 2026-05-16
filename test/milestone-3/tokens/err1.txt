@@ -1,5 +1,7 @@
 programsy
-ident (MissingSemicolon)
+ident (UndeclaredIdentifier)
+semicolon
+
 varsy
 ident (a)
 colon
@@ -9,6 +11,13 @@ semicolon
 beginsy
 ident (a)
 becomes
+intcon (5)
+semicolon
+
+ident (b)
+becomes
+ident (a)
+plus
 intcon (1)
 semicolon
 
