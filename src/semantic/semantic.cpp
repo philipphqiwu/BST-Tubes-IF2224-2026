@@ -2,6 +2,52 @@
 #include <iostream>
 #include <algorithm>
 
+static bool parseLiteralValue(const ExprNode* node, long long& value) {
+    const auto* lit = dynamic_cast<const LiteralNode*>(node);
+    if (!lit) return false;
+
+    try {
+        if (lit->lit_type == "intcon") {
+            value = std::stoll(lit->value);
+            return true;
+        }
+        if (lit->lit_type == "charcon" && !lit->value.empty()) {
+            value = static_cast<unsigned char>(lit->value[0]);
+            return true;
+        }
+    } catch (...) {
+    }
+
+    return false;
+}
+
+static bool validateRangeType(SemanticVisitor* visitor, RangeNode* rangeNode, const std::string& context) {
+    if (!rangeNode) return false;
+
+    if (rangeNode->low) rangeNode->low->accept(*visitor);
+    if (rangeNode->high) rangeNode->high->accept(*visitor);
+
+    if ((rangeNode->low && rangeNode->low->eval_type == "real") ||
+        (rangeNode->high && rangeNode->high->eval_type == "real")) {
+        visitor->addError(context + ": subrange type cannot use Real type");
+        rangeNode->eval_type = "unknown";
+        return false;
+    }
+
+    long long low_val = 0;
+    long long high_val = 0;
+    if (parseLiteralValue(rangeNode->low, low_val) && parseLiteralValue(rangeNode->high, high_val)) {
+        if (low_val > high_val) {
+            visitor->addError(context + ": lower bound cannot be greater than upper bound");
+            rangeNode->eval_type = "unknown";
+            return false;
+        }
+    }
+
+    rangeNode->eval_type = "range";
+    return true;
+}
+
 SemanticVisitor::SemanticVisitor() {}
 
 bool SemanticVisitor::hasErrors() const {
@@ -116,9 +162,7 @@ void SemanticVisitor::visit(NamedTypeNode* node) {
     node->eval_type = node->name;
 }
 void SemanticVisitor::visit(RangeNode* node) {
-    if (node->low) node->low->accept(*this);
-    if (node->high) node->high->accept(*this);
-    node->eval_type = "range";
+    validateRangeType(this, node, "Subrange");
 }
 void SemanticVisitor::visit(ArrayTypeNode* node) {
     if (node->index_type) node->index_type->accept(*this);
@@ -431,6 +475,13 @@ void SemanticVisitor::visit(TypeDeclNode* node) {
         int atab_idx = symtab.insertATab(xtyp, etyp, eref, low, high, elsz, size);
         ref = atab_idx;
     }
+    else if (auto rngType = dynamic_cast<RangeNode*>(node->type)) {
+        if (!validateRangeType(this, rngType, "Subrange")) {
+            typeCode = 0;
+        } else {
+            typeCode = 0;
+        }
+    }
 
     int idx = symtab.insertTab(node->name, ObjClass::TYPE, typeCode, ref, 1, 0);
     node->tab_index = idx;
@@ -446,6 +497,10 @@ void SemanticVisitor::visit(VarDeclNode* node) {
 
     if (auto ntn = dynamic_cast<NamedTypeNode*>(node->type)) {
         t_name = ntn->name;
+    } else if (auto rngType = dynamic_cast<RangeNode*>(node->type)) {
+        if (validateRangeType(this, rngType, "Subrange")) {
+            t_name = "subrange";
+        }
     } else if (auto arrType = dynamic_cast<ArrayTypeNode*>(node->type)) {
         t_name = "array";
         // Insert anonymous array into atab
