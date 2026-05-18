@@ -23,9 +23,9 @@ make run
 
 
 ## Team Members
-| NIM | Nama | Pembagian Tugas (Milestone 2) |
+| NIM | Nama | Pembagian Tugas (Milestone 3) |
 | :---: | :--- | :--- |
-| **13524019** | Kevin Wirya Valerian | Implementasi Parser |
-| **13524033** | Ray Owen Martin | Laporan |
-| **13524043** | Emilio Justin | Revisi Milestone 1 & Implementasi Parser |
-| **13524101** | Philipp Hamara | Laporan |
+| **13524019** | Kevin Wirya Valerian | Laporan |
+| **13524033** | Ray Owen Martin | Revisi Milestone 2 & Implementasi Semantic Analyzer |
+| **13524043** | Emilio Justin | Implementasi Semantic Analyzer |
+| **13524101** | Philipp Hamara | Laporan dan Pengujian |
