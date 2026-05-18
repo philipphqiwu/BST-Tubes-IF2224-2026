@@ -1,0 +1,36 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (SubrangeBoundError)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (range)
+│       ├── colon
+│       ├── <type>
+│       │   └── <range>
+│       │       ├── <constant>
+│       │       │   └── intcon (10)
+│       │       ├── period
+│       │       ├── period
+│       │       └── <constant>
+│       │           └── intcon (5)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (range)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (7)
+│   │   └── semicolon
+│   └── endsy
+└── period

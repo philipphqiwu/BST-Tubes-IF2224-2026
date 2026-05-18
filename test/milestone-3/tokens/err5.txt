@@ -1,0 +1,39 @@
+programsy
+ident (ArrayIndexTypeError)
+semicolon
+
+varsy
+ident (arr)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (10)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (index)
+colon
+ident (boolean)
+semicolon
+
+beginsy
+ident (index)
+becomes
+ident (true)
+semicolon
+
+ident (arr)
+lbrack
+ident (index)
+rbrack
+becomes
+intcon (42)
+semicolon
+
+endsy
+period

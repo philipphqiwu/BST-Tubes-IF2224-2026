@@ -1,0 +1,35 @@
+=== SEMANTIC ERRORS ===
+Semantic Error: Type mismatch in assignment: cannot assign boolean to integer
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    TypeMismatchAssignmentprogram     0     0     1     0     0     0     
+34    intVar         variable    1     0     1     0     0     33    
+35    boolVar        variable    3     0     1     0     1     34    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     35      0       0       2         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'TypeMismatchAssignment') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('intVar') → tab_index:34, type:integer, lev:0
+   │  └─ VarDecl('boolVar') → tab_index:35, type:boolean, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('intVar' := 42) → type:void
+      │  ├─ target 'intVar' → tab_index:34, type:integer
+      │  └─ value 42 → type:integer
+      ├─ Assign('boolVar' := true) → type:void
+      │  ├─ target 'boolVar' → tab_index:35, type:boolean
+      │  └─ value 'true' → tab_index:31, type:boolean
+      └─ Assign('intVar' := boolVar) → type:void
+         ├─ target 'intVar' → tab_index:34, type:integer
+         └─ value 'boolVar' → tab_index:35, type:boolean

@@ -1,8 +1,8 @@
-program BadStatement;
+program SubrangeBoundError;
 
 var
-  x: integer;
+  range: 10..5;
 
 begin
-  if x == 0 x := 1;
+  range := 7;
 end.

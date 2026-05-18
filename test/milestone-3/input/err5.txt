@@ -1,5 +1,10 @@
-program BadEnd;
+program ArrayIndexTypeError;
+
+var
+  arr: array[1..10] of integer;
+  index: boolean;
 
 begin
-  writeln('hello');
-end
+  index := true;
+  arr[index] := 42;
+end.

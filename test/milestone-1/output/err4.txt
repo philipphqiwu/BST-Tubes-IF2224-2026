@@ -1,1 +1,4 @@
-Error at line 2 at newline character '\n' 
+unknown (hello)
+ident (
+world)
+unknown ()

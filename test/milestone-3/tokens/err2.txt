@@ -1,13 +1,33 @@
 programsy
-ident (BadConst)
+ident (TypeMismatchAssignment)
 semicolon
 
-constsy
-ident (A)
-eql
-unknown (==)
+varsy
+ident (intVar)
+colon
+ident (integer)
+semicolon
+
+ident (boolVar)
+colon
+ident (boolean)
 semicolon
 
 beginsy
+ident (intVar)
+becomes
+intcon (42)
+semicolon
+
+ident (boolVar)
+becomes
+ident (true)
+semicolon
+
+ident (intVar)
+becomes
+ident (boolVar)
+semicolon
+
 endsy
 period

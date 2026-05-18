@@ -1,0 +1,34 @@
+=== SEMANTIC ERRORS ===
+Semantic Error: Array index must be simple type, got: unknown
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    ArrayIndexTypeErrorprogram     0     0     1     0     0     0     
+34    arr            variable    0     0     1     0     0     33    
+35    index          variable    3     0     1     0     1     34    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     35      0       0       2         <- global block (program)
+1     0       0       0       0       
+
+=== ARRAY TABLE (atab) ===
+idx   xtyp    etyp    eref    low     high    elsz    size    
+--------------------------------------------------------------
+0     1       1       0       0       0       1       1       
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'ArrayIndexTypeError') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('arr') → tab_index:34, type:array, lev:0
+   │  └─ VarDecl('index') → tab_index:35, type:boolean, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('index' := true) → type:void
+      │  ├─ target 'index' → tab_index:35, type:boolean
+      │  └─ value 'true' → tab_index:31, type:boolean
+      └─ Assign('arr' := 42) → type:void
+         ├─ target 'arr' → tab_index:34, type:integer
+         └─ value 42 → type:integer
