@@ -1,0 +1,111 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (TestArr)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (a)
+│       ├── colon
+│       ├── <type>
+│       │   └── <array-type>
+│       │       ├── arraysy
+│       │       ├── lbrack
+│       │       ├── <range>
+│       │       │   ├── <constant>
+│       │       │   │   └── intcon (1)
+│       │       │   ├── period
+│       │       │   ├── period
+│       │       │   └── <constant>
+│       │       │       └── intcon (5)
+│       │       ├── rbrack
+│       │       ├── ofsy
+│       │       └── <type>
+│       │           └── ident (integer)
+│       ├── semicolon
+│       ├── <identifier-list>
+│       │   └── ident (i)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (integer)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <for-statement>
+│   │   │       ├── forsy
+│   │   │       ├── ident (i)
+│   │   │       ├── becomes
+│   │   │       ├── <expression>
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (1)
+│   │   │       ├── tosy
+│   │   │       ├── <expression>
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (5)
+│   │   │       ├── dosy
+│   │   │       └── <statement>
+│   │   │           └── <assignment-statement>
+│   │   │               ├── <variable>
+│   │   │               │   ├── ident (a)
+│   │   │               │   └── <component-variable>
+│   │   │               │       ├── lbrack
+│   │   │               │       ├── <index-list>
+│   │   │               │       │   └── ident (i)
+│   │   │               │       └── rbrack
+│   │   │               ├── becomes
+│   │   │               └── <expression>
+│   │   │                   └── <simple-expression>
+│   │   │                       └── <term>
+│   │   │                           ├── <factor>
+│   │   │                           │   └── <variable>
+│   │   │                           │       └── ident (i)
+│   │   │                           ├── <multiplicative-operator>
+│   │   │                           │   └── times
+│   │   │                           └── <factor>
+│   │   │                               └── intcon (10)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <for-statement>
+│   │   │       ├── forsy
+│   │   │       ├── ident (i)
+│   │   │       ├── becomes
+│   │   │       ├── <expression>
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (1)
+│   │   │       ├── tosy
+│   │   │       ├── <expression>
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (5)
+│   │   │       ├── dosy
+│   │   │       └── <statement>
+│   │   │           └── <procedure/function-call>
+│   │   │               ├── ident (writeln)
+│   │   │               ├── lparent
+│   │   │               ├── <parameter-list>
+│   │   │               │   └── <expression>
+│   │   │               │       └── <simple-expression>
+│   │   │               │           └── <term>
+│   │   │               │               └── <factor>
+│   │   │               │                   └── <variable>
+│   │   │               │                       ├── ident (a)
+│   │   │               │                       └── <component-variable>
+│   │   │               │                           ├── lbrack
+│   │   │               │                           ├── <index-list>
+│   │   │               │                           │   └── ident (i)
+│   │   │               │                           └── rbrack
+│   │   │               └── rparent
+│   │   └── semicolon
+│   └── endsy
+└── period

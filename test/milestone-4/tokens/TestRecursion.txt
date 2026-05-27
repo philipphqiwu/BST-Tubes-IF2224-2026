@@ -1,0 +1,52 @@
+programsy
+ident (TestRecursion)
+semicolon
+
+varsy
+ident (n)
+colon
+ident (integer)
+semicolon
+
+functionsy
+ident (Inf)
+lparent
+ident (k)
+colon
+ident (integer)
+rparent
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (Inf)
+becomes
+ident (Inf)
+lparent
+ident (k)
+plus
+intcon (1)
+rparent
+semicolon
+
+endsy
+semicolon
+
+beginsy
+ident (n)
+becomes
+ident (Inf)
+lparent
+intcon (0)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (n)
+rparent
+semicolon
+
+endsy
+period

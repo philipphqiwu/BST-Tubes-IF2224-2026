@@ -1,0 +1,59 @@
+programsy
+ident (TestArr)
+semicolon
+
+varsy
+ident (a)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (5)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (i)
+colon
+ident (integer)
+semicolon
+
+beginsy
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (5)
+dosy
+ident (a)
+lbrack
+ident (i)
+rbrack
+becomes
+ident (i)
+times
+intcon (10)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (5)
+dosy
+ident (writeln)
+lparent
+ident (a)
+lbrack
+ident (i)
+rbrack
+rparent
+semicolon
+
+endsy
+period

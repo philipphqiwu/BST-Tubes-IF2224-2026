@@ -1,0 +1,33 @@
+programsy
+ident (TestDivZero)
+semicolon
+
+varsy
+ident (a)
+comma
+ident (b)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (a)
+becomes
+intcon (10)
+semicolon
+
+ident (b)
+becomes
+intcon (0)
+semicolon
+
+ident (writeln)
+lparent
+ident (a)
+idiv
+ident (b)
+rparent
+semicolon
+
+endsy
+period
