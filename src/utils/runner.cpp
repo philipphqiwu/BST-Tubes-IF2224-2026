@@ -13,7 +13,8 @@
 #include "parser/header/parser.hpp"
 #include "semantic/header/semantic.hpp"
 #include "semantic/header/ast.hpp"
-#include "semantic/header/ast_builder.hpp" 
+#include "semantic/header/ast_builder.hpp"
+#include "interpreter/header/icgen.hpp"
 
 static std::string objClassToStr(ObjClass obj) {
     switch(obj) {
@@ -284,6 +285,94 @@ int runMilestone3(const std::string& filename) {
     
     delete parseTreeRoot;
     delete astRoot;
-    
+
+    return 0;
+}
+
+// milestone 4
+int runMilestone4(const std::string& filename) {
+    const std::string in_path    = "test/milestone-4/input/"  + filename + ".txt";
+    const std::string token_path = "test/milestone-4/tokens/" + filename + ".txt";
+    const std::string pt_path    = "test/milestone-4/parsetree/" + filename + ".txt";
+    const std::string ast_path   = "test/milestone-4/ast/" + filename + ".txt";
+    const std::string out_path   = "test/milestone-4/output/" + filename + ".txt";
+
+    std::ifstream srcFile(in_path);
+    if (!srcFile.is_open()) {
+        std::cerr << "Error: Tidak bisa membuka file input \"" << in_path << "\"\n";
+        return 1;
+    }
+
+    std::ofstream tokenFile(token_path);
+    if (!tokenFile.is_open()) {
+        std::cerr << "Error: Tidak bisa membuat file token di \"" << token_path << "\"\n";
+        return 1;
+    }
+    std::vector<Token> tokens = lexer(srcFile, tokenFile);
+    srcFile.close();
+    tokenFile.close();
+    std::cout << "--- 1. Lexer Selesai ---\n";
+
+    Parser parser(tokens);
+    ParseNode* parseTreeRoot = parser.parse();
+
+    if (parser.hasErrors()) {
+        std::cout << "\n=== SYNTAX ERRORS ===\n";
+        for (const auto& err : parser.getErrors()) std::cout << err << "\n";
+        delete parseTreeRoot;
+        return 1;
+    }
+
+    std::ofstream ptFile(pt_path);
+    if (ptFile.is_open()) {
+        printTree(parseTreeRoot, ptFile);
+        ptFile.close();
+    }
+    std::cout << "--- 2. Parser Selesai ---\n";
+
+    ASTBuilder builder;
+    ProgramNode* astRoot = builder.build(parseTreeRoot);
+    std::cout << "--- 3. Konversi Parse Tree -> AST ---\n";
+
+    SemanticVisitor semantic;
+    if (astRoot) astRoot->accept(semantic);
+    std::cout << "--- 4. Semantic Analysis Selesai ---\n";
+
+    if (semantic.hasErrors()) {
+        std::cout << "\n=== SEMANTIC ERRORS ===\n";
+        semantic.printErrors();
+        std::cout << "Intermediate Code Generation dibatalkan.\n";
+        delete parseTreeRoot;
+        delete astRoot;
+        return 1;
+    }
+
+    std::ofstream astFile(ast_path);
+    if (astFile.is_open()) {
+        astFile << "=== SYMBOL TABLES ===\n";
+        printAllSymbolTables(semantic.symtab, astFile);
+        astFile << "\n=== DECORATED AST ===\n";
+        printAST(astRoot, astFile, true);
+        astFile.close();
+    }
+
+    IntermediateCodeGen icgen(&semantic.symtab);
+    icgen.generate(astRoot);
+    std::cout << "--- 5. Intermediate Code Generation Selesai ---\n";
+
+    std::cout << "\n=== INTERMEDIATE CODE ===\n";
+    icgen.print(std::cout);
+
+    std::ofstream outFile(out_path);
+    if (outFile.is_open()) {
+        icgen.print(outFile);
+        outFile.close();
+        std::cout << "\n>>> Intermediate Code berhasil disimpan di " << out_path << "\n";
+    } else {
+        std::cerr << "Warning: Tidak bisa membuat file output di \"" << out_path << "\"\n";
+    }
+
+    delete parseTreeRoot;
+    delete astRoot;
     return 0;
 }

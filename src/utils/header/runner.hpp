@@ -6,5 +6,6 @@
 int runMilestone1(const std::string& filename);
 int runMilestone2(const std::string& filename);
 int runMilestone3(const std::string& filename);
+int runMilestone4(const std::string& filename);
 
 #endif

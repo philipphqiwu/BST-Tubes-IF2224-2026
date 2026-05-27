@@ -4,7 +4,7 @@
 
 int main() {
     int milestone = 0;
-    std::cout << ">> Pilih milestone (1, 2, atau 3): ";
+    std::cout << ">> Pilih milestone (1, 2, 3, atau 4): ";
     std::cin  >> milestone;
 
     std::string filename;
@@ -17,6 +17,8 @@ int main() {
         return runMilestone2(filename);
     } else if (milestone == 3) {
         return runMilestone3(filename);
+    } else if (milestone == 4) {
+        return runMilestone4(filename);
     } else {
         std::cerr << "Milestone belum ada :(" << milestone << "\n";
         return 1;
