@@ -1,9 +1,19 @@
 #include "interpreter/header/interpreter.hpp"
 
 #include <algorithm>
+#include <climits>
 
 namespace
 {
+
+    constexpr size_t MAX_FRAMES = 1000;
+    constexpr long long INT32_HIGH = 2147483647LL;
+    constexpr long long INT32_LOW = -2147483648LL;
+
+    bool inInt32Range(long long v)
+    {
+        return v >= INT32_LOW && v <= INT32_HIGH;
+    }
 
     std::string normalizeStringLiteral(const std::string &raw)
     {
@@ -236,13 +246,15 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
         }
         if (sp_ < needed - 1)
             sp_ = needed - 1;
+        if (!frames_.empty())
+            frames_.back().expected_sp = sp_;
         ++pc_;
         return true;
     }
 
     if (ins.op == "LOD")
     {
-        if (ins.level == 0 && ins.operand == 0 && !frames_.empty())
+        if (ins.level == 0 && ins.operand == 0 && !frames_.empty() && frames_.back().is_function)
         {
             if (frames_.back().has_return)
             {
@@ -251,13 +263,10 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
                 ++pc_;
                 return true;
             }
-            if (frames_.back().is_function)
-            {
-                if (!push(Value::fromNumber(0)))
-                    return false;
-                ++pc_;
-                return true;
-            }
+            if (!push(Value::fromNumber(0)))
+                return false;
+            ++pc_;
+            return true;
         }
 
         int b = base(ins.level);
@@ -294,7 +303,7 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
         if (!pop(v))
             return false;
 
-        if (ins.level == 0 && ins.operand == 0 && !frames_.empty())
+        if (ins.level == 0 && ins.operand == 0 && !frames_.empty() && frames_.back().is_function)
         {
             frames_.back().return_value = v;
             frames_.back().has_return = true;
@@ -309,6 +318,11 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
             return false;
         }
         int addr = b + static_cast<int>(ins.operand);
+        if (addr >= b && addr < b + 3)
+        {
+            addError("Stack smashing: attempt to overwrite reserved frame slot (SL/DL/RA) at addr " + std::to_string(addr));
+            return false;
+        }
         if (!ensureIndex(addr))
         {
             addError("STO address out of bounds");
@@ -371,6 +385,12 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
             return false;
         }
 
+        if (frames_.size() >= MAX_FRAMES)
+        {
+            addError("Stack overflow: maximum recursion depth (" + std::to_string(MAX_FRAMES) + ") exceeded");
+            return false;
+        }
+
         CallInfo info;
         auto it = call_info_.find(target);
         if (it != call_info_.end())
@@ -424,6 +444,12 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
         }
 
         FrameMeta frame = frames_.back();
+        if (frame.expected_sp >= 0 && sp_ != frame.expected_sp)
+        {
+            addError("Stack corruption: unbalanced push/pop in frame (expected sp=" +
+                     std::to_string(frame.expected_sp) + ", got=" + std::to_string(sp_) + ")");
+            return false;
+        }
         frames_.pop_back();
 
         if (bp_ + 2 >= (int)stack_.size())
@@ -470,7 +496,13 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
             long long v = 0;
             if (!popNumber(v))
                 return false;
-            if (!push(Value::fromNumber(-v)))
+            long long result = -v;
+            if (!inInt32Range(result))
+            {
+                addError("Numerical overflow on NEG: -" + std::to_string(v));
+                return false;
+            }
+            if (!push(Value::fromNumber(result)))
                 return false;
         }
         else if (op == 2 || op == 3 || op == 4 || op == 5 || op == 6)
@@ -521,6 +553,13 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
                         return false;
                     }
                     result = a % b;
+                }
+                if (op >= 2 && op <= 4 && !inInt32Range(result))
+                {
+                    addError("Numerical overflow/underflow in arithmetic: " +
+                             std::to_string(a) + " op " + std::to_string(b) +
+                             " = " + std::to_string(result));
+                    return false;
                 }
                 if (!push(Value::fromNumber(result)))
                     return false;
@@ -634,12 +673,46 @@ bool Interpreter::execInstruction(const ICInstr &ins, std::ostream &out)
             if (!pop(v))
                 return false;
             int index = bp_ + static_cast<int>(addr);
+            if (index >= bp_ && index < bp_ + 3)
+            {
+                addError("Stack smashing: indirect store hits reserved frame slot (SL/DL/RA) at addr " + std::to_string(index));
+                return false;
+            }
             if (!ensureIndex(index))
             {
                 addError("Indirect store address out of bounds");
                 return false;
             }
             stack_[index] = v;
+        }
+        else if (op == 22)
+        {
+            Value high_v;
+            Value low_v;
+            if (!pop(high_v) || !pop(low_v))
+                return false;
+            if (sp_ < 0)
+            {
+                addError("Array bounds check: missing index value on stack");
+                return false;
+            }
+            const Value &val_v = stack_[sp_];
+            if (val_v.kind != Value::Kind::Number ||
+                low_v.kind != Value::Kind::Number ||
+                high_v.kind != Value::Kind::Number)
+            {
+                addError("Array bounds check: non-numeric index or bounds");
+                return false;
+            }
+            long long val = val_v.number;
+            long long low = low_v.number;
+            long long high = high_v.number;
+            if (val < low || val > high)
+            {
+                addError("Array index out of bounds: " + std::to_string(val) +
+                         " not in [" + std::to_string(low) + ".." + std::to_string(high) + "]");
+                return false;
+            }
         }
         else
         {

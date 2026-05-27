@@ -49,6 +49,7 @@ public:
         bool has_return = false;
         Value return_value = Value::fromNumber(0);
         int lex_level = 0;
+        int expected_sp = -1;
     };
 
 private:

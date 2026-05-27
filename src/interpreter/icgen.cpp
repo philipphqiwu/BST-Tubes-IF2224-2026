@@ -209,7 +209,7 @@ void IntermediateCodeGen::genFor(ForStmtNode* node) {
     emit("LOD", lvl, counter_adr);
     genExpr(node->final_val);
 
-    bool isDownto = (node->direction == "downto");
+    bool isDownto = (node->direction == "downto" || node->direction == "downtosy");
     int cmpOp = isDownto ? 10 : 12;
     emit("OPR", 0, cmpOp);
     int jpcIdx = emit("JPC", 0, 0);
@@ -433,14 +433,22 @@ void IntermediateCodeGen::pushVarAddress(VarAccessNode* node) {
 
     for (auto& comp : node->components) {
         if (comp.is_array_index) {
-            int low = 0, elsz = 1;
+            int low = 0, high = 0, elsz = 1;
+            bool has_bounds = false;
             if (current_ref >= 0 && current_ref < (int)symtab->atab.size()) {
                 low = symtab->atab[current_ref].low;
+                high = symtab->atab[current_ref].high;
                 elsz = symtab->atab[current_ref].elsz;
+                has_bounds = (low != high);
                 current_ref = symtab->atab[current_ref].eref;
             }
             for (auto idx : comp.indices) {
                 genExpr(idx);
+                if (has_bounds) {
+                    emit("LIT", 0, low);
+                    emit("LIT", 0, high);
+                    emit("OPR", 0, 22);
+                }
                 if (low != 0) {
                     emit("LIT", 0, low);
                     emit("OPR", 0, 3);
