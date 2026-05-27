@@ -4,9 +4,9 @@ SymbolTable::SymbolTable() {
     current_level = 0;
     predefined_count = 0;
 
-    BTabEntry global_block = {0, 0, 0, 0};
+    BTabEntry global_block = {0, 0, 0, 3};
     btab.push_back(global_block);
-    display.push_back(0); 
+    display.push_back(0);
 
     initPredefined();
     predefined_count = static_cast<int>(tab.size());
@@ -114,7 +114,7 @@ int SymbolTable::insertTabAtLevel(int level, const std::string &name, ObjClass o
 }
 
 int SymbolTable::insertBTab() {
-    BTabEntry entry = {0, 0, 0, 0};
+    BTabEntry entry = {0, 0, 0, 3};
     btab.push_back(entry);
     return btab.size() - 1;
 }

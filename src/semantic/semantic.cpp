@@ -593,10 +593,10 @@ void SemanticVisitor::visit(ParamNode* node) {
         if (symtab.lookupLocal(name) != -1) {
             addError("Duplicate parameter name: " + name);
         } else {
-            int adr = symtab.btab[btab_idx].psze;
+            int adr = symtab.btab[btab_idx].vsze;
             symtab.insertTab(name, ObjClass::VARIABLE, type_id, 0, 0, adr);
+            symtab.btab[btab_idx].vsze += 1;
             symtab.btab[btab_idx].psze += 1;
-            // Track lpar (last parameter index)
             symtab.btab[btab_idx].lpar = symtab.tab.size() - 1;
         }
     }
