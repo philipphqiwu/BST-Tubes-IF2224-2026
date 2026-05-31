@@ -136,7 +136,13 @@ TypeNode* ASTBuilder::buildType(ParseNode* node) {
         TypeNode* idx = nullptr;
         TypeNode* el = nullptr;
         for (ParseNode* ac : node->children[0]->children) {
-            if (ac->label == "<range>") idx = buildType(ac);
+            if (ac->label == "<range>") {
+                // ac is the <range> node itself; build it directly (do not route
+                // through buildType, which expects a wrapper whose children[0] is <range>)
+                ExprNode* low = buildExpression(ac->children[0]);
+                ExprNode* high = buildExpression(ac->children[3]);
+                idx = new RangeNode(low, high);
+            }
             else if (extractType(ac->label) == "ident") idx = new NamedTypeNode(extractValue(ac->label));
             else if (ac->label == "<type>") el = buildType(ac);
         }
@@ -412,7 +418,9 @@ VarAccessNode* ASTBuilder::buildVariable(ParseNode* node) {
                 } else if (cc->label == "<index-list>") {
                     for (ParseNode* ic : cc->children) {
                         std::string t = extractType(ic->label);
-                        if (t == "intcon" || t == "charcon" || t == "ident") {
+                        if (t == "ident") {
+                            comp.indices.push_back(new VarAccessNode(extractValue(ic->label)));
+                        } else if (t == "intcon" || t == "charcon") {
                             comp.indices.push_back(new LiteralNode(extractValue(ic->label), t));
                         }
                     }
