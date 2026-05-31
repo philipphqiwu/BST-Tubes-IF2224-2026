@@ -1,0 +1,88 @@
+programsy
+ident (TestProc)
+semicolon
+
+varsy
+ident (i)
+comma
+ident (total)
+colon
+ident (integer)
+semicolon
+
+proceduresy
+ident (Add)
+lparent
+ident (x)
+colon
+ident (integer)
+rparent
+semicolon
+
+beginsy
+ident (total)
+becomes
+ident (total)
+plus
+ident (x)
+semicolon
+
+endsy
+semicolon
+
+beginsy
+ident (total)
+becomes
+intcon (0)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (10)
+dosy
+ident (Add)
+lparent
+ident (i)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+string ('sum 1..10 = ')
+comma
+ident (total)
+rparent
+semicolon
+
+ident (total)
+becomes
+intcon (100)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (5)
+downtosy
+intcon (1)
+dosy
+ident (Add)
+lparent
+minus
+ident (i)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+string ('after subtraction = ')
+comma
+ident (total)
+rparent
+semicolon
+
+endsy
+period

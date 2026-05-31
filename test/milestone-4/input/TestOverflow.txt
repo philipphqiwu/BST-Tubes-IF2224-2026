@@ -1,0 +1,10 @@
+program TestOverflow;
+
+var
+  a, b: integer;
+
+begin
+  a := 2000000000;
+  b := a + a;
+  writeln(b);
+end.

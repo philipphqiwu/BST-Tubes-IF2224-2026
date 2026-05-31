@@ -1,0 +1,66 @@
+programsy
+ident (TestKeywords)
+semicolon
+
+varsy
+ident (x)
+comma
+ident (y)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (x)
+becomes
+intcon (10)
+semicolon
+
+ifsy
+ident (x)
+gtr
+intcon (5)
+thensy
+ident (y)
+becomes
+ident (x)
+times
+intcon (2)
+elsesy
+ident (y)
+becomes
+ident (x)
+idiv
+intcon (2)
+semicolon
+
+ident (writeln)
+lparent
+ident (y)
+rparent
+semicolon
+
+whilesy
+ident (y)
+gtr
+intcon (0)
+dosy
+beginsy
+ident (y)
+becomes
+ident (y)
+minus
+intcon (1)
+semicolon
+
+ident (writeln)
+lparent
+ident (y)
+rparent
+semicolon
+
+endsy
+semicolon
+
+endsy
+period

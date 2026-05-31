@@ -1,0 +1,14 @@
+program TestRecursion;
+
+var
+  n: integer;
+
+function Inf(k: integer): integer;
+begin
+  Inf := Inf(k + 1);
+end;
+
+begin
+  n := Inf(0);
+  writeln(n);
+end.

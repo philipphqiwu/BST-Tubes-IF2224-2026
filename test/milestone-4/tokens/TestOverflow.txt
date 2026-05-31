@@ -1,0 +1,33 @@
+programsy
+ident (TestOverflow)
+semicolon
+
+varsy
+ident (a)
+comma
+ident (b)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (a)
+becomes
+intcon (2000000000)
+semicolon
+
+ident (b)
+becomes
+ident (a)
+plus
+ident (a)
+semicolon
+
+ident (writeln)
+lparent
+ident (b)
+rparent
+semicolon
+
+endsy
+period

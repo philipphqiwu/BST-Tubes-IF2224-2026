@@ -1,0 +1,84 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    Subprograms    program     0     0     1     0     0     0     
+34    i              variable    1     0     1     0     3     33    
+35    total          variable    1     0     1     0     4     34    
+36    AddToTotal     procedure   0     1     1     0     0     35    
+37    x              variable    1     0     0     1     3     0     
+38    y              variable    1     0     0     1     4     37    
+39    NextVal        function    1     2     1     0     0     36    
+40    v              variable    1     0     0     1     3     0     
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     39      0       0       5         <- global block (program)
+1     38      38      2       5       
+2     40      40      1       4       
+3     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'Subprograms') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('i') → tab_index:34, type:integer, lev:0
+   │  ├─ VarDecl('total') → tab_index:35, type:integer, lev:0
+   │  ├─ ProcDecl('AddToTotal') → tab_index:36, lev:0
+   │  │  ├─ Param(x) → type:integer
+   │  │  ├─ Param(y) → type:integer
+   │  │  └─ Block → block_index:1, lev:1
+   │  │     └─ CompoundStmt
+   │  │        └─ Assign('total' := ...+y) → type:void
+   │  │           ├─ target 'total' → tab_index:35, type:integer
+   │  │           └─ value 
+   │  │              └─ BinOp '+' → type:integer
+   │  │                 ├─ BinOp '+' → type:integer
+   │  │                 │  ├─ 'total' → tab_index:35, type:integer
+   │  │                 │  └─ 'x' → tab_index:37, type:integer
+   │  │                 └─ 'y' → tab_index:38, type:integer
+   │  └─ FuncDecl('NextVal') : integer → tab_index:39, lev:0
+   │     ├─ Param(v) → type:integer
+   │     └─ Block → block_index:2, lev:1
+   │        └─ CompoundStmt
+   │           └─ Assign('NextVal' := v+1) → type:void
+   │              ├─ target 'NextVal' → tab_index:39, type:integer
+   │              └─ value 
+   │                 └─ BinOp '+' → type:integer
+   │                    ├─ 'v' → tab_index:40, type:integer
+   │                    └─ 1 → type:integer
+   └─ Block → block_index:3, lev:1
+      ├─ Assign('i' := 1) → type:void
+      │  ├─ target 'i' → tab_index:34, type:integer
+      │  └─ value 1 → type:integer
+      ├─ Assign('total' := 0) → type:void
+      │  ├─ target 'total' → tab_index:35, type:integer
+      │  └─ value 0 → type:integer
+      ├─ AddToTotal(...) → predefined, tab_index:36
+      │  ├─ 'i' → tab_index:34, type:integer
+      │  └─ FuncCall('NextVal') → tab_index:39, type:integer, lev:0
+      │     └─ 'i' → tab_index:34, type:integer
+      └─ IfStmt
+         ├─ condition
+         │  └─ BinOp '>' → type:boolean
+         │     ├─ 'total' → tab_index:35, type:integer
+         │     └─ 0 → type:integer
+         ├─ then
+         │  └─ Assign('total' := total+1) → type:void
+         │     ├─ target 'total' → tab_index:35, type:integer
+         │     └─ value 
+         │        └─ BinOp '+' → type:integer
+         │           ├─ 'total' → tab_index:35, type:integer
+         │           └─ 1 → type:integer
+         └─ else
+            └─ Assign('total' := total-1) → type:void
+               ├─ target 'total' → tab_index:35, type:integer
+               └─ value 
+                  └─ BinOp '-' → type:integer
+                     ├─ 'total' → tab_index:35, type:integer
+                     └─ 1 → type:integer

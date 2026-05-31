@@ -1,0 +1,45 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    TestRecursion  program     0     0     1     0     0     0     
+34    n              variable    1     0     1     0     3     33    
+35    Inf            function    1     1     1     0     0     34    
+36    k              variable    1     0     0     1     3     0     
+37    writeln        procedure   0     0     1     0     0     35    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     37      0       0       4         <- global block (program)
+1     36      36      1       4       
+2     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'TestRecursion') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('n') → tab_index:34, type:integer, lev:0
+   │  └─ FuncDecl('Inf') : integer → tab_index:35, lev:0
+   │     ├─ Param(k) → type:integer
+   │     └─ Block → block_index:1, lev:1
+   │        └─ CompoundStmt
+   │           └─ Assign('Inf' := ) → type:void
+   │              ├─ target 'Inf' → tab_index:35, type:integer
+   │              └─ value 
+   │                 └─ FuncCall('Inf') → tab_index:35, type:integer, lev:0
+   │                    └─ BinOp '+' → type:integer
+   │                       ├─ 'k' → tab_index:36, type:integer
+   │                       └─ 1 → type:integer
+   └─ Block → block_index:2, lev:1
+      ├─ Assign('n' := ) → type:void
+      │  ├─ target 'n' → tab_index:34, type:integer
+      │  └─ value 
+      │     └─ FuncCall('Inf') → tab_index:35, type:integer, lev:0
+      │        └─ 0 → type:integer
+      └─ writeln(...) → predefined, tab_index:37
+         └─ 'n' → tab_index:34, type:integer
