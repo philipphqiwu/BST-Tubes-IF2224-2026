@@ -1,0 +1,69 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (InfiniteLoop)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   └── ident (x)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (integer)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (x)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (1)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <while-statement>
+│   │   │       ├── whilesy
+│   │   │       ├── <expression>
+│   │   │       │   ├── <simple-expression>
+│   │   │       │   │   └── <term>
+│   │   │       │   │       └── <factor>
+│   │   │       │   │           └── <variable>
+│   │   │       │   │               └── ident (x)
+│   │   │       │   ├── <relational-operator>
+│   │   │       │   │   └── gtr
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (0)
+│   │   │       ├── dosy
+│   │   │       └── <statement>
+│   │   │           └── <compound-statement>
+│   │   │               ├── beginsy
+│   │   │               ├── <statement-list>
+│   │   │               │   ├── <statement>
+│   │   │               │   │   └── <assignment-statement>
+│   │   │               │   │       ├── <variable>
+│   │   │               │   │       │   └── ident (x)
+│   │   │               │   │       ├── becomes
+│   │   │               │   │       └── <expression>
+│   │   │               │   │           └── <simple-expression>
+│   │   │               │   │               ├── <term>
+│   │   │               │   │               │   └── <factor>
+│   │   │               │   │               │       └── <variable>
+│   │   │               │   │               │           └── ident (x)
+│   │   │               │   │               ├── <additive-operator>
+│   │   │               │   │               │   └── plus
+│   │   │               │   │               └── <term>
+│   │   │               │   │                   └── <factor>
+│   │   │               │   │                       └── intcon (1)
+│   │   │               │   └── semicolon
+│   │   │               └── endsy
+│   │   └── semicolon
+│   └── endsy
+└── period

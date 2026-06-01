@@ -1,0 +1,76 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    M4ProcFunc     program     0     0     1     0     0     0     
+34    n              variable    1     0     1     0     3     33    
+35    total          variable    1     0     1     0     4     34    
+36    AddTwice       procedure   0     1     1     0     0     35    
+37    x              variable    1     0     0     1     3     0     
+38    Square         function    1     2     1     0     0     36    
+39    x              variable    1     0     0     1     3     0     
+40    writeln        procedure   0     0     1     0     0     38    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     40      0       0       5         <- global block (program)
+1     37      37      1       4       
+2     39      39      1       4       
+3     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'M4ProcFunc') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('n') → tab_index:34, type:integer, lev:0
+   │  ├─ VarDecl('total') → tab_index:35, type:integer, lev:0
+   │  ├─ ProcDecl('AddTwice') → tab_index:36, lev:0
+   │  │  ├─ Param(x) → type:integer
+   │  │  └─ Block → block_index:1, lev:1
+   │  │     └─ CompoundStmt
+   │  │        ├─ Assign('total' := total+x) → type:void
+   │  │        │  ├─ target 'total' → tab_index:35, type:integer
+   │  │        │  └─ value 
+   │  │        │     └─ BinOp '+' → type:integer
+   │  │        │        ├─ 'total' → tab_index:35, type:integer
+   │  │        │        └─ 'x' → tab_index:37, type:integer
+   │  │        └─ Assign('total' := total+x) → type:void
+   │  │           ├─ target 'total' → tab_index:35, type:integer
+   │  │           └─ value 
+   │  │              └─ BinOp '+' → type:integer
+   │  │                 ├─ 'total' → tab_index:35, type:integer
+   │  │                 └─ 'x' → tab_index:37, type:integer
+   │  └─ FuncDecl('Square') : integer → tab_index:38, lev:0
+   │     ├─ Param(x) → type:integer
+   │     └─ Block → block_index:2, lev:1
+   │        └─ CompoundStmt
+   │           └─ Assign('Square' := x*x) → type:void
+   │              ├─ target 'Square' → tab_index:38, type:integer
+   │              └─ value 
+   │                 └─ BinOp '*' → type:integer
+   │                    ├─ 'x' → tab_index:39, type:integer
+   │                    └─ 'x' → tab_index:39, type:integer
+   └─ Block → block_index:3, lev:1
+      ├─ Assign('total' := 0) → type:void
+      │  ├─ target 'total' → tab_index:35, type:integer
+      │  └─ value 0 → type:integer
+      ├─ Assign('n' := 3) → type:void
+      │  ├─ target 'n' → tab_index:34, type:integer
+      │  └─ value 3 → type:integer
+      ├─ AddTwice(...) → predefined, tab_index:36
+      │  └─ 'n' → tab_index:34, type:integer
+      ├─ Assign('total' := total+...) → type:void
+      │  ├─ target 'total' → tab_index:35, type:integer
+      │  └─ value 
+      │     └─ BinOp '+' → type:integer
+      │        ├─ 'total' → tab_index:35, type:integer
+      │        └─ FuncCall('Square') → tab_index:38, type:integer, lev:0
+      │           └─ 'n' → tab_index:34, type:integer
+      └─ writeln(...) → predefined, tab_index:40
+         ├─ 'procfunc = ' → type:string
+         └─ 'total' → tab_index:35, type:integer

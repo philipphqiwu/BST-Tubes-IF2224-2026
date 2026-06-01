@@ -1,0 +1,34 @@
+programsy
+ident (InfiniteLoop)
+semicolon
+
+varsy
+ident (x)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (x)
+becomes
+intcon (1)
+semicolon
+
+whilesy
+ident (x)
+gtr
+intcon (0)
+dosy
+beginsy
+ident (x)
+becomes
+ident (x)
+plus
+intcon (1)
+semicolon
+
+endsy
+semicolon
+
+endsy
+period

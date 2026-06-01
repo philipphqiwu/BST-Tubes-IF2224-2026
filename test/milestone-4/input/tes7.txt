@@ -1,0 +1,13 @@
+program M4IfElse;
+
+var
+  x, y: integer;
+
+begin
+  x := 8;
+  if x > 10 then
+    y := x * 2
+  else
+    y := x div 2;
+  writeln('ifelse = ', y);
+end.

@@ -1,0 +1,23 @@
+program M4ProcFunc;
+
+var
+  n, total: integer;
+
+procedure AddTwice(x: integer);
+begin
+  total := total + x;
+  total := total + x;
+end;
+
+function Square(x: integer): integer;
+begin
+  Square := x * x;
+end;
+
+begin
+  total := 0;
+  n := 3;
+  AddTwice(n);
+  total := total + Square(n);
+  writeln('procfunc = ', total);
+end.

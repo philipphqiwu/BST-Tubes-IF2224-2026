@@ -1,0 +1,46 @@
+programsy
+ident (M4IfElse)
+semicolon
+
+varsy
+ident (x)
+comma
+ident (y)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (x)
+becomes
+intcon (8)
+semicolon
+
+ifsy
+ident (x)
+gtr
+intcon (10)
+thensy
+ident (y)
+becomes
+ident (x)
+times
+intcon (2)
+elsesy
+ident (y)
+becomes
+ident (x)
+idiv
+intcon (2)
+semicolon
+
+ident (writeln)
+lparent
+string ('ifelse = ')
+comma
+ident (y)
+rparent
+semicolon
+
+endsy
+period

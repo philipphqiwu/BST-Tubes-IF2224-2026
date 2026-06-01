@@ -1,0 +1,119 @@
+<program>
+├── <program-header>
+│   ├── programsy
+│   ├── ident (M4WhileSum)
+│   └── semicolon
+├── <declaration-part>
+│   └── <var-declaration>
+│       ├── varsy
+│       ├── <identifier-list>
+│       │   ├── ident (i)
+│       │   ├── comma
+│       │   └── ident (sum)
+│       ├── colon
+│       ├── <type>
+│       │   └── ident (integer)
+│       └── semicolon
+├── <compound-statement>
+│   ├── beginsy
+│   ├── <statement-list>
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (i)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (1)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <assignment-statement>
+│   │   │       ├── <variable>
+│   │   │       │   └── ident (sum)
+│   │   │       ├── becomes
+│   │   │       └── <expression>
+│   │   │           └── <simple-expression>
+│   │   │               └── <term>
+│   │   │                   └── <factor>
+│   │   │                       └── intcon (0)
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <while-statement>
+│   │   │       ├── whilesy
+│   │   │       ├── <expression>
+│   │   │       │   ├── <simple-expression>
+│   │   │       │   │   └── <term>
+│   │   │       │   │       └── <factor>
+│   │   │       │   │           └── <variable>
+│   │   │       │   │               └── ident (i)
+│   │   │       │   ├── <relational-operator>
+│   │   │       │   │   └── leq
+│   │   │       │   └── <simple-expression>
+│   │   │       │       └── <term>
+│   │   │       │           └── <factor>
+│   │   │       │               └── intcon (5)
+│   │   │       ├── dosy
+│   │   │       └── <statement>
+│   │   │           └── <compound-statement>
+│   │   │               ├── beginsy
+│   │   │               ├── <statement-list>
+│   │   │               │   ├── <statement>
+│   │   │               │   │   └── <assignment-statement>
+│   │   │               │   │       ├── <variable>
+│   │   │               │   │       │   └── ident (sum)
+│   │   │               │   │       ├── becomes
+│   │   │               │   │       └── <expression>
+│   │   │               │   │           └── <simple-expression>
+│   │   │               │   │               ├── <term>
+│   │   │               │   │               │   └── <factor>
+│   │   │               │   │               │       └── <variable>
+│   │   │               │   │               │           └── ident (sum)
+│   │   │               │   │               ├── <additive-operator>
+│   │   │               │   │               │   └── plus
+│   │   │               │   │               └── <term>
+│   │   │               │   │                   └── <factor>
+│   │   │               │   │                       └── <variable>
+│   │   │               │   │                           └── ident (i)
+│   │   │               │   ├── semicolon
+│   │   │               │   ├── <statement>
+│   │   │               │   │   └── <assignment-statement>
+│   │   │               │   │       ├── <variable>
+│   │   │               │   │       │   └── ident (i)
+│   │   │               │   │       ├── becomes
+│   │   │               │   │       └── <expression>
+│   │   │               │   │           └── <simple-expression>
+│   │   │               │   │               ├── <term>
+│   │   │               │   │               │   └── <factor>
+│   │   │               │   │               │       └── <variable>
+│   │   │               │   │               │           └── ident (i)
+│   │   │               │   │               ├── <additive-operator>
+│   │   │               │   │               │   └── plus
+│   │   │               │   │               └── <term>
+│   │   │               │   │                   └── <factor>
+│   │   │               │   │                       └── intcon (1)
+│   │   │               │   └── semicolon
+│   │   │               └── endsy
+│   │   ├── semicolon
+│   │   ├── <statement>
+│   │   │   └── <procedure/function-call>
+│   │   │       ├── ident (writeln)
+│   │   │       ├── lparent
+│   │   │       ├── <parameter-list>
+│   │   │       │   ├── <expression>
+│   │   │       │   │   └── <simple-expression>
+│   │   │       │   │       └── <term>
+│   │   │       │   │           └── <factor>
+│   │   │       │   │               └── string ('sum = ')
+│   │   │       │   ├── comma
+│   │   │       │   └── <expression>
+│   │   │       │       └── <simple-expression>
+│   │   │       │           └── <term>
+│   │   │       │               └── <factor>
+│   │   │       │                   └── <variable>
+│   │   │       │                       └── ident (sum)
+│   │   │       └── rparent
+│   │   └── semicolon
+│   └── endsy
+└── period

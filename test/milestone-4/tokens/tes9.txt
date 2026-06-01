@@ -1,0 +1,155 @@
+programsy
+ident (M4Array2D)
+semicolon
+
+varsy
+ident (m)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (2)
+rbrack
+ofsy
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+beginsy
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (1)
+rbrack
+becomes
+intcon (2)
+semicolon
+
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
+becomes
+intcon (4)
+semicolon
+
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (3)
+rbrack
+becomes
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (1)
+rbrack
+plus
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
+semicolon
+
+ident (m)
+lbrack
+intcon (2)
+rbrack
+lbrack
+intcon (1)
+rbrack
+becomes
+intcon (7)
+semicolon
+
+ident (m)
+lbrack
+intcon (2)
+rbrack
+lbrack
+intcon (2)
+rbrack
+becomes
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (3)
+rbrack
+times
+intcon (2)
+semicolon
+
+ident (m)
+lbrack
+intcon (2)
+rbrack
+lbrack
+intcon (3)
+rbrack
+becomes
+ident (m)
+lbrack
+intcon (2)
+rbrack
+lbrack
+intcon (2)
+rbrack
+minus
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (1)
+rbrack
+semicolon
+
+ident (writeln)
+lparent
+ident (m)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (3)
+rbrack
+rparent
+semicolon
+
+ident (writeln)
+lparent
+ident (m)
+lbrack
+intcon (2)
+rbrack
+lbrack
+intcon (3)
+rbrack
+rparent
+semicolon
+
+endsy
+period

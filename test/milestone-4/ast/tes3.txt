@@ -4,91 +4,45 @@
 idx   id             obj         type  ref   nrm   lev   adr   link  
 ---------------------------------------------------------------------
 ...  (reserved words 0-32)
-33    ControlFlow    program     0     0     1     0     0     0     
-34    i              variable    1     0     1     0     3     33    
-35    x              variable    1     0     1     0     4     34    
-36    y              variable    1     0     1     0     5     35    
+33    TestArr        program     0     0     1     0     0     0     
+34    a              variable    0     0     1     0     3     33    
+35    i              variable    1     0     1     0     8     34    
+36    writeln        procedure   0     0     1     0     0     35    
 
 === BLOCK TABLE (btab) ===
 idx   last    lpar    psze    vsze    
 --------------------------------------
-0     36      0       0       6         <- global block (program)
+0     36      0       0       9         <- global block (program)
 1     0       0       0       3       
 
 === ARRAY TABLE (atab) ===
-(kosong karena tidak ada array)
+idx   xtyp    etyp    eref    low     high    elsz    size    
+--------------------------------------------------------------
+0     1       1       0       1       5       1       5       
 
 === DECORATED AST ===
-└─ ProgramNode(name: 'ControlFlow') → tab_index:33, lev:0
+└─ ProgramNode(name: 'TestArr') → tab_index:33, lev:0
    ├─ Declarations
-   │  └─ VarDecl('i') → tab_index:34, type:integer, lev:0
-   │  ├─ VarDecl('x') → tab_index:35, type:integer, lev:0
-   │  └─ VarDecl('y') → tab_index:36, type:integer, lev:0
+   │  ├─ VarDecl('a') → tab_index:34, type:array, lev:0
+   │  └─ VarDecl('i') → tab_index:35, type:integer, lev:0
    └─ Block → block_index:1, lev:1
-      ├─ Assign('x' := 0) → type:void
-      │  ├─ target 'x' → tab_index:35, type:integer
-      │  └─ value 0 → type:integer
-      ├─ ForStmt('i', tosy) → tab_index:34, lev:0
+      ├─ ForStmt('i', tosy) → tab_index:35, lev:0
       │  ├─ init
       │  │  └─ 1 → type:integer
       │  ├─ final
-      │  │  └─ 3 → type:integer
+      │  │  └─ 5 → type:integer
       │  └─ body
-      │     └─ CompoundStmt
-      │        ├─ Assign('x' := x+i) → type:void
-      │        │  ├─ target 'x' → tab_index:35, type:integer
-      │        │  └─ value 
-      │        │     └─ BinOp '+' → type:integer
-      │        │        ├─ 'x' → tab_index:35, type:integer
-      │        │        └─ 'i' → tab_index:34, type:integer
-      │        └─ Assign('y' := 1) → type:void
-      │           ├─ target 'y' → tab_index:36, type:integer
-      │           └─ value 1 → type:integer
-      ├─ WhileStmt
-      │  ├─ condition
-      │  │  └─ BinOp '>' → type:boolean
-      │  │     ├─ 'x' → tab_index:35, type:integer
-      │  │     └─ 0 → type:integer
-      │  └─ body
-      │     └─ CompoundStmt
-      │        ├─ Assign('x' := x-1) → type:void
-      │        │  ├─ target 'x' → tab_index:35, type:integer
-      │        │  └─ value 
-      │        │     └─ BinOp '-' → type:integer
-      │        │        ├─ 'x' → tab_index:35, type:integer
-      │        │        └─ 1 → type:integer
-      │        └─ Assign('y' := 0) → type:void
-      │           ├─ target 'y' → tab_index:36, type:integer
-      │           └─ value 0 → type:integer
-      ├─ RepeatStmt
-      │  ├─ Assign('x' := x+2) → type:void
-      │  │  ├─ target 'x' → tab_index:35, type:integer
-      │  │  └─ value 
-      │  │     └─ BinOp '+' → type:integer
-      │  │        ├─ 'x' → tab_index:35, type:integer
-      │  │        └─ 2 → type:integer
-      │  └─ until
-      │     └─ BinOp '>' → type:boolean
-      │        ├─ 'x' → tab_index:35, type:integer
-      │        └─ 1 → type:integer
-      ├─ IfStmt
-      │  ├─ condition
-      │  │  └─ BinOp '>' → type:boolean
-      │  │     ├─ 'x' → tab_index:35, type:integer
-      │  │     └─ 1 → type:integer
-      │  ├─ then
-      │  │  └─ Assign('x' := 5) → type:void
-      │  │     ├─ target 'x' → tab_index:35, type:integer
-      │  │     └─ value 5 → type:integer
-      │  └─ else
-      │     └─ Assign('x' := 6) → type:void
-      │        ├─ target 'x' → tab_index:35, type:integer
-      │        └─ value 6 → type:integer
-      └─ CaseStmt
-         ├─ expr
-         │  └─ 'x' → tab_index:35, type:integer
-         └─ CaseBlock
-            ├─ const: 1
-            └─ Assign('x' := 10) → type:void
-               ├─ target 'x' → tab_index:35, type:integer
-               └─ value 10 → type:integer
+      │     └─ Assign('a' := i*10) → type:void
+      │        ├─ target 'a' → tab_index:34, type:integer
+      │        └─ value 
+      │           └─ BinOp '*' → type:integer
+      │              ├─ 'i' → tab_index:35, type:integer
+      │              └─ 10 → type:integer
+      └─ ForStmt('i', tosy) → tab_index:35, lev:0
+         ├─ init
+         │  └─ 1 → type:integer
+         ├─ final
+         │  └─ 5 → type:integer
+         └─ body
+            └─ writeln(...) → predefined, tab_index:36
+               └─ 'a' → tab_index:34, type:integer

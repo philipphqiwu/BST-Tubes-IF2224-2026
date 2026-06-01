@@ -1,0 +1,57 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    M4Array2D      program     0     0     1     0     0     0     
+34    m              variable    0     0     1     0     3     33    
+35    writeln        procedure   0     0     1     0     0     34    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     35      0       0       5         <- global block (program)
+1     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+idx   xtyp    etyp    eref    low     high    elsz    size    
+--------------------------------------------------------------
+0     1       1       0       1       2       1       2       
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'M4Array2D') → tab_index:33, lev:0
+   ├─ Declarations
+   │  └─ VarDecl('m') → tab_index:34, type:array, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('m' := 2) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 2 → type:integer
+      ├─ Assign('m' := 4) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 4 → type:integer
+      ├─ Assign('m' := m+m) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 
+      │     └─ BinOp '+' → type:integer
+      │        ├─ 'm' → tab_index:34, type:integer
+      │        └─ 'm' → tab_index:34, type:integer
+      ├─ Assign('m' := 7) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 7 → type:integer
+      ├─ Assign('m' := m*2) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 
+      │     └─ BinOp '*' → type:integer
+      │        ├─ 'm' → tab_index:34, type:integer
+      │        └─ 2 → type:integer
+      ├─ Assign('m' := m-m) → type:void
+      │  ├─ target 'm' → tab_index:34, type:integer
+      │  └─ value 
+      │     └─ BinOp '-' → type:integer
+      │        ├─ 'm' → tab_index:34, type:integer
+      │        └─ 'm' → tab_index:34, type:integer
+      ├─ writeln(...) → predefined, tab_index:35
+      │  └─ 'm' → tab_index:34, type:integer
+      └─ writeln(...) → predefined, tab_index:35
+         └─ 'm' → tab_index:34, type:integer
