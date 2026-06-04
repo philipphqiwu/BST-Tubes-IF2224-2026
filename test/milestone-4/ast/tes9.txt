@@ -4,54 +4,81 @@
 idx   id             obj         type  ref   nrm   lev   adr   link  
 ---------------------------------------------------------------------
 ...  (reserved words 0-32)
-33    M4Array2D      program     0     0     1     0     0     0     
-34    m              variable    0     0     1     0     3     33    
-35    writeln        procedure   0     0     1     0     0     34    
+33    TestFunc       program     0     0     1     0     0     0     
+34    n              variable    1     0     1     0     3     33    
+35    result         variable    1     0     1     0     4     34    
+36    Factorial      function    1     1     1     0     0     35    
+37    k              variable    1     0     0     1     3     0     
+38    Square         function    1     2     1     0     0     36    
+39    x              variable    1     0     0     1     3     0     
+40    writeln        procedure   0     0     1     0     0     38    
 
 === BLOCK TABLE (btab) ===
 idx   last    lpar    psze    vsze    
 --------------------------------------
-0     35      0       0       5         <- global block (program)
-1     0       0       0       3       
+0     40      0       0       5         <- global block (program)
+1     37      37      1       4       
+2     39      39      1       4       
+3     0       0       0       3       
 
 === ARRAY TABLE (atab) ===
-idx   xtyp    etyp    eref    low     high    elsz    size    
---------------------------------------------------------------
-0     1       1       0       1       2       1       2       
+(kosong karena tidak ada array)
 
 === DECORATED AST ===
-└─ ProgramNode(name: 'M4Array2D') → tab_index:33, lev:0
+└─ ProgramNode(name: 'TestFunc') → tab_index:33, lev:0
    ├─ Declarations
-   │  └─ VarDecl('m') → tab_index:34, type:array, lev:0
-   └─ Block → block_index:1, lev:1
-      ├─ Assign('m' := 2) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
-      │  └─ value 2 → type:integer
-      ├─ Assign('m' := 4) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
-      │  └─ value 4 → type:integer
-      ├─ Assign('m' := m+m) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
+   │  ├─ VarDecl('n') → tab_index:34, type:integer, lev:0
+   │  ├─ VarDecl('result') → tab_index:35, type:integer, lev:0
+   │  ├─ FuncDecl('Factorial') : integer → tab_index:36, lev:0
+   │  │  ├─ Param(k) → type:integer
+   │  │  └─ Block → block_index:1, lev:1
+   │  │     └─ CompoundStmt
+   │  │        └─ IfStmt
+   │  │           ├─ condition
+   │  │           │  └─ BinOp '<=' → type:boolean
+   │  │           │     ├─ 'k' → tab_index:37, type:integer
+   │  │           │     └─ 1 → type:integer
+   │  │           ├─ then
+   │  │           │  └─ Assign('Factorial' := 1) → type:void
+   │  │           │     ├─ target 'Factorial' → tab_index:36, type:integer
+   │  │           │     └─ value 1 → type:integer
+   │  │           └─ else
+   │  │              └─ Assign('Factorial' := k*...) → type:void
+   │  │                 ├─ target 'Factorial' → tab_index:36, type:integer
+   │  │                 └─ value 
+   │  │                    └─ BinOp '*' → type:integer
+   │  │                       ├─ 'k' → tab_index:37, type:integer
+   │  │                       └─ FuncCall('Factorial') → tab_index:36, type:integer, lev:0
+   │  │                          └─ BinOp '-' → type:integer
+   │  │                             ├─ 'k' → tab_index:37, type:integer
+   │  │                             └─ 1 → type:integer
+   │  └─ FuncDecl('Square') : integer → tab_index:38, lev:0
+   │     ├─ Param(x) → type:integer
+   │     └─ Block → block_index:2, lev:1
+   │        └─ CompoundStmt
+   │           └─ Assign('Square' := x*x) → type:void
+   │              ├─ target 'Square' → tab_index:38, type:integer
+   │              └─ value 
+   │                 └─ BinOp '*' → type:integer
+   │                    ├─ 'x' → tab_index:39, type:integer
+   │                    └─ 'x' → tab_index:39, type:integer
+   └─ Block → block_index:3, lev:1
+      ├─ Assign('n' := 5) → type:void
+      │  ├─ target 'n' → tab_index:34, type:integer
+      │  └─ value 5 → type:integer
+      ├─ Assign('result' := ) → type:void
+      │  ├─ target 'result' → tab_index:35, type:integer
       │  └─ value 
-      │     └─ BinOp '+' → type:integer
-      │        ├─ 'm' → tab_index:34, type:integer
-      │        └─ 'm' → tab_index:34, type:integer
-      ├─ Assign('m' := 7) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
-      │  └─ value 7 → type:integer
-      ├─ Assign('m' := m*2) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
-      │  └─ value 
-      │     └─ BinOp '*' → type:integer
-      │        ├─ 'm' → tab_index:34, type:integer
-      │        └─ 2 → type:integer
-      ├─ Assign('m' := m-m) → type:void
-      │  ├─ target 'm' → tab_index:34, type:integer
-      │  └─ value 
-      │     └─ BinOp '-' → type:integer
-      │        ├─ 'm' → tab_index:34, type:integer
-      │        └─ 'm' → tab_index:34, type:integer
-      ├─ writeln(...) → predefined, tab_index:35
-      │  └─ 'm' → tab_index:34, type:integer
-      └─ writeln(...) → predefined, tab_index:35
-         └─ 'm' → tab_index:34, type:integer
+      │     └─ FuncCall('Factorial') → tab_index:36, type:integer, lev:0
+      │        └─ 'n' → tab_index:34, type:integer
+      ├─ writeln(...) → predefined, tab_index:40
+      │  ├─ 'fact(' → type:string
+      │  ├─ 'n' → tab_index:34, type:integer
+      │  ├─ ') = ' → type:string
+      │  └─ 'result' → tab_index:35, type:integer
+      └─ writeln(...) → predefined, tab_index:40
+         ├─ 'square(' → type:string
+         ├─ 'n' → tab_index:34, type:integer
+         ├─ ') = ' → type:string
+         └─ FuncCall('Square') → tab_index:38, type:integer, lev:0
+            └─ 'n' → tab_index:34, type:integer

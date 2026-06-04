@@ -11,3 +11,6 @@
 9 RET
 
 === INTERPRETER OUTPUT ===
+
+=== RUNTIME ERRORS ===
+Division by zero

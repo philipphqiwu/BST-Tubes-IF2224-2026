@@ -1,153 +1,111 @@
 programsy
-ident (M4Array2D)
+ident (TestFunc)
 semicolon
 
 varsy
-ident (m)
+ident (n)
+comma
+ident (result)
 colon
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (2)
-rbrack
-ofsy
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (3)
-rbrack
-ofsy
+ident (integer)
+semicolon
+
+functionsy
+ident (Factorial)
+lparent
+ident (k)
+colon
+ident (integer)
+rparent
+colon
 ident (integer)
 semicolon
 
 beginsy
-ident (m)
-lbrack
+ifsy
+ident (k)
+leq
 intcon (1)
-rbrack
-lbrack
-intcon (1)
-rbrack
+thensy
+ident (Factorial)
 becomes
-intcon (2)
-semicolon
-
-ident (m)
-lbrack
 intcon (1)
-rbrack
-lbrack
-intcon (2)
-rbrack
+elsesy
+ident (Factorial)
 becomes
-intcon (4)
-semicolon
-
-ident (m)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (3)
-rbrack
-becomes
-ident (m)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (1)
-rbrack
-plus
-ident (m)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (2)
-rbrack
-semicolon
-
-ident (m)
-lbrack
-intcon (2)
-rbrack
-lbrack
-intcon (1)
-rbrack
-becomes
-intcon (7)
-semicolon
-
-ident (m)
-lbrack
-intcon (2)
-rbrack
-lbrack
-intcon (2)
-rbrack
-becomes
-ident (m)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (3)
-rbrack
+ident (k)
 times
-intcon (2)
-semicolon
-
-ident (m)
-lbrack
-intcon (2)
-rbrack
-lbrack
-intcon (3)
-rbrack
-becomes
-ident (m)
-lbrack
-intcon (2)
-rbrack
-lbrack
-intcon (2)
-rbrack
-minus
-ident (m)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (1)
-rbrack
-semicolon
-
-ident (writeln)
+ident (Factorial)
 lparent
-ident (m)
-lbrack
+ident (k)
+minus
 intcon (1)
-rbrack
-lbrack
-intcon (3)
-rbrack
+rparent
+semicolon
+
+endsy
+semicolon
+
+functionsy
+ident (Square)
+lparent
+ident (x)
+colon
+ident (integer)
+rparent
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (Square)
+becomes
+ident (x)
+times
+ident (x)
+semicolon
+
+endsy
+semicolon
+
+beginsy
+ident (n)
+becomes
+intcon (5)
+semicolon
+
+ident (result)
+becomes
+ident (Factorial)
+lparent
+ident (n)
 rparent
 semicolon
 
 ident (writeln)
 lparent
-ident (m)
-lbrack
-intcon (2)
-rbrack
-lbrack
-intcon (3)
-rbrack
+string ('fact(')
+comma
+ident (n)
+comma
+string (') = ')
+comma
+ident (result)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+string ('square(')
+comma
+ident (n)
+comma
+string (') = ')
+comma
+ident (Square)
+lparent
+ident (n)
+rparent
 rparent
 semicolon
 

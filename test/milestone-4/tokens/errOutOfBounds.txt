@@ -1,0 +1,93 @@
+programsy
+ident (TestOutOfBounds)
+semicolon
+
+varsy
+ident (arr)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (5)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (i)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (arr)
+lbrack
+intcon (1)
+rbrack
+becomes
+intcon (10)
+semicolon
+
+ident (arr)
+lbrack
+intcon (2)
+rbrack
+becomes
+intcon (20)
+semicolon
+
+ident (arr)
+lbrack
+intcon (3)
+rbrack
+becomes
+intcon (30)
+semicolon
+
+ident (arr)
+lbrack
+intcon (4)
+rbrack
+becomes
+intcon (40)
+semicolon
+
+ident (arr)
+lbrack
+intcon (5)
+rbrack
+becomes
+intcon (50)
+semicolon
+
+ident (writeln)
+lparent
+string ('Array[3] = ')
+comma
+ident (arr)
+lbrack
+intcon (3)
+rbrack
+rparent
+semicolon
+
+ident (i)
+becomes
+ident (arr)
+lbrack
+intcon (10)
+rbrack
+semicolon
+
+ident (writeln)
+lparent
+string ('Out of bounds access result: ')
+comma
+ident (i)
+rparent
+semicolon
+
+endsy
+period

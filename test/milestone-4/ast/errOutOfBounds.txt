@@ -1,0 +1,52 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    TestOutOfBoundsprogram     0     0     1     0     0     0     
+34    arr            variable    0     0     1     0     3     33    
+35    i              variable    1     0     1     0     8     34    
+36    writeln        procedure   0     0     1     0     0     35    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     36      0       0       9         <- global block (program)
+1     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+idx   xtyp    etyp    eref    low     high    elsz    size    
+--------------------------------------------------------------
+0     1       1       0       1       5       1       5       
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'TestOutOfBounds') → tab_index:33, lev:0
+   ├─ Declarations
+   │  ├─ VarDecl('arr') → tab_index:34, type:array, lev:0
+   │  └─ VarDecl('i') → tab_index:35, type:integer, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('arr' := 10) → type:void
+      │  ├─ target 'arr' → tab_index:34, type:integer
+      │  └─ value 10 → type:integer
+      ├─ Assign('arr' := 20) → type:void
+      │  ├─ target 'arr' → tab_index:34, type:integer
+      │  └─ value 20 → type:integer
+      ├─ Assign('arr' := 30) → type:void
+      │  ├─ target 'arr' → tab_index:34, type:integer
+      │  └─ value 30 → type:integer
+      ├─ Assign('arr' := 40) → type:void
+      │  ├─ target 'arr' → tab_index:34, type:integer
+      │  └─ value 40 → type:integer
+      ├─ Assign('arr' := 50) → type:void
+      │  ├─ target 'arr' → tab_index:34, type:integer
+      │  └─ value 50 → type:integer
+      ├─ writeln(...) → predefined, tab_index:36
+      │  ├─ 'Array[3] = ' → type:string
+      │  └─ 'arr' → tab_index:34, type:integer
+      ├─ Assign('i' := arr) → type:void
+      │  ├─ target 'i' → tab_index:35, type:integer
+      │  └─ value 'arr' → tab_index:34, type:integer
+      └─ writeln(...) → predefined, tab_index:36
+         ├─ 'Out of bounds access result: ' → type:string
+         └─ 'i' → tab_index:35, type:integer

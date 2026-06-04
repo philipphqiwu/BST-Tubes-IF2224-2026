@@ -1,0 +1,135 @@
+programsy
+ident (TestCaseJump)
+semicolon
+
+varsy
+ident (x)
+comma
+ident (result)
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (x)
+becomes
+intcon (2)
+semicolon
+
+ident (result)
+becomes
+intcon (0)
+semicolon
+
+casesy
+ident (x)
+ofsy
+intcon (1)
+colon
+ident (result)
+becomes
+intcon (10)
+semicolon
+
+intcon (2)
+colon
+ident (result)
+becomes
+intcon (20)
+semicolon
+
+intcon (3)
+colon
+ident (result)
+becomes
+intcon (30)
+semicolon
+
+intcon (4)
+colon
+ident (result)
+becomes
+intcon (40)
+semicolon
+
+intcon (5)
+colon
+ident (result)
+becomes
+intcon (50)
+semicolon
+
+endsy
+semicolon
+
+ident (writeln)
+lparent
+string ('Result for x=')
+comma
+ident (x)
+comma
+string (' is ')
+comma
+ident (result)
+rparent
+semicolon
+
+ident (x)
+becomes
+intcon (3)
+semicolon
+
+casesy
+ident (x)
+ofsy
+intcon (1)
+colon
+ident (writeln)
+lparent
+string ('One')
+rparent
+semicolon
+
+intcon (2)
+colon
+ident (writeln)
+lparent
+string ('Two')
+rparent
+semicolon
+
+intcon (3)
+colon
+ident (writeln)
+lparent
+string ('Three')
+rparent
+semicolon
+
+intcon (4)
+colon
+ident (writeln)
+lparent
+string ('Four')
+rparent
+semicolon
+
+intcon (5)
+colon
+ident (writeln)
+lparent
+string ('Five')
+rparent
+semicolon
+
+endsy
+semicolon
+
+ident (writeln)
+lparent
+string ('Program completed')
+rparent
+semicolon
+
+endsy
+period

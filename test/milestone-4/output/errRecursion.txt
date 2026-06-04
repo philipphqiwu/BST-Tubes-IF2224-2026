@@ -16,3 +16,6 @@
 14 RET
 
 === INTERPRETER OUTPUT ===
+
+=== RUNTIME ERRORS ===
+Stack overflow: maximum recursion depth (1000) exceeded
