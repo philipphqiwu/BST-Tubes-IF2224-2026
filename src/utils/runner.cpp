@@ -444,6 +444,14 @@ int runMilestone4(const std::string &filename)
     if (outFile.is_open())
     {
         outFile << runtimeText;
+        if (!interpreter.errors().empty())
+        {
+            outFile << "\n=== RUNTIME ERRORS ===\n";
+            for (const auto &err : interpreter.errors())
+            {
+                outFile << err << "\n";
+            }
+        }
         std::cout << "\n>>> Intermediate Code dan Interpreter Output berhasil disimpan di " << out_path << "\n";
         outFile.close();
     }
