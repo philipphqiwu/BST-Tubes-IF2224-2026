@@ -1,391 +1,46 @@
 programsy
-ident (Everything)
+ident (M4Arith)
 semicolon
 
 varsy
-ident (i)
-comma
-ident (j)
-colon
-ident (integer)
-semicolon
-
-ident (x)
-colon
-ident (real)
-semicolon
-
-ident (ch)
-colon
-ident (char)
-semicolon
-
-ident (e)
-colon
-lparent
-ident (A)
-comma
-ident (B)
-comma
-ident (C)
-rparent
-semicolon
-
-ident (r)
-colon
-intcon (1)
-period
-period
-intcon (3)
-semicolon
-
-ident (mat)
-colon
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (3)
-rbrack
-ofsy
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (3)
-rbrack
-ofsy
-ident (integer)
-semicolon
-
-ident (rec)
-colon
-recordsy
-ident (age)
-colon
-ident (integer)
-semicolon
-
-ident (code)
-colon
-ident (integer)
-endsy
-semicolon
-
-proceduresy
-ident (Update)
-lparent
 ident (a)
 comma
 ident (b)
+comma
+ident (c)
 colon
 ident (integer)
-semicolon
-
-ident (v)
-colon
-arraysy
-lbrack
-intcon (1)
-period
-period
-intcon (3)
-rbrack
-ofsy
-ident (integer)
-rparent
 semicolon
 
 beginsy
-ident (v)
-lbrack
-intcon (1)
-rbrack
+ident (a)
 becomes
+intcon (12)
+semicolon
+
+ident (b)
+becomes
+intcon (5)
+semicolon
+
+ident (c)
+becomes
+lparent
 ident (a)
 plus
 ident (b)
-semicolon
-
-ident (v)
-lbrack
-intcon (2)
-rbrack
-becomes
-lparent
-ident (a)
+rparent
 times
 intcon (2)
-rparent
-idiv
-intcon (2)
-semicolon
-
-ident (v)
-lbrack
-intcon (3)
-rbrack
-becomes
-lparent
-ident (v)
-lbrack
-intcon (1)
-rbrack
-plus
-ident (v)
-lbrack
-intcon (2)
-rbrack
-rparent
-imod
-intcon (3)
-semicolon
-
-endsy
-semicolon
-
-functionsy
-ident (NextVal)
-lparent
-ident (n)
-colon
-ident (integer)
-rparent
-colon
-ident (integer)
-semicolon
-
-beginsy
-ident (NextVal)
-becomes
-ident (n)
-plus
-intcon (1)
-semicolon
-
-endsy
-semicolon
-
-beginsy
-ident (i)
-becomes
-intcon (1)
-semicolon
-
-ident (j)
-becomes
 minus
-ident (i)
-plus
-intcon (2)
-times
 intcon (3)
-idiv
-intcon (2)
-imod
-intcon (2)
-semicolon
-
-ident (x)
-becomes
-intcon (6)
-rdiv
-intcon (2)
-semicolon
-
-ident (ch)
-becomes
-charcon (z)
-semicolon
-
-ident (mat)
-lbrack
-intcon (1)
-comma
-intcon (2)
-rbrack
-becomes
-ident (j)
-semicolon
-
-ident (rec)
-period
-ident (age)
-becomes
-ident (mat)
-lbrack
-intcon (1)
-rbrack
-lbrack
-intcon (2)
-rbrack
-semicolon
-
-ident (rec)
-period
-ident (code)
-becomes
-ident (NextVal)
-lparent
-ident (rec)
-period
-ident (age)
-rparent
-semicolon
-
-ifsy
-notsy
-lparent
-ident (j)
-leq
-intcon (0)
-rparent
-orsy
-lparent
-ident (i)
-neq
-intcon (0)
-rparent
-thensy
-ident (j)
-becomes
-ident (j)
-plus
-intcon (1)
-elsesy
-ident (j)
-becomes
-ident (j)
-minus
-intcon (1)
-semicolon
-
-casesy
-ident (j)
-ofsy
-intcon (1)
-colon
-ident (j)
-becomes
-intcon (10)
-semicolon
-
-intcon (2)
-comma
-intcon (3)
-colon
-ident (j)
-becomes
-intcon (20)
-semicolon
-
-endsy
-semicolon
-
-whilesy
-lparent
-ident (j)
-gtr
-intcon (0)
-rparent
-andsy
-lparent
-ident (i)
-lss
-intcon (10)
-rparent
-dosy
-beginsy
-ident (j)
-becomes
-ident (j)
-minus
-intcon (1)
-semicolon
-
-endsy
-semicolon
-
-repeatsy
-ident (j)
-becomes
-ident (j)
-plus
-intcon (1)
-semicolon
-
-untilsy
-ident (j)
-geq
-intcon (2)
-semicolon
-
-forsy
-ident (i)
-becomes
-intcon (1)
-tosy
-intcon (3)
-dosy
-beginsy
-ident (Update)
-lparent
-ident (i)
-comma
-ident (j)
-comma
-ident (mat)
-lbrack
-intcon (1)
-rbrack
-rparent
-semicolon
-
-endsy
-semicolon
-
-forsy
-ident (i)
-becomes
-intcon (3)
-downtosy
-intcon (1)
-dosy
-beginsy
-ident (j)
-becomes
-ident (j)
-plus
-ident (i)
-semicolon
-
-endsy
-semicolon
-
-ident (Update)
-lparent
-ident (i)
-comma
-ident (j)
-comma
-ident (mat)
-lbrack
-intcon (2)
-rbrack
-rparent
 semicolon
 
 ident (writeln)
 lparent
-string ('done')
+string ('arith = ')
 comma
-ident (j)
-comma
-ident (x)
-comma
-ident (ch)
+ident (c)
 rparent
 semicolon
 

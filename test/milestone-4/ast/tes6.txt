@@ -4,214 +4,44 @@
 idx   id             obj         type  ref   nrm   lev   adr   link  
 ---------------------------------------------------------------------
 ...  (reserved words 0-32)
-33    Everything     program     0     0     1     0     0     0     
-34    i              variable    1     0     1     0     3     33    
-35    j              variable    1     0     1     0     4     34    
-36    x              variable    2     0     1     0     5     35    
-37    ch             variable    4     0     1     0     6     36    
-38    e              variable    0     0     1     0     7     37    
-39    r              variable    0     0     1     0     8     38    
-40    mat            variable    0     0     1     0     9     39    
-41    age            field       1     0     1     0     0     40    
-42    code           field       1     0     1     0     0     41    
-43    rec            variable    0     1     1     0     10    42    
-44    Update         procedure   0     2     1     0     0     43    
-45    a              variable    1     0     0     1     3     0     
-46    b              variable    1     0     0     1     4     45    
-47    v              variable    0     0     0     1     5     46    
-48    NextVal        function    1     3     1     0     0     44    
-49    n              variable    1     0     0     1     3     0     
-50    writeln        procedure   0     0     1     0     0     48    
+33    M4Arith        program     0     0     1     0     0     0     
+34    a              variable    1     0     1     0     3     33    
+35    b              variable    1     0     1     0     4     34    
+36    c              variable    1     0     1     0     5     35    
+37    writeln        procedure   0     0     1     0     0     36    
 
 === BLOCK TABLE (btab) ===
 idx   last    lpar    psze    vsze    
 --------------------------------------
-0     50      0       0       11        <- global block (program)
-1     42      0       0       3       
-2     47      47      3       6       
-3     49      49      1       4       
-4     0       0       0       3       
+0     37      0       0       6         <- global block (program)
+1     0       0       0       3       
 
 === ARRAY TABLE (atab) ===
-idx   xtyp    etyp    eref    low     high    elsz    size    
---------------------------------------------------------------
-0     1       1       0       0       0       1       1       
+(kosong karena tidak ada array)
 
 === DECORATED AST ===
-└─ ProgramNode(name: 'Everything') → tab_index:33, lev:0
+└─ ProgramNode(name: 'M4Arith') → tab_index:33, lev:0
    ├─ Declarations
-   │  ├─ VarDecl('i') → tab_index:34, type:integer, lev:0
-   │  ├─ VarDecl('j') → tab_index:35, type:integer, lev:0
-   │  ├─ VarDecl('x') → tab_index:36, type:real, lev:0
-   │  ├─ VarDecl('ch') → tab_index:37, type:char, lev:0
-   │  ├─ VarDecl('e') → tab_index:38, type:unknown, lev:0
-   │  ├─ VarDecl('r') → tab_index:39, type:unknown, lev:0
-   │  ├─ VarDecl('mat') → tab_index:40, type:array, lev:0
-   │  ├─ VarDecl('rec') → tab_index:43, type:record, lev:0
-   │  ├─ ProcDecl('Update') → tab_index:44, lev:0
-   │  │  ├─ Param(a, b) → type:integer
-   │  │  ├─ Param(v) → type:unknown
-   │  │  └─ Block → block_index:2, lev:1
-   │  │     └─ CompoundStmt
-   │  │        ├─ Assign('v' := a+b) → type:void
-   │  │        │  ├─ target 'v' → tab_index:47, type:integer
-   │  │        │  └─ value 
-   │  │        │     └─ BinOp '+' → type:integer
-   │  │        │        ├─ 'a' → tab_index:45, type:integer
-   │  │        │        └─ 'b' → tab_index:46, type:integer
-   │  │        ├─ Assign('v' := ...div2) → type:void
-   │  │        │  ├─ target 'v' → tab_index:47, type:integer
-   │  │        │  └─ value 
-   │  │        │     └─ BinOp 'div' → type:integer
-   │  │        │        ├─ BinOp '*' → type:integer
-   │  │        │        │  ├─ 'a' → tab_index:45, type:integer
-   │  │        │        │  └─ 2 → type:integer
-   │  │        │        └─ 2 → type:integer
-   │  │        └─ Assign('v' := ...mod3) → type:void
-   │  │           ├─ target 'v' → tab_index:47, type:integer
-   │  │           └─ value 
-   │  │              └─ BinOp 'mod' → type:integer
-   │  │                 ├─ BinOp '+' → type:integer
-   │  │                 │  ├─ 'v' → tab_index:47, type:integer
-   │  │                 │  └─ 'v' → tab_index:47, type:integer
-   │  │                 └─ 3 → type:integer
-   │  └─ FuncDecl('NextVal') : integer → tab_index:48, lev:0
-   │     ├─ Param(n) → type:integer
-   │     └─ Block → block_index:3, lev:1
-   │        └─ CompoundStmt
-   │           └─ Assign('NextVal' := n+1) → type:void
-   │              ├─ target 'NextVal' → tab_index:48, type:integer
-   │              └─ value 
-   │                 └─ BinOp '+' → type:integer
-   │                    ├─ 'n' → tab_index:49, type:integer
-   │                    └─ 1 → type:integer
-   └─ Block → block_index:4, lev:1
-      ├─ Assign('i' := 1) → type:void
-      │  ├─ target 'i' → tab_index:34, type:integer
-      │  └─ value 1 → type:integer
-      ├─ Assign('j' := ...+...) → type:void
-      │  ├─ target 'j' → tab_index:35, type:integer
+   │  └─ VarDecl('a') → tab_index:34, type:integer, lev:0
+   │  ├─ VarDecl('b') → tab_index:35, type:integer, lev:0
+   │  └─ VarDecl('c') → tab_index:36, type:integer, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('a' := 12) → type:void
+      │  ├─ target 'a' → tab_index:34, type:integer
+      │  └─ value 12 → type:integer
+      ├─ Assign('b' := 5) → type:void
+      │  ├─ target 'b' → tab_index:35, type:integer
+      │  └─ value 5 → type:integer
+      ├─ Assign('c' := ...-3) → type:void
+      │  ├─ target 'c' → tab_index:36, type:integer
       │  └─ value 
-      │     └─ BinOp '+' → type:integer
-      │        ├─ UnaryOp '-' → type:integer
-      │        │  └─ 'i' → tab_index:34, type:integer
-      │        └─ BinOp 'mod' → type:integer
-      │           ├─ BinOp 'div' → type:integer
-      │           │  ├─ BinOp '*' → type:integer
-      │           │  │  ├─ 2 → type:integer
-      │           │  │  └─ 3 → type:integer
-      │           │  └─ 2 → type:integer
-      │           └─ 2 → type:integer
-      ├─ Assign('x' := 6/2) → type:void
-      │  ├─ target 'x' → tab_index:36, type:real
-      │  └─ value 
-      │     └─ BinOp '/' → type:real
-      │        ├─ 6 → type:integer
-      │        └─ 2 → type:integer
-      ├─ Assign('ch' := z) → type:void
-      │  ├─ target 'ch' → tab_index:37, type:char
-      │  └─ value z → type:char
-      ├─ Assign('mat' := j) → type:void
-      │  ├─ target 'mat' → tab_index:40, type:integer
-      │  └─ value 'j' → tab_index:35, type:integer
-      ├─ Assign('rec' := mat) → type:void
-      │  ├─ target 'rec' → tab_index:43, type:integer
-      │  └─ value 'mat' → tab_index:40, type:integer
-      ├─ Assign('rec' := ) → type:void
-      │  ├─ target 'rec' → tab_index:43, type:integer
-      │  └─ value 
-      │     └─ FuncCall('NextVal') → tab_index:48, type:integer, lev:0
-      │        └─ 'rec' → tab_index:43, type:integer
-      ├─ IfStmt
-      │  ├─ condition
-      │  │  └─ BinOp 'or' → type:boolean
-      │  │     ├─ UnaryOp 'not' → type:boolean
-      │  │     │  └─ BinOp '<=' → type:boolean
-      │  │     │     ├─ 'j' → tab_index:35, type:integer
-      │  │     │     └─ 0 → type:integer
-      │  │     └─ BinOp '<>' → type:boolean
-      │  │        ├─ 'i' → tab_index:34, type:integer
-      │  │        └─ 0 → type:integer
-      │  ├─ then
-      │  │  └─ Assign('j' := j+1) → type:void
-      │  │     ├─ target 'j' → tab_index:35, type:integer
-      │  │     └─ value 
-      │  │        └─ BinOp '+' → type:integer
-      │  │           ├─ 'j' → tab_index:35, type:integer
-      │  │           └─ 1 → type:integer
-      │  └─ else
-      │     └─ Assign('j' := j-1) → type:void
-      │        ├─ target 'j' → tab_index:35, type:integer
-      │        └─ value 
-      │           └─ BinOp '-' → type:integer
-      │              ├─ 'j' → tab_index:35, type:integer
-      │              └─ 1 → type:integer
-      ├─ CaseStmt
-      │  ├─ expr
-      │  │  └─ 'j' → tab_index:35, type:integer
-      │  └─ CaseBlock
-      │     ├─ const: 1
-      │     └─ Assign('j' := 10) → type:void
-      │        ├─ target 'j' → tab_index:35, type:integer
-      │        └─ value 10 → type:integer
-      ├─ WhileStmt
-      │  ├─ condition
-      │  │  └─ BinOp 'and' → type:boolean
-      │  │     ├─ BinOp '>' → type:boolean
-      │  │     │  ├─ 'j' → tab_index:35, type:integer
-      │  │     │  └─ 0 → type:integer
-      │  │     └─ BinOp '<' → type:boolean
-      │  │        ├─ 'i' → tab_index:34, type:integer
-      │  │        └─ 10 → type:integer
-      │  └─ body
-      │     └─ CompoundStmt
-      │        └─ Assign('j' := j-1) → type:void
-      │           ├─ target 'j' → tab_index:35, type:integer
-      │           └─ value 
-      │              └─ BinOp '-' → type:integer
-      │                 ├─ 'j' → tab_index:35, type:integer
-      │                 └─ 1 → type:integer
-      ├─ RepeatStmt
-      │  ├─ Assign('j' := j+1) → type:void
-      │  │  ├─ target 'j' → tab_index:35, type:integer
-      │  │  └─ value 
-      │  │     └─ BinOp '+' → type:integer
-      │  │        ├─ 'j' → tab_index:35, type:integer
-      │  │        └─ 1 → type:integer
-      │  └─ until
-      │     └─ BinOp '>=' → type:boolean
-      │        ├─ 'j' → tab_index:35, type:integer
-      │        └─ 2 → type:integer
-      ├─ ForStmt('i', tosy) → tab_index:34, lev:0
-      │  ├─ init
-      │  │  └─ 1 → type:integer
-      │  ├─ final
-      │  │  └─ 3 → type:integer
-      │  └─ body
-      │     └─ CompoundStmt
-      │        └─ Update(...) → predefined, tab_index:44
-      │           ├─ 'i' → tab_index:34, type:integer
-      │           ├─ 'j' → tab_index:35, type:integer
-      │           └─ 'mat' → tab_index:40, type:integer
-      ├─ ForStmt('i', downtosy) → tab_index:34, lev:0
-      │  ├─ init
-      │  │  └─ 3 → type:integer
-      │  ├─ final
-      │  │  └─ 1 → type:integer
-      │  └─ body
-      │     └─ CompoundStmt
-      │        └─ Assign('j' := j+i) → type:void
-      │           ├─ target 'j' → tab_index:35, type:integer
-      │           └─ value 
-      │              └─ BinOp '+' → type:integer
-      │                 ├─ 'j' → tab_index:35, type:integer
-      │                 └─ 'i' → tab_index:34, type:integer
-      ├─ Update(...) → predefined, tab_index:44
-      │  ├─ 'i' → tab_index:34, type:integer
-      │  ├─ 'j' → tab_index:35, type:integer
-      │  └─ 'mat' → tab_index:40, type:integer
-      └─ writeln(...) → predefined, tab_index:50
-         ├─ 'done' → type:string
-         ├─ 'j' → tab_index:35, type:integer
-         ├─ 'x' → tab_index:36, type:real
-         └─ 'ch' → tab_index:37, type:char
+      │     └─ BinOp '-' → type:integer
+      │        ├─ BinOp '*' → type:integer
+      │        │  ├─ BinOp '+' → type:integer
+      │        │  │  ├─ 'a' → tab_index:34, type:integer
+      │        │  │  └─ 'b' → tab_index:35, type:integer
+      │        │  └─ 2 → type:integer
+      │        └─ 3 → type:integer
+      └─ writeln(...) → predefined, tab_index:37
+         ├─ 'arith = ' → type:string
+         └─ 'c' → tab_index:36, type:integer

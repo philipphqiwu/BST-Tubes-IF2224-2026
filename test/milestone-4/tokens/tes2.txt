@@ -1,37 +1,146 @@
 programsy
-ident (Subprograms)
+ident (Everything)
 semicolon
 
 varsy
 ident (i)
 comma
-ident (total)
+ident (j)
 colon
 ident (integer)
+semicolon
+
+ident (x)
+colon
+ident (real)
+semicolon
+
+ident (ch)
+colon
+ident (char)
+semicolon
+
+ident (e)
+colon
+lparent
+ident (A)
+comma
+ident (B)
+comma
+ident (C)
+rparent
+semicolon
+
+ident (r)
+colon
+intcon (1)
+period
+period
+intcon (3)
+semicolon
+
+ident (mat)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+rbrack
+ofsy
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
+ident (rec)
+colon
+recordsy
+ident (age)
+colon
+ident (integer)
+semicolon
+
+ident (code)
+colon
+ident (integer)
+endsy
 semicolon
 
 proceduresy
-ident (AddToTotal)
+ident (Update)
 lparent
-ident (x)
+ident (a)
+comma
+ident (b)
 colon
 ident (integer)
 semicolon
 
-ident (y)
+ident (v)
 colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (3)
+rbrack
+ofsy
 ident (integer)
 rparent
 semicolon
 
 beginsy
-ident (total)
+ident (v)
+lbrack
+intcon (1)
+rbrack
 becomes
-ident (total)
+ident (a)
 plus
-ident (x)
+ident (b)
+semicolon
+
+ident (v)
+lbrack
+intcon (2)
+rbrack
+becomes
+lparent
+ident (a)
+times
+intcon (2)
+rparent
+idiv
+intcon (2)
+semicolon
+
+ident (v)
+lbrack
+intcon (3)
+rbrack
+becomes
+lparent
+ident (v)
+lbrack
+intcon (1)
+rbrack
 plus
-ident (y)
+ident (v)
+lbrack
+intcon (2)
+rbrack
+rparent
+imod
+intcon (3)
 semicolon
 
 endsy
@@ -40,7 +149,7 @@ semicolon
 functionsy
 ident (NextVal)
 lparent
-ident (v)
+ident (n)
 colon
 ident (integer)
 rparent
@@ -51,7 +160,7 @@ semicolon
 beginsy
 ident (NextVal)
 becomes
-ident (v)
+ident (n)
 plus
 intcon (1)
 semicolon
@@ -65,38 +174,219 @@ becomes
 intcon (1)
 semicolon
 
-ident (total)
+ident (j)
 becomes
-intcon (0)
+minus
+ident (i)
+plus
+intcon (2)
+times
+intcon (3)
+idiv
+intcon (2)
+imod
+intcon (2)
 semicolon
 
-ident (AddToTotal)
-lparent
-ident (i)
+ident (x)
+becomes
+intcon (6)
+rdiv
+intcon (2)
+semicolon
+
+ident (ch)
+becomes
+charcon (z)
+semicolon
+
+ident (mat)
+lbrack
+intcon (1)
 comma
+intcon (2)
+rbrack
+becomes
+ident (j)
+semicolon
+
+ident (rec)
+period
+ident (age)
+becomes
+ident (mat)
+lbrack
+intcon (1)
+rbrack
+lbrack
+intcon (2)
+rbrack
+semicolon
+
+ident (rec)
+period
+ident (code)
+becomes
 ident (NextVal)
 lparent
-ident (i)
-rparent
+ident (rec)
+period
+ident (age)
 rparent
 semicolon
 
 ifsy
-ident (total)
-gtr
+notsy
+lparent
+ident (j)
+leq
 intcon (0)
+rparent
+orsy
+lparent
+ident (i)
+neq
+intcon (0)
+rparent
 thensy
-ident (total)
+ident (j)
 becomes
-ident (total)
+ident (j)
 plus
 intcon (1)
 elsesy
-ident (total)
+ident (j)
 becomes
-ident (total)
+ident (j)
 minus
 intcon (1)
+semicolon
+
+casesy
+ident (j)
+ofsy
+intcon (1)
+colon
+ident (j)
+becomes
+intcon (10)
+semicolon
+
+intcon (2)
+comma
+intcon (3)
+colon
+ident (j)
+becomes
+intcon (20)
+semicolon
+
+endsy
+semicolon
+
+whilesy
+lparent
+ident (j)
+gtr
+intcon (0)
+rparent
+andsy
+lparent
+ident (i)
+lss
+intcon (10)
+rparent
+dosy
+beginsy
+ident (j)
+becomes
+ident (j)
+minus
+intcon (1)
+semicolon
+
+endsy
+semicolon
+
+repeatsy
+ident (j)
+becomes
+ident (j)
+plus
+intcon (1)
+semicolon
+
+untilsy
+ident (j)
+geq
+intcon (2)
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (1)
+tosy
+intcon (3)
+dosy
+beginsy
+ident (Update)
+lparent
+ident (i)
+comma
+ident (j)
+comma
+ident (mat)
+lbrack
+intcon (1)
+rbrack
+rparent
+semicolon
+
+endsy
+semicolon
+
+forsy
+ident (i)
+becomes
+intcon (3)
+downtosy
+intcon (1)
+dosy
+beginsy
+ident (j)
+becomes
+ident (j)
+plus
+ident (i)
+semicolon
+
+endsy
+semicolon
+
+ident (Update)
+lparent
+ident (i)
+comma
+ident (j)
+comma
+ident (mat)
+lbrack
+intcon (2)
+rbrack
+rparent
+semicolon
+
+ident (writeln)
+lparent
+string ('done')
+comma
+ident (j)
+comma
+ident (x)
+comma
+ident (ch)
+rparent
 semicolon
 
 endsy

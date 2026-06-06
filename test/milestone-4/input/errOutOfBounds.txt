@@ -1,0 +1,16 @@
+program TestOutOfBounds;
+
+var
+  arr: array[1..5] of integer;
+  i: integer;
+
+begin
+  arr[1] := 10;
+  arr[2] := 20;
+  arr[3] := 30;
+  arr[4] := 40;
+  arr[5] := 50;
+  writeln('Array[3] = ', arr[3]);
+  i := arr[10];
+  writeln('Out of bounds access result: ', i);
+end.

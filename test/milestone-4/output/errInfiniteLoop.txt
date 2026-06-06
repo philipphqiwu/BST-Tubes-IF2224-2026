@@ -1,0 +1,19 @@
+=== INTERMEDIATE CODE ===
+0 INT 0 4
+1 LIT 0 1
+2 STO 0 3
+3 LOD 0 3
+4 LIT 0 0
+5 OPR 0 11
+6 JPC 0 12
+7 LOD 0 3
+8 LIT 0 1
+9 OPR 0 2
+10 STO 0 3
+11 JMP 0 3
+12 RET
+
+=== INTERPRETER OUTPUT ===
+
+=== RUNTIME ERRORS ===
+Execution step limit exceeded: possible infinite loop

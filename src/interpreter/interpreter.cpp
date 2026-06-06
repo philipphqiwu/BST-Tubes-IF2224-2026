@@ -7,6 +7,7 @@ namespace
 {
 
     constexpr size_t MAX_FRAMES = 1000;
+    constexpr size_t MAX_EXEC_STEPS = 1000000;
     constexpr long long INT32_HIGH = 2147483647LL;
     constexpr long long INT32_LOW = -2147483648LL;
 
@@ -208,8 +209,16 @@ bool Interpreter::execute(std::ostream &out)
 
     frames_.push_back(FrameMeta{});
 
+    size_t executed_steps = 0;
+
     while (pc_ >= 0 && pc_ < (int)code_->size())
     {
+        if (executed_steps++ >= MAX_EXEC_STEPS)
+        {
+            addError("Execution step limit exceeded: possible infinite loop");
+            return false;
+        }
+
         const ICInstr &ins = (*code_)[pc_];
         if (!execInstruction(ins, out))
             return false;

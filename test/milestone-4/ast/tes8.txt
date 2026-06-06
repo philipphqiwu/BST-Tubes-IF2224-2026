@@ -1,0 +1,54 @@
+=== SYMBOL TABLES ===
+
+=== SYMBOL TABLE (tab) ===
+idx   id             obj         type  ref   nrm   lev   adr   link  
+---------------------------------------------------------------------
+...  (reserved words 0-32)
+33    M4WhileSum     program     0     0     1     0     0     0     
+34    i              variable    1     0     1     0     3     33    
+35    sum            variable    1     0     1     0     4     34    
+36    writeln        procedure   0     0     1     0     0     35    
+
+=== BLOCK TABLE (btab) ===
+idx   last    lpar    psze    vsze    
+--------------------------------------
+0     36      0       0       5         <- global block (program)
+1     0       0       0       3       
+
+=== ARRAY TABLE (atab) ===
+(kosong karena tidak ada array)
+
+=== DECORATED AST ===
+└─ ProgramNode(name: 'M4WhileSum') → tab_index:33, lev:0
+   ├─ Declarations
+   │  └─ VarDecl('i') → tab_index:34, type:integer, lev:0
+   │  └─ VarDecl('sum') → tab_index:35, type:integer, lev:0
+   └─ Block → block_index:1, lev:1
+      ├─ Assign('i' := 1) → type:void
+      │  ├─ target 'i' → tab_index:34, type:integer
+      │  └─ value 1 → type:integer
+      ├─ Assign('sum' := 0) → type:void
+      │  ├─ target 'sum' → tab_index:35, type:integer
+      │  └─ value 0 → type:integer
+      ├─ WhileStmt
+      │  ├─ condition
+      │  │  └─ BinOp '<=' → type:boolean
+      │  │     ├─ 'i' → tab_index:34, type:integer
+      │  │     └─ 5 → type:integer
+      │  └─ body
+      │     └─ CompoundStmt
+      │        ├─ Assign('sum' := sum+i) → type:void
+      │        │  ├─ target 'sum' → tab_index:35, type:integer
+      │        │  └─ value 
+      │        │     └─ BinOp '+' → type:integer
+      │        │        ├─ 'sum' → tab_index:35, type:integer
+      │        │        └─ 'i' → tab_index:34, type:integer
+      │        └─ Assign('i' := i+1) → type:void
+      │           ├─ target 'i' → tab_index:34, type:integer
+      │           └─ value 
+      │              └─ BinOp '+' → type:integer
+      │                 ├─ 'i' → tab_index:34, type:integer
+      │                 └─ 1 → type:integer
+      └─ writeln(...) → predefined, tab_index:36
+         ├─ 'sum = ' → type:string
+         └─ 'sum' → tab_index:35, type:integer

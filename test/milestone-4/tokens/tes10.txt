@@ -1,0 +1,98 @@
+programsy
+ident (M4ProcFunc)
+semicolon
+
+varsy
+ident (n)
+comma
+ident (total)
+colon
+ident (integer)
+semicolon
+
+proceduresy
+ident (AddTwice)
+lparent
+ident (x)
+colon
+ident (integer)
+rparent
+semicolon
+
+beginsy
+ident (total)
+becomes
+ident (total)
+plus
+ident (x)
+semicolon
+
+ident (total)
+becomes
+ident (total)
+plus
+ident (x)
+semicolon
+
+endsy
+semicolon
+
+functionsy
+ident (Square)
+lparent
+ident (x)
+colon
+ident (integer)
+rparent
+colon
+ident (integer)
+semicolon
+
+beginsy
+ident (Square)
+becomes
+ident (x)
+times
+ident (x)
+semicolon
+
+endsy
+semicolon
+
+beginsy
+ident (total)
+becomes
+intcon (0)
+semicolon
+
+ident (n)
+becomes
+intcon (3)
+semicolon
+
+ident (AddTwice)
+lparent
+ident (n)
+rparent
+semicolon
+
+ident (total)
+becomes
+ident (total)
+plus
+ident (Square)
+lparent
+ident (n)
+rparent
+semicolon
+
+ident (writeln)
+lparent
+string ('procfunc = ')
+comma
+ident (total)
+rparent
+semicolon
+
+endsy
+period

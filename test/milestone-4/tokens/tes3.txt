@@ -1,21 +1,42 @@
 programsy
-ident (ControlFlow)
+ident (TestArr)
 semicolon
 
 varsy
+ident (a)
+colon
+arraysy
+lbrack
+intcon (1)
+period
+period
+intcon (5)
+rbrack
+ofsy
+ident (integer)
+semicolon
+
 ident (i)
-comma
-ident (x)
-comma
-ident (y)
 colon
 ident (integer)
 semicolon
 
 beginsy
-ident (x)
+forsy
+ident (i)
 becomes
-intcon (0)
+intcon (1)
+tosy
+intcon (5)
+dosy
+ident (a)
+lbrack
+ident (i)
+rbrack
+becomes
+ident (i)
+times
+intcon (10)
 semicolon
 
 forsy
@@ -23,93 +44,15 @@ ident (i)
 becomes
 intcon (1)
 tosy
-intcon (3)
-dosy
-beginsy
-ident (x)
-becomes
-ident (x)
-plus
-ident (i)
-semicolon
-
-ident (y)
-becomes
-intcon (1)
-semicolon
-
-endsy
-semicolon
-
-whilesy
-ident (x)
-gtr
-intcon (0)
-dosy
-beginsy
-ident (x)
-becomes
-ident (x)
-minus
-intcon (1)
-semicolon
-
-ident (y)
-becomes
-intcon (0)
-semicolon
-
-endsy
-semicolon
-
-repeatsy
-ident (x)
-becomes
-ident (x)
-plus
-intcon (2)
-semicolon
-
-untilsy
-ident (x)
-gtr
-intcon (1)
-semicolon
-
-ifsy
-ident (x)
-gtr
-intcon (1)
-thensy
-ident (x)
-becomes
 intcon (5)
-elsesy
-ident (x)
-becomes
-intcon (6)
-semicolon
-
-casesy
-ident (x)
-ofsy
-intcon (1)
-colon
-ident (x)
-becomes
-intcon (10)
-semicolon
-
-intcon (2)
-comma
-intcon (3)
-colon
-ident (x)
-becomes
-intcon (20)
-semicolon
-
-endsy
+dosy
+ident (writeln)
+lparent
+ident (a)
+lbrack
+ident (i)
+rbrack
+rparent
 semicolon
 
 endsy
